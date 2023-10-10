@@ -13,7 +13,7 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>
-        <main className='min-w-[300px]'>
+        <main className='relative min-w-[300px]'>
           <CartContextProvider>
             <Header/>
             {children}
