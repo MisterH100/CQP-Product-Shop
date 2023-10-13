@@ -16,12 +16,12 @@ export const Products = ({products}: {products: IProducts[]}) =>{
                     products.map((product) =>
                         <article key={product._id} className="w-full md:w-96 h-[650px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             
-                            <div className ="w-full h-3/4 relative bg-white">
-                                <Image className="rounded-t-lg w-full h-full object-cover"
-                                src={product.productImages.image_one.image_url} 
-                                alt={product.name} 
-                                width={300}
-                                height={200}
+                            <div className ="w-full h-3/4 relative bg-white overflow-hidden">
+                                <Image className="rounded-t-lg w-full h-full object-cover hover:scale-105 transition-all ease-in"
+                                    src={product.productImages.image_one.image_url} 
+                                    alt={product.name} 
+                                    width={300}
+                                    height={200}
                                 />
                                 <Link href={`/store/product/${product._id}`} className="w-full absolute left-0 bottom-0 px-5">
                                     <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate text-ellipsis">{product.name}</h2>
