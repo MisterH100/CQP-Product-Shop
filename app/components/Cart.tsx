@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useCartContext } from '../context/CartContext'
 import { randsSA } from '../functions/formatToRands'
+import Link from 'next/link'
 
 
 export const Cart = () =>{
@@ -19,7 +20,7 @@ export const Cart = () =>{
             <ul className="w-full py-10 divide-y divide-black dark:divide-gray-700">
                 {cartList.map(item =>
                     <li key={item._id}
-                        className="w-fit p-0 md:p-4 mx-auto mb-10 md:mb-4">
+                        className="w-fit p-0 pt-4 md:p-4 mx-auto mb-10 md:mb-4">
                         <div className="flex items-center space-x-1 md:space-x-4 flex-col md:flex-row gap-4 md:gap-0">
                             <div className="flex gap-2 items-center">
                                 <Image 
@@ -75,8 +76,12 @@ export const Cart = () =>{
                 )}
             </ul>
             <div>
+                {cartList.length > 0?
                 <span className="mt-4 text-2xl font-bold dark:text-white">Total: {randsSA.format(total)}
+                </span>:
+                <span className="mt-4 text-lg font-bold dark:text-white">Your cart is empty, Start shopping and add items to your cart
                 </span>
+                }
             </div>
             <div className="pt-4">
                 <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
@@ -86,14 +91,16 @@ export const Cart = () =>{
                 </svg>
                     Discard cart
                 </button>
-                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    onClick={()=> console.log(cartList)}
+                <Link 
+                    href={cartList.length > 0?`/store/checkout`: `/store/cart`}
+                    className={`${cartList.length > 0? " bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300": "bg-gray-600"} text-white font-medium rounded-lg text-sm px-5 py-2.5 ml-4 text-center inline-flex items-center `}
+
                 >
                     Checkout
                 <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
                     <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
                 </svg>
-                </button>
+                </Link>
             </div>
         </div>
     ) 
