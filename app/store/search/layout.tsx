@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 
 export const metadata: Metadata = {
-  title: 'Product Store',
+  title: 'Product Store Search',
   description: 'products store brings you quality products',
 }
 

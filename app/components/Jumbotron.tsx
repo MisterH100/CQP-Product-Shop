@@ -6,7 +6,7 @@ export const Jumbotron = ()=>{
         <section className="absolute top-0 left-0 z-50 w-full h-screen bg-center bg-no-repeat bg-cover bg-jumbotron-bg bg-gray-700 bg-blend-multiply">
             <div className="px-4 mx-auto text-center py-24 lg:py-56">
                 <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Great comfort, great quality, great prices</h1>
-                <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Here at Product Store we aim to please, please follow us on our social meadia plartforms</p>
+                <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Here at CQP we aim to please,head on to our store and start shopping</p>
                 <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                     <Link href="/store" className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                         Go to store

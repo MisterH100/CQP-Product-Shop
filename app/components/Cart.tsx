@@ -76,8 +76,12 @@ export const Cart = () =>{
                 )}
             </ul>
             <div>
+                {cartList.length > 0?
                 <span className="mt-4 text-2xl font-bold dark:text-white">Total: {randsSA.format(total)}
+                </span>:
+                <span className="mt-4 text-lg font-bold dark:text-white">Your cart is empty, Start shopping and add items to your cart
                 </span>
+                }
             </div>
             <div className="pt-4">
                 <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
@@ -89,7 +93,8 @@ export const Cart = () =>{
                 </button>
                 <Link 
                     href={cartList.length > 0?`/store/checkout`: `/store/cart`}
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className={`${cartList.length > 0? " bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300": "bg-gray-600"} text-white font-medium rounded-lg text-sm px-5 py-2.5 ml-4 text-center inline-flex items-center `}
+
                 >
                     Checkout
                 <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
