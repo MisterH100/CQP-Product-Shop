@@ -16,7 +16,7 @@ const ProductsPage =() =>{
     
     const cachedProductsData = useMemo(()=> products, [products])
     return(
-        <section className="w-full pt-20 min-h-screen dark:bg-gray-900">
+        <section className="w-full pt-20 min-h-screen bg-white">
             {loading? 
             <ProductsLoadingSkeleton/>:
             <Products products={cachedProductsData}/>
