@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState,useMemo } from "react"
+import { useEffect, useState,useMemo, useRef } from "react"
 import { Products } from "../components/Products"
 import { IProducts } from "../interfaces/ProductInterface"
 import { ProductsLoadingSkeleton } from "../components/ProductsLoadingSkeleton"
@@ -14,6 +14,7 @@ const ProductsPage =() =>{
     const router = useRouter();
     const [products, setProducts] = useState<IProducts[]>([{}] as IProducts[]);
     const [loading, setLoading] = useState(false);
+    const carouselRef = useRef<HTMLDivElement>(null);
     const URL = 'https://misterh-api-server.onrender.com/api/products'
     const [catNames, setCatnames] = useState([
         {id:1,cat:"shoes"},
@@ -26,6 +27,21 @@ const ProductsPage =() =>{
         fetchData(URL,setProducts,setLoading);
     },[URL]);
 
+    const [currPos,setCurrPos] = useState(0);
+    const maxPos = carouselRef.current? carouselRef.current.getBoundingClientRect().width - window.innerWidth: 150; 
+
+    const moveRight =()=>{
+        if(currPos < maxPos){
+            setCurrPos((prev)=>prev+300);
+        }
+        if(currPos == maxPos|| currPos > maxPos){
+            setCurrPos(0);
+        }
+
+        if(carouselRef.current){
+            carouselRef.current.style.translate = `-${currPos}px`;
+        }
+    }
 
     const cachedProductsData = useMemo(()=> products, [products])
     return(
@@ -34,12 +50,23 @@ const ProductsPage =() =>{
             <div className="p-4 mt-4">
                 <HeadingPanel>
                     Featured products
+                    <div className="flex gap-4 items-center">
+                        <button 
+                            onClick={moveRight}
+                            className="text-black">
+                            <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
                 </HeadingPanel>
             </div>
             {loading? 
             <ProductsLoadingSkeleton/>:
-            <div className="w-full h-[600px] md:h-fit overflow-hidden">
-                <div className="w-full md:w-max h-full grid grid-cols-2 justify-items-center md:flex gap-4 px-4">
+            <div className="w-full h-[600px] md:h-fit overflow-y-auto md:overflow-x-auto ">
+                <div
+                    ref={carouselRef} 
+                    className="w-full md:w-max h-full grid grid-cols-2 justify-items-center md:flex gap-4 px-4 transition-all duration-100 ease-in-out cursor-grab">
                     <Products products={cachedProductsData}/>
                 </div>
             </div>
@@ -48,7 +75,7 @@ const ProductsPage =() =>{
                 <Button 
                     type="primary" 
                     size="w-40 h-10"
-                    click={()=>router.push("/")}
+                    click={()=>router.push("/store/products")}
                     >
                    View all products
                 </Button>

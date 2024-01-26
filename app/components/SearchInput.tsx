@@ -1,14 +1,12 @@
 'use client'
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
 
 export const SearchInput =()=>{
-    const router = useRouter();
     const [query, setQuery] = useState("")
     const [active,setActive] = useState(false);
-    //router.push(`/store/search?search=${query}`)
+
     return(
-        <form className="w-200px flex items-center" action={`/store/search?search=${query}`}>   
+        <form className="w-200px flex items-center" action={`/store/search/${query}`}>   
             <label htmlFor="simple-search" className="sr-only">Search</label>
             <div className="relative w-full flex">
                 <input 

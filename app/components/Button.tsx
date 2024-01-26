@@ -1,4 +1,4 @@
-type Type = "primary" | "borderd";
+type Type = "primary" | "borderd" | "borderless";
 
 export const Button =({type,size,children,click}:{type:Type,size:string,children:React.ReactNode,click:()=>void})=>{
 
@@ -9,6 +9,10 @@ export const Button =({type,size,children,click}:{type:Type,size:string,children
         if(t == "borderd"){
           return "text-center border-2 border-black text-black text-sm md:text-base font-medium leading-tight";   
         }
+        if(t == "borderless"){
+            return "text-center text-black text-sm md:text-base font-medium leading-tight";   
+          }
+          
     }
 
     return(
