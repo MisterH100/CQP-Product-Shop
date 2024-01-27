@@ -16,7 +16,7 @@ export const Products = ({products}: {products: IProducts[]}) =>{
                 <article key={product._id} className="w-[150px] md:w-[250px] pb-4">
                     <div className="w-full h-[220px] md:h-[350px] overflow-hidden">
                         <Link  href={`/store/product/${product._id}`}> 
-                            <Image className="w-full h-full object-cover hover:scale-105 transition-all ease-in"
+                            <Image className="w-full h-full object-scale-down hover:scale-105 transition-all ease-in"
                                 src={product.productImages?.image_one.image_url} 
                                 alt={product.name} 
                                 width={300}

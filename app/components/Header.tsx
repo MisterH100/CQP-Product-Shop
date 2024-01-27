@@ -3,13 +3,18 @@ import Link from "next/link"
 import { SearchInput } from "./SearchInput"
 import { useCartContext } from "../context/CartContext"
 import { DropDown } from "./Dropdown"
+import { Drawer } from "./Drawer"
+import { useRef, useState } from "react"
+import { Button } from "./Button"
 
 
 export const Header =()=>{
     const {cartList} = useCartContext();
+    const drawerRef = useRef<HTMLDivElement>();
+    const [active,setActive] = useState(false);
     return(
         <header className="fixed bg-white w-full h-fit p-4 z-20 top-0 left-0">
-            <nav className="w-full h-full">
+            <nav className="w-full h-fit">
                 <div className="flex items-center">
                     <Link 
                         href="/store" 
@@ -55,13 +60,17 @@ export const Header =()=>{
                             }
                         </Link>
                     </div>
-                    <div className="block md:hidden p-2 md:ml-4 w-[50px] h-[40px]">
-                    <svg className="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M5 7h14M5 12h14M5 17h14"/>
-                    </svg>
-                    </div>
+                    <Button 
+                        type="borderless"
+                        click={()=>setActive(!active)}
+                        size="block md:hidden p-2 md:ml-4 w-[50px] h-[40px]">
+                        <svg className="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M5 7h14M5 12h14M5 17h14"/>
+                        </svg>
+                    </Button>
                 </div>
             </nav>
+            <Drawer active={active} setActive={setActive}/>
         </header>
     )
 }

@@ -63,13 +63,13 @@ const ProductsPage =() =>{
             </div>
             {loading? 
             <ProductsLoadingSkeleton/>:
-            <div className="w-full h-[600px] md:h-fit overflow-y-auto md:overflow-x-auto ">
-                <div
-                    ref={carouselRef} 
-                    className="w-full md:w-max h-full grid grid-cols-2 justify-items-center md:flex gap-4 px-4 transition-all duration-100 ease-in-out cursor-grab">
-                    <Products products={cachedProductsData}/>
+                <div className="w-full h-[600px] md:h-fit overflow-y-auto md:overflow-x-auto ">
+                    <div
+                        ref={carouselRef} 
+                        className="w-full md:w-max h-full grid grid-cols-2 justify-items-center md:flex gap-4 px-4 transition-all duration-100 ease-in-out cursor-grab">
+                        <Products products={cachedProductsData}/>
+                    </div>
                 </div>
-            </div>
             }  
             <div className="w-full h-fit flex justify-center p-4 mt-4">
                 <Button 
