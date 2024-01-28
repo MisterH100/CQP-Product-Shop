@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 
 const CartPage = () =>{
     const router = useRouter();
-    const {cartList} = useCartContext();
+    const {setCartList,cartList} = useCartContext();
     const total = cartList.map((product) => {return product.price * product.quantity }).reduce((prev, curr) => prev + curr, 0);
 
     return(
@@ -24,13 +24,20 @@ const CartPage = () =>{
                         </span>
                     }
                 </div>
-                <div className="w-fit pt-4">
+                <div className="w-full flex gap-10 pt-4">
                     <Button
                         type="primary"
-                        size="fit p-4"
+                        size="fit p-2"
                         click={()=>router.push("/store")}
                         >
                         Continue shopping
+                    </Button>
+                    <Button 
+                        type="borderd" 
+                        size={`${cartList.length > 0? "block":"hidden"} w-fit p-2`}
+                        click={()=> setCartList([])}
+                        >
+                            Discard Cart
                     </Button>
                 </div>
             </div>
@@ -57,6 +64,7 @@ const CartPage = () =>{
                             className="w-4 h-4 checked:bg-black border border-black rounded-full peer" 
                             type="radio" 
                             name="method" 
+                            checked
                             id="shipping"
                         />
                         <div className="flex items-center w-full h-[50px] my-4 p-2 bg-white text-black text-opacity-50 text-lg font-medium leading-tight peer-checked:text-opacity-100">
@@ -99,6 +107,17 @@ const CartPage = () =>{
                                 Checkout
                             </Button>
                         </div>
+                    }
+                </div>
+                <div className="w-full flex justify-center pt-20">
+                    {cartList.length > 0 &&
+                        <Button 
+                            type="primary" 
+                            size="w-[301px] h-[50px] p-2"
+                            click={()=> console.log("hi")}
+                            >
+                                Checkout
+                        </Button>
                     }
                 </div>
             </div>

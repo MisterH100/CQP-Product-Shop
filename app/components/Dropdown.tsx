@@ -23,10 +23,16 @@ export const DropDown =()=>{
                         <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Shoes</Link>
                     </li>
                     <li>
-                        <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Tops</Link>
+                        <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Women</Link>
                     </li>
                     <li>
-                        <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Pants</Link>
+                        <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Men</Link>
+                    </li>
+                    <li>
+                        <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Sports</Link>
+                    </li>
+                    <li>
+                        <Link href="#" className="block px-4 py-2 hover:bg-black hover:text-white">Clothing</Link>
                     </li>
                     </ul>
                 </div>

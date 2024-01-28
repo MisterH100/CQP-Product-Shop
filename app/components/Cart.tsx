@@ -8,7 +8,7 @@ import { Button } from './Button'
 
 
 export const Cart = ({cartList}:{cartList:IProducts[]}) =>{
-    const {setCartList,removeFromCart,increaseCartQuantity,decreaseCartQuantity} = useCartContext()
+    const {removeFromCart,increaseCartQuantity,decreaseCartQuantity} = useCartContext()
     const total = cartList.map((product) => {return product.price * product.quantity }).reduce((prev, curr) => prev + curr, 0)
 
 
@@ -28,7 +28,7 @@ export const Cart = ({cartList}:{cartList:IProducts[]}) =>{
                             </Image>
                         </div>
                         <div className="flex gap-4 flex-col md:flex-row md:items-center">
-                            <div className="max-w-[150px]">
+                            <div className="w-[150px] truncate">
                                 <p className="text-sm font-medium text-black truncate">
                                 {item.name}
                                 </p>
@@ -74,14 +74,7 @@ export const Cart = ({cartList}:{cartList:IProducts[]}) =>{
                     </li>
                 )}
             </ul>
-            {/*<div>
-                {cartList.length > 0?
-                <span className="mt-4 text-2xl font-bold dark:text-white">Total: {randsSA.format(total)}
-                </span>:
-                <span className="mt-4 text-lg font-bold dark:text-white">Your cart is empty, Start shopping and add items to your cart
-                </span>
-                }
-            </div>
+            {/*
             <div className="pt-4">
                 <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                     onClick={()=> setCartList([])}
