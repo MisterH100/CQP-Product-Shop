@@ -1,30 +1,56 @@
 'use client'
-import Link from "next/link"
-import { useState } from "react"
+import { useState } from "react";
 
 export const SearchInput =()=>{
     const [query, setQuery] = useState("")
+    const [active,setActive] = useState(false);
+
     return(
-        <form className="w-200px flex items-center">   
+        <form className="w-200px flex items-center" action={`/store/search/${query}`}>   
             <label htmlFor="simple-search" className="sr-only">Search</label>
-            <div className="relative w-full">
+            <div className="relative w-full flex">
                 <input 
                     type="text" 
                     value={query}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none" 
+                    className="hidden md:block w-[300px] h-[40px] pl-2 text-black border border-black border-r-white"
                     placeholder="Search brand name..." 
                     required
                     onChange={(e)=>setQuery(e.target.value)}
                 />
+                <button
+                    type="submit"
+                    onClick={()=>setActive(!active)}
+                    className="w-[50px] h-[40px] text-sm font-medium text-black flex justify-center items-center border border-white md:border-black border-l-white">
+                    <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                    </svg>
+                    <span className="sr-only">Search</span>
+                </button>
             </div>
-            <Link
-                href={`/store/search?search=${query}`}
-                className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
-                <span className="sr-only">Search</span>
-            </Link>
+
+            {active?
+                <div className="absolute left-0 top-0 z-[100] w-full h-full md:hidden bg-white flex justify-center items-center">
+                    <div className="flex border border-black">
+                        <input 
+                            type="text" 
+                            value={query}
+                            className="w-[300px] h-[40px] pl-2 text-black"
+                            placeholder="Search brand name..." 
+                            required
+                            onChange={(e)=>setQuery(e.target.value)}
+                        />
+                        <button
+                            type="submit"
+                            onClick={()=>setActive(!active)}
+                            className="w-[50px] h-[40px] text-sm font-medium text-black flex justify-center items-center">
+                            <svg className="w-6 h-6"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 18 6m0 12L6 6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>:null
+            }
+            
         </form>
     )
 }

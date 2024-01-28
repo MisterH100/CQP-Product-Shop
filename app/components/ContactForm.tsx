@@ -13,6 +13,7 @@ type FormData ={
 }
 
 export const ConatctForm = ({cartList,setOpenSubmitForm}:{cartList: IProducts[], setOpenSubmitForm: Dispatch<SetStateAction<boolean>>})=>{
+
     const [formData, setFormData] = useState({} as FormData);
     const [loading, setLoading] = useState(false)
     const {setCartList} = useCartContext();
@@ -25,6 +26,7 @@ export const ConatctForm = ({cartList,setOpenSubmitForm}:{cartList: IProducts[],
         })
     }
     const POSTURL = "https://misterh-api-server.onrender.com/api/products/orders"
+    
     const postData = async (url: string) =>{
         const response = await fetch(url, {
           method: "POST",

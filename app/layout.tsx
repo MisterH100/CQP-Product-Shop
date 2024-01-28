@@ -1,8 +1,13 @@
 import { Header } from './components/Header'
 import { CartContextProvider } from './context/CartContext'
 import './globals.css'
+import {Poppins} from 'next/font/google'
 import type { Metadata } from 'next'
 
+const poppins = Poppins({
+  weight: ['400','500','900'],
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'Product Store',
@@ -19,7 +24,7 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
         <link rel="manifest" href="/site.webmanifest"/>
       </head>
       <body>
-        <main className='relative min-w-[300px]'>
+        <main className={`relative min-w-[300px] ${poppins.className}`}>
           <CartContextProvider>
             <Header/>
             {children}

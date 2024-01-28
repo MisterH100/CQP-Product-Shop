@@ -3,58 +3,60 @@ import Link from 'next/link';
 import { IProducts } from '../interfaces/ProductInterface';
 import { randsSA } from '../functions/formatToRands';
 import { useCartContext } from '../context/CartContext';
+import { Button } from './Button';
 
 
 export const Products = ({products}: {products: IProducts[]}) =>{
    const {addToCart} = useCartContext()
 
     return(
-        <div className="p-0 md:p-10 min-w-[200px]">
-            {products.length !== 1? 
-                <div className="flex flex-wrap justify-evenly items-center gap-10">
-                    {
-                    products.map((product) =>
-                        <article key={product._id} className="w-full md:w-96 h-[650px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                            
-                            <div className ="w-full h-3/4 relative bg-white overflow-hidden">
-                                <Image className="rounded-t-lg w-full h-full object-cover hover:scale-105 transition-all ease-in"
-                                    src={product.productImages.image_one.image_url} 
-                                    alt={product.name} 
-                                    width={300}
-                                    height={200}
-                                />
-                                <Link href={`/store/product/${product._id}`} className="w-full absolute left-0 bottom-0 px-5">
-                                    <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate text-ellipsis">{product.name}</h2>
-                                </Link>
-                            </div>
+        <>
+            {
+                products.map((product) =>
+                <article key={product._id} className="w-[150px] md:w-[250px] pb-4">
+                    <div className="w-full h-[220px] md:h-[350px] overflow-hidden">
+                        <Link  href={`/store/product/${product._id}`}> 
+                            <Image className="w-full h-full object-scale-down hover:scale-105 transition-all ease-in"
+                                src={product.productImages?.image_one.image_url} 
+                                alt={product.name} 
+                                width={300}
+                                height={350}
+                            />
+                        </Link>
+                    </div>
+                    <div className="w-full flex text-black md:px-2">
+                        <div className="w-1/2">
+                            <Link href={`/store/product/${product._id}`} className="w-full">
+                                <h2 className="text-base font-medium tracking-tight text-black truncate text-ellipsis">{product.name}</h2>
+                            </Link>
+                            <h3 className="text-sm md:text-lg font-bold text-black mt-4">{randsSA.format(product.price)}</h3>
+                        </div>
 
-                            <div className="w-full px-5 pt-2">
-                                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 truncate text-ellipsis">{product.description}</p>
-                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">{randsSA.format(product.price)}</h3>
-                            </div>
-
-                            <div className="flex w-full px-5 pt-4 gap-2">
-                                <Link href={`/store/product/${product._id}`} 
-                                className="flex-1 h-10 flex justify-center items-center text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 d">
-                                    View product
-                                </Link>
-                                <button 
-                                className="h-10 inline-flex items-center px-3 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                onClick={()=>addToCart(product._id, product.quantity)}
-                                >
-                                <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                                    <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
+                        <div className="w-1/2 flex flex-col items-end">
+                            <span className="flex">
+                                <svg className="w-6 h-6 text-blck" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeWidth="2" d="M11 5.1a1 1 0 0 1 2 0l1.7 4c.1.4.4.6.8.6l4.5.4a1 1 0 0 1 .5 1.7l-3.3 2.8a1 1 0 0 0-.3 1l1 4a1 1 0 0 1-1.5 1.2l-3.9-2.3a1 1 0 0 0-1 0l-4 2.3a1 1 0 0 1-1.4-1.1l1-4.1c.1-.4 0-.8-.3-1l-3.3-2.8a1 1 0 0 1 .5-1.7l4.5-.4c.4 0 .7-.2.8-.6l1.8-4Z"/>
                                 </svg>
-                            </button>
+                                99%
+                            </span>
+                            <div className="mt-2 md:mt-4">
+                                <Button 
+                                    type="borderd" 
+                                    size="w-[50px] h-[30px] flex items-center justify-center"
+                                    click={()=>addToCart(product._id, product.quantity)}
+                                    >
+                                    <span>+</span>
+                                    <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 1 12c0 .5-.5 1-1 1H6a1 1 0 0 1-1-1L6 8h12Z"/>
+                                    </svg>
+                                </Button>
                             </div>
-                        </article>
-                    )
-                    }
-                </div>: null
-            
-            }
-            
 
-        </div>
+                        </div>
+                    </div>
+                </article>
+            )
+            }
+        </>
     )
 }     

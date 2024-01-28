@@ -1,11 +1,13 @@
 'use client'
+import { HeadingPanel } from "@/app/components/HeadingPanel"
 import { Product } from "@/app/components/Product"
 import { ProductLoadingSkeleton } from "@/app/components/ProductLoadingSkeleton"
 import { Products } from "@/app/components/Products"
+import { ProductsLoadingSkeleton } from "@/app/components/ProductsLoadingSkeleton"
 import { fetchData } from "@/app/functions/fetchData"
 import { IProducts} from "@/app/interfaces/ProductInterface"
 import Link from "next/link"
-import {useEffect, useState,useMemo } from "react"
+import {useEffect, useState,useMemo, useRef } from "react"
 
 
 const ProductPage = ({params: {productId}}: {params: {productId:string}}) =>{
@@ -50,23 +52,27 @@ const ProductPage = ({params: {productId}}: {params: {productId:string}}) =>{
         fetchData(FEATURED_URL, setProducts,setLoading)
     },[URL]);
     const cachedProductData = useMemo(()=> product, [product])
-    const cachedProductsData = useMemo(()=> products, [products])
+
     return(
-        <section className="relative w-full pt-8">
-            <div className="absolute w-full px-2 md:px-10 top-20 left-0">
-                <Link href={'/store'} className="flex gap-1 items-center">
-                    <svg className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                    </svg>
-                    Back
-                </Link>
+        <section className="relative w-full pt-20">
+            <div className="w-full py-10 md:h-[600px] bg-[url('/jumbotron-ps.png')] dark:bg-[url('/jumbotron-dark-ps.png')] bg-cover bg-center bg-no-repeat">
+                {loading?
+                    <ProductLoadingSkeleton/>:
+                    <Product product={cachedProductData}/>
+                }
             </div>
-            {loading?
-            <ProductLoadingSkeleton/>:
-            <Product product={cachedProductData}/>
-            }
-            <div>
-                <Products products={cachedProductsData}/>
+            <div className="bg-white">
+                <div className="p-4 mt-4 text-white">
+                    <HeadingPanel>
+                        Featured products
+                    </HeadingPanel>
+                </div>
+                {loading?  
+                    <ProductsLoadingSkeleton/>:
+                    <div className="w-full grid grid-cols-2 md:grid-cols-4 justify-items-center gap-4 ">
+                        <Products products={products}/>
+                    </div>
+                }  
             </div>
         </section>
     )
