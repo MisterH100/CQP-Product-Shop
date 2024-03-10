@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -16,16 +17,33 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
 import { buttonVariants } from "@/components/ui/button";
 import { Search } from "@/components/ui/search_field";
 import { BellIcon } from "lucide-react";
 import jumbotronImage from "@/public/jumbotron-ps.png";
-import exampleImage from "@/public/men.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { useGlobalContext } from "@/lib/global_context";
+import Products from "@/lib/data.json";
+import { IProduct } from "@/lib/global_context";
 
 const Home = () => {
+  const { setSelected } = useGlobalContext();
+  const products = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const data: any = Products;
+      return data;
+    },
+  });
+
+  if (products.isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (products.error) {
+    return <div>{products.error.message}</div>;
+  }
   return (
     <section className="relative w-full min-h-screen">
       <Card className="border-none">
@@ -51,7 +69,7 @@ const Home = () => {
               </DrawerHeader>
               <CardContent>
                 {Array.from({ length: 10 }).map((_, index) => (
-                  <p>notification{index + 1}</p>
+                  <p key={index}>notification{index + 1}</p>
                 ))}
               </CardContent>
             </DrawerContent>
@@ -76,20 +94,24 @@ const Home = () => {
           Featured
         </h1>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <Link href="/product/1">
+          {products.data.map((product: IProduct) => (
+            <Link
+              key={product.id}
+              onClick={() => setSelected("")}
+              href={`/product/${product.id}`}
+            >
               <Card className="rounded-2xl overflow-hidden">
                 <Image
-                  src={exampleImage}
-                  alt="men.jpg"
+                  src={product.image}
+                  alt={product.name}
                   className="w-full h-[200px] object-cover"
-                  width={736}
-                  height={981}
+                  width={500}
+                  height={500}
                 />
                 <CardHeader className="p-2">
                   <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg">Item{index + 1}</CardTitle>
-                    <CardTitle className="text-lg">R200</CardTitle>
+                    <CardTitle className="text-base">{product.name}</CardTitle>
+                    <CardTitle className="text-base">{product.price}</CardTitle>
                   </div>
                   <CardDescription>item description</CardDescription>
                 </CardHeader>
@@ -99,6 +121,7 @@ const Home = () => {
         </div>
         <div className="w-full flex justify-center py-4">
           <Link
+            onClick={() => setSelected("")}
             href="/products"
             className={buttonVariants({ variant: "outline" })}
           >

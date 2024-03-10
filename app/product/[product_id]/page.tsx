@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,14 +9,33 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Search } from "@/components/ui/search_field";
-import exampleImage from "@/public/men.jpg";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import Products from "@/lib/data.json";
+import { IProduct, useGlobalContext } from "@/lib/global_context";
 
 const ProductPage = ({
   params: { product_id },
 }: {
   params: { product_id: string };
 }) => {
+  const { addToCart } = useGlobalContext();
+  const product = useQuery({
+    queryKey: ["product"],
+    queryFn: async () => {
+      const data: any = Products.find(
+        (product) => product.id.toString() === product_id
+      );
+      return data;
+    },
+  });
+
+  if (product.isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (product.error) {
+    return <div>{product.error.message}</div>;
+  }
   return (
     <section className="min-h-screen px-4 md:px-10">
       <div className="py-6">
@@ -24,27 +44,28 @@ const ProductPage = ({
       <div className="flex justify-center mt-4">
         <Card className="md:w-2/3 overflow-hidden">
           <Image
-            src={exampleImage}
-            alt="men.jpg"
+            src={product.data.image}
+            alt={product.data.name}
             className="w-full h-[500px] object-cover"
-            width={736}
-            height={981}
+            width={500}
+            height={500}
           />
           <CardHeader>
             <div className="flex justify-between items-center">
-              <CardTitle>product {product_id}</CardTitle>
-              <CardTitle>R200</CardTitle>
+              <CardTitle>{product.data.name}</CardTitle>
+              <CardTitle>{product.data.price}</CardTitle>
             </div>
             <CardDescription>item description</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
-              enim provident tempora ea voluptatum! Numquam ae?
-            </p>
+            <p>{product.data.description}</p>
           </CardContent>
           <CardFooter>
-            <Button className="ml-auto" variant="secondary">
+            <Button
+              className="ml-auto"
+              variant="secondary"
+              onClick={() => addToCart(product.data.id, 1)}
+            >
               Add to cart
             </Button>
           </CardFooter>

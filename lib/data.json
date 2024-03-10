@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "Air shoe",
+    "price": 2900,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102231/samples/shoe.jpg",
+    "description": "High quality shoe with comfortable sole and breathable fabric"
+  },
+  {
+    "id": 2,
+    "name": "Leather bag",
+    "price": 5000,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102213/samples/ecommerce/leather-bag-gray.jpg",
+    "description": "Premium leather bag with,for laptop storage and document storage"
+  },
+  {
+    "id": 3,
+    "name": "White shoe",
+    "price": 3000,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102242/cld-sample-5.jpg",
+    "description": "Simple white shoe for casual occasions, goes well with formal occasions also"
+  },
+  {
+    "id": 4,
+    "name": "Movie glasses",
+    "price": 500,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102235/samples/man-portrait.jpg",
+    "description": "White cinema glasses, but for everyday stylish look and very fashionable"
+  },
+  {
+    "id": 5,
+    "name": "Air shoe",
+    "price": 2900,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102231/samples/shoe.jpg",
+    "description": "High quality shoe with comfortable sole and breathable fabric"
+  },
+  {
+    "id": 6,
+    "name": "Leather bag",
+    "price": 5000,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102213/samples/ecommerce/leather-bag-gray.jpg",
+    "description": "Premium leather bag with,for laptop storage and document storage"
+  },
+  {
+    "id": 7,
+    "name": "White shoe",
+    "price": 3000,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102242/cld-sample-5.jpg",
+    "description": "Simple white shoe for casual occasions, goes well with formal occasions also"
+  },
+  {
+    "id": 8,
+    "name": "Movie glasses",
+    "price": 500,
+    "quantity": 0,
+    "image": "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710102235/samples/man-portrait.jpg",
+    "description": "White cinema glasses, but for everyday stylish look and very fashionable"
+  }
+]

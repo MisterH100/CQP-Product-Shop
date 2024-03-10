@@ -3,10 +3,11 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { HomeIcon, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useGlobalContext } from "@/lib/global_context";
+import { Badge } from "@/components/ui/badge";
 
 export const BottomNav = () => {
-  const [selected, setSelected] = useState("Home");
+  const { selected, setSelected, cartList } = useGlobalContext();
   const navLinks = [
     {
       id: 1,
@@ -26,7 +27,15 @@ export const BottomNav = () => {
       <nav className="flex justify-center">
         {navLinks.map((link) => (
           <CardHeader key={link.id}>
-            <CardTitle className="text-lg">
+            <CardTitle className="relative text-lg">
+              {link.name === "Cart" && cartList.length != 0 && (
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-2 -right-2 z-50"
+                >
+                  {cartList.length}
+                </Badge>
+              )}
               <Link
                 onClick={() => setSelected(link.name)}
                 className={`${buttonVariants({

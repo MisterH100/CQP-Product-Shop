@@ -2,7 +2,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import { BottomNav } from "@/components/ui/bottom_nav";
-
+import { GlobalContextProvider } from "@/lib/global_context";
 const poppins = Poppins({
   weight: ["400", "500", "900"],
   subsets: ["latin"],
@@ -44,10 +44,12 @@ export default function RootLayout({
         <main
           className={` ${poppins.className} relative h-screen overflow-y-auto`}
         >
-          {children}
-          <div className="sticky bottom-0 left-0">
-            <BottomNav />
-          </div>
+          <GlobalContextProvider>
+            {children}
+            <div className="sticky bottom-0 left-0">
+              <BottomNav />
+            </div>
+          </GlobalContextProvider>
         </main>
       </body>
     </html>
