@@ -18,11 +18,12 @@ import {
 } from "@/components/ui/drawer";
 
 import { buttonVariants } from "@/components/ui/button";
-import { Search } from "@/components/ui/searchfield";
+import { Search } from "@/components/ui/search_field";
 import { BellIcon } from "lucide-react";
 import jumbotronImage from "@/public/jumbotron-ps.png";
 import exampleImage from "@/public/men.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -57,43 +58,52 @@ const Home = () => {
           </Drawer>
         </div>
       </Card>
-      <div className="py-4 px-10">
+      <div className="py-4 px-4 md:px-10">
         <Search />
       </div>
-      <div className="w-full h-[200px] md:h-[300px] my-4 px-10 rounded-2xl overflow-hidden">
+      <div className="w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 rounded-2xl overflow-hidden">
         <Image
           src={jumbotronImage}
           alt="jumbotron-ps.png"
           className="w-full h-full rounded-2xl object-cover"
           width={1080}
           height={1920}
+          priority
         />
       </div>
-      <div className="px-10 py-4">
+      <div className="px-4 md:px-10 py-4">
         <h1 className="text-2xl py-4 font-semibold leading-none tracking-tight">
           Featured
         </h1>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, index) => (
-            <Card className="rounded-2xl">
-              <CardContent className="p-0 w-full h-[200px]">
+            <Link href="/product/1">
+              <Card className="rounded-2xl overflow-hidden">
                 <Image
                   src={exampleImage}
                   alt="men.jpg"
-                  className="w-full h-full object-cover"
+                  className="w-full h-[200px] object-cover"
                   width={736}
                   height={981}
                 />
-              </CardContent>
-              <CardHeader className="p-2">
-                <div className="flex justify-between items-center">
-                  <CardTitle>Item{index + 1}</CardTitle>
-                  <CardTitle>R200</CardTitle>
-                </div>
-                <CardDescription>item description</CardDescription>
-              </CardHeader>
-            </Card>
+                <CardHeader className="p-2">
+                  <div className="flex justify-between items-center">
+                    <CardTitle className="text-lg">Item{index + 1}</CardTitle>
+                    <CardTitle className="text-lg">R200</CardTitle>
+                  </div>
+                  <CardDescription>item description</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
           ))}
+        </div>
+        <div className="w-full flex justify-center py-4">
+          <Link
+            href="/products"
+            className={buttonVariants({ variant: "outline" })}
+          >
+            View all
+          </Link>
         </div>
       </div>
     </section>

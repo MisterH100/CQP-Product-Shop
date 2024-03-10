@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
-import { BottomNav } from "@/components/ui/bottomnav";
+import { BottomNav } from "@/components/ui/bottom_nav";
 
 const poppins = Poppins({
   weight: ["400", "500", "900"],
