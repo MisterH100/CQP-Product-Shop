@@ -29,7 +29,6 @@ import {
   IProduct,
   useGlobalContext,
 } from "@/lib/global_context";
-import Products from "@/lib/products.json";
 import Notifications from "@/lib/notifications.json";
 import { Skeleton } from "@/components/layout/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -49,7 +48,10 @@ const Home = () => {
   const productData = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const data: any = Products;
+      const res: any = await fetch(
+        "https://nodeserver-v2.onrender.com/api/products"
+      );
+      const data = await res.json();
       return data;
     },
   });
@@ -186,13 +188,13 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {featuredProducts.map((product: IProduct) => (
               <Link
-                key={product.id}
+                key={product._id}
                 onClick={() => setSelected("")}
-                href={`/product/${product.id}`}
+                href={`/product/${product._id}`}
               >
                 <Card className="rounded-2xl overflow-hidden">
                   <Image
-                    src={product.image}
+                    src={product.images[0]}
                     alt={product.name}
                     className="w-full h-[200px] object-cover"
                     width={500}
@@ -207,7 +209,7 @@ const Home = () => {
                         {randsSA.format(product.price)}
                       </CardTitle>
                     </div>
-                    <CardDescription>item description</CardDescription>
+                    <CardDescription>{product.brand}</CardDescription>
                   </CardHeader>
                 </Card>
               </Link>

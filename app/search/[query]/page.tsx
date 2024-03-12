@@ -24,12 +24,12 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
   const productData = useQuery({
     queryKey: ["productData"],
     queryFn: async () => {
-      const data: any = Products.filter((product) =>
-        product.name
+      const res: any = await fetch(
+        `https://nodeserver-v2.onrender.com/api/products/search/${query
           .replace(/\s+/g, "")
-          .toLowerCase()
-          .includes(query.replace(/\s+/g, ""))
+          .toLowerCase()}`
       );
+      const data: any = await res.json();
       return data;
     },
   });
@@ -74,10 +74,10 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 md:px-10">
           {productData.data.map((product: IProduct) => (
-            <Link key={product.id} href={`/product/${product.id}`}>
+            <Link key={product._id} href={`/product/${product._id}`}>
               <Card className="rounded-2xl overflow-hidden">
                 <Image
-                  src={product.image}
+                  src={product.images[0]}
                   alt={product.name}
                   className="w-full h-[200px] object-cover"
                   width={500}
@@ -92,7 +92,7 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
                       {randsSA.format(product.price)}
                     </CardTitle>
                   </div>
-                  <CardDescription>item description</CardDescription>
+                  <CardDescription>{product.brand}</CardDescription>
                 </CardHeader>
               </Card>
             </Link>

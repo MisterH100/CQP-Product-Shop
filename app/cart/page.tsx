@@ -61,15 +61,15 @@ const Cart = () => {
       </Card>
       <div className="px-4 md:px-10 mb-4">
         {cartList.map((item) => (
-          <Card key={item.id} className="p-0 rounded-2xl mt-4 overflow-hidden">
+          <Card key={item._id} className="p-0 rounded-2xl mt-4 overflow-hidden">
             <div className="flex">
               <CardContent className="p-0 w-[100px] h-[100px]">
                 <Link
                   onClick={() => setSelected("")}
-                  href={`/product/${item.id}`}
+                  href={`/product/${item._id}`}
                 >
                   <Image
-                    src={item.image}
+                    src={item.images[0]}
                     alt={item.name}
                     className="w-full h-full object-cover"
                     width={500}
@@ -90,7 +90,7 @@ const Cart = () => {
                       <Ellipsis />
                     </MenubarTrigger>
                     <MenubarContent>
-                      <MenubarItem onClick={() => removeFromCart(item.id)}>
+                      <MenubarItem onClick={() => removeFromCart(item._id)}>
                         Delete
                         <MenubarShortcut>
                           <Trash className="w-4 h-4" />
@@ -102,7 +102,7 @@ const Cart = () => {
                           navigator.share({
                             title: "I found this" + item.name,
                             text: "Check out this product on product store",
-                            url: `https://cqp-product-shop.vercel.app/product/${item.id}`,
+                            url: `https://cqp-product-shop.vercel.app/product/${item._id}`,
                           })
                         }
                       >
@@ -121,7 +121,7 @@ const Cart = () => {
                   </MenubarMenu>
                 </Menubar>
                 <Button
-                  onClick={() => decreaseCartQuantity(item.id)}
+                  onClick={() => decreaseCartQuantity(item._id)}
                   variant="outline"
                   disabled={item.quantity == 1}
                 >
@@ -131,7 +131,7 @@ const Cart = () => {
                   {item.quantity}
                 </span>
                 <Button
-                  onClick={() => increaseCartQuantity(item.id)}
+                  onClick={() => increaseCartQuantity(item._id)}
                   disabled={item.quantity == 10}
                   variant="outline"
                 >

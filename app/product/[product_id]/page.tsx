@@ -11,9 +11,9 @@ import {
 import { Search } from "@/components/ui/search_field";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import Products from "@/lib/products.json";
 import { randsSA } from "@/lib/format_to_rand";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
+import { Skeleton } from "@/components/layout/skeleton";
 
 const ProductPage = ({
   params: { product_id },
@@ -24,16 +24,14 @@ const ProductPage = ({
   const product = useQuery({
     queryKey: ["product"],
     queryFn: async () => {
-      const data: any = Products.find(
-        (product) => product.id.toString() === product_id
+      const res: any = await fetch(
+        `https://nodeserver-v2.onrender.com/api/products/product/${product_id}`
       );
+      const data = await res.json();
       return data;
     },
   });
 
-  if (product.isLoading) {
-    return <div>Loading...</div>;
-  }
   if (product.error) {
     return <div>{product.error.message}</div>;
   }
@@ -43,34 +41,44 @@ const ProductPage = ({
         <Search />
       </div>
       <div className="flex justify-center mt-4">
-        <Card className="md:w-2/3 mb-10 overflow-hidden">
-          <Image
-            src={product.data.image}
-            alt={product.data.name}
-            className="w-full h-[500px] object-cover"
-            width={500}
-            height={500}
-          />
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle>{product.data.name}</CardTitle>
-              <CardTitle>{randsSA.format(product.data.price)}</CardTitle>
+        {product.isLoading ? (
+          <Card className="w-full md:w-2/3 mb-10 overflow-hidden">
+            <Skeleton className="w-full h-[500px] rounded-2xl" />
+            <div className="mt-2">
+              <Skeleton className="h-4 mb-2" />
+              <Skeleton className="h-4" />
             </div>
-            <CardDescription>item description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>{product.data.description}</p>
-          </CardContent>
-          <CardFooter>
-            <Button
-              className="ml-auto border rounded-2xl"
-              variant="secondary"
-              onClick={() => addToCart(product.data.id, 1)}
-            >
-              Add to cart
-            </Button>
-          </CardFooter>
-        </Card>
+          </Card>
+        ) : (
+          <Card className="md:w-2/3 mb-10 overflow-hidden">
+            <Image
+              src={product.data.images[0]}
+              alt={product.data.name}
+              className="w-full h-[500px] object-cover"
+              width={500}
+              height={500}
+            />
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>{product.data.name}</CardTitle>
+                <CardTitle>{randsSA.format(product.data.price)}</CardTitle>
+              </div>
+              <CardDescription>{product.data.brand}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p>{product.data.description}</p>
+            </CardContent>
+            <CardFooter>
+              <Button
+                className="ml-auto border rounded-2xl"
+                variant="secondary"
+                onClick={() => addToCart(product.data._id, 1)}
+              >
+                Add to cart
+              </Button>
+            </CardFooter>
+          </Card>
+        )}
       </div>
     </section>
   );

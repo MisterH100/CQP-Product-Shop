@@ -11,12 +11,16 @@ import { useLocalStorage } from "./local_storage";
 import Products from "@/lib/products.json";
 
 export interface IProduct {
-  id: number;
+  _id: string;
   name: string;
+  brand: string;
+  description: string;
+  in_stock: number;
   price: number;
   quantity: number;
-  image: string;
-  description: string;
+  categories: [string];
+  reviews: [string];
+  images: [string];
 }
 export interface INotification {
   id: number;
@@ -30,10 +34,10 @@ interface contextProps {
   setSelected: Dispatch<SetStateAction<string>>;
   cartList: IProduct[];
   setCartList: Dispatch<SetStateAction<IProduct[]>>;
-  addToCart: (id: number, itemQuantity: number) => void;
-  removeFromCart: (Id: number) => void;
-  increaseCartQuantity: (id: number) => void;
-  decreaseCartQuantity: (id: number) => void;
+  addToCart: (id: string, itemQuantity: number) => void;
+  removeFromCart: (Id: string) => void;
+  increaseCartQuantity: (id: string) => void;
+  decreaseCartQuantity: (id: string) => void;
 }
 const queryClient = new QueryClient();
 const GlobalContext = createContext<contextProps>({} as contextProps);
@@ -46,64 +50,50 @@ export const GlobalContextProvider = ({
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
 
-  const addToCart = (id: number, itemQuantity: number) => {
+  const addToCart = (id: string, itemQuantity: number) => {
     {
-      /*const URL = `https://misterh-api-server.onrender.com/api/products/product/${id}`;
-    const fetchData = async (URL: string) => {
-      try {
-        const response = await fetch(URL);
-        const data = response.json();
-        const product = await data;
-        setCartList((current) =>
-          current.find((item) => item.id == id)
-            ? current.map((item) =>
-                item.id == id
-                  ? {
-                      ...item,
-                      quantity: (item.quantity = item.quantity + itemQuantity),
-                    }
-                  : { ...item }
-              )
-            : [...current, { ...product, quantity: itemQuantity }]
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-fetchData(URL);*/
+      const URL = `https://nodeserver-v2.onrender.com/api/products/product/${id}`;
+      const fetchData = async (URL: string) => {
+        try {
+          const response = await fetch(URL);
+          const data = response.json();
+          const product = await data;
+          setCartList((current) =>
+            current.find((item) => item._id == id)
+              ? current.map((item) =>
+                  item._id == id
+                    ? {
+                        ...item,
+                        quantity: (item.quantity =
+                          item.quantity + itemQuantity),
+                      }
+                    : { ...item }
+                )
+              : [...current, { ...product, quantity: itemQuantity }]
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData(URL);
     }
-    const product =
-      Products.find((product) => product.id === id) || ({} as IProduct);
-
-    setCartList((current) =>
-      current.find((item) => item.id == id)
-        ? current.map((item) =>
-            item.id == id
-              ? {
-                  ...item,
-                  quantity: (item.quantity = item.quantity + itemQuantity),
-                }
-              : { ...item }
-          )
-        : [...current, { ...product, quantity: itemQuantity }]
-    );
   };
-  const removeFromCart = (id: number) => {
-    setCartList((current) => current.filter((item) => item.id != id));
+  const removeFromCart = (id: string) => {
+    setCartList((current) => current.filter((item) => item._id != id));
   };
 
-  const increaseCartQuantity = (id: number) => {
+  const increaseCartQuantity = (id: string) => {
     setCartList((current) =>
       current.map((item) =>
-        item.id == id ? { ...item, quantity: item.quantity + 1 } : { ...item }
+        item._id == id ? { ...item, quantity: item.quantity + 1 } : { ...item }
       )
     );
   };
 
-  const decreaseCartQuantity = (id: number) => {
+  const decreaseCartQuantity = (id: string) => {
     setCartList((current) =>
       current.map((item) =>
-        item.id == id ? { ...item, quantity: item.quantity - 1 } : { ...item }
+        item._id == id ? { ...item, quantity: item.quantity - 1 } : { ...item }
       )
     );
   };

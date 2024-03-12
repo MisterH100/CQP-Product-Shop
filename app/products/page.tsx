@@ -11,7 +11,6 @@ import { Search } from "@/components/ui/search_field";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import Products from "@/lib/products.json";
 import { IProduct } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
 import { randsSA } from "@/lib/format_to_rand";
@@ -20,7 +19,10 @@ const ProductsPage = () => {
   const productData = useQuery({
     queryKey: ["productData"],
     queryFn: async () => {
-      const data: any = Products;
+      const res: any = await fetch(
+        "https://nodeserver-v2.onrender.com/api/products"
+      );
+      const data = await res.json();
       return data;
     },
   });
@@ -48,10 +50,10 @@ const ProductsPage = () => {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {productData.data.map((product: IProduct) => (
-            <Link key={product.id} href={`/product/${product.id}`}>
+            <Link key={product._id} href={`/product/${product._id}`}>
               <Card className="rounded-2xl overflow-hidden">
                 <Image
-                  src={product.image}
+                  src={product.images[0]}
                   alt={product.name}
                   className="w-full h-[200px] object-cover"
                   width={500}
@@ -66,7 +68,7 @@ const ProductsPage = () => {
                       {randsSA.format(product.price)}
                     </CardTitle>
                   </div>
-                  <CardDescription>item description</CardDescription>
+                  <CardDescription>{product.brand}</CardDescription>
                 </CardHeader>
               </Card>
             </Link>
