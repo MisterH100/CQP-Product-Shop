@@ -8,7 +8,8 @@ import {
 } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useLocalStorage } from "./local_storage";
-import Products from "@/lib/data.json";
+import Products from "@/lib/products.json";
+
 export interface IProduct {
   id: number;
   name: string;
@@ -17,6 +18,13 @@ export interface IProduct {
   image: string;
   description: string;
 }
+export interface INotification {
+  id: number;
+  title: string;
+  message: string;
+  read: boolean;
+}
+
 interface contextProps {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;

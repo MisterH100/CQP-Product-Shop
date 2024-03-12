@@ -11,7 +11,8 @@ import {
 import { Search } from "@/components/ui/search_field";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import Products from "@/lib/data.json";
+import Products from "@/lib/products.json";
+import { randsSA } from "@/lib/format_to_rand";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
 
 const ProductPage = ({
@@ -42,7 +43,7 @@ const ProductPage = ({
         <Search />
       </div>
       <div className="flex justify-center mt-4">
-        <Card className="md:w-2/3 overflow-hidden">
+        <Card className="md:w-2/3 mb-10 overflow-hidden">
           <Image
             src={product.data.image}
             alt={product.data.name}
@@ -53,7 +54,7 @@ const ProductPage = ({
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>{product.data.name}</CardTitle>
-              <CardTitle>{product.data.price}</CardTitle>
+              <CardTitle>{randsSA.format(product.data.price)}</CardTitle>
             </div>
             <CardDescription>item description</CardDescription>
           </CardHeader>
@@ -62,7 +63,7 @@ const ProductPage = ({
           </CardContent>
           <CardFooter>
             <Button
-              className="ml-auto"
+              className="ml-auto border rounded-2xl"
               variant="secondary"
               onClick={() => addToCart(product.data.id, 1)}
             >

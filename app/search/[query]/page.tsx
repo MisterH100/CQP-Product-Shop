@@ -7,20 +7,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Search } from "@/components/ui/search_field";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import Products from "@/lib/products.json";
-import { IProduct } from "@/lib/global_context";
+import { IProduct, useGlobalContext } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
 import { randsSA } from "@/lib/format_to_rand";
+import { XIcon } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { Search } from "@/components/ui/search_field";
 
-const ProductsPage = () => {
+const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
+  const { setSelected } = useGlobalContext();
+
   const productData = useQuery({
     queryKey: ["productData"],
     queryFn: async () => {
-      const data: any = Products;
+      const data: any = Products.filter((product) =>
+        product.name
+          .replace(/\s+/g, "")
+          .toLowerCase()
+          .includes(query.replace(/\s+/g, ""))
+      );
       return data;
     },
   });
@@ -29,12 +38,29 @@ const ProductsPage = () => {
     return <div>{productData.error.message}</div>;
   }
   return (
-    <section className="min-h-screen px-4 md:px-10">
-      <div className="py-6">
-        <Search />
+    <section className="min-h-screen">
+      <Card className="mb-4">
+        <div className="flex justify-between items-center pr-6">
+          <CardHeader>
+            <CardTitle>Results</CardTitle>
+            <CardDescription>"{query.replace(/\s+/g, "")}"</CardDescription>
+          </CardHeader>
+          <Link
+            onClick={() => setSelected("Home")}
+            href="/"
+            className={` ${buttonVariants({
+              variant: "outline",
+            })} rounded-full p-4`}
+          >
+            <XIcon className="w-6 h-6" />
+          </Link>
+        </div>
+      </Card>
+      <div className="pb-6 px-4 md:px-10">
+        <Search textValue={query.replace(/\s+/g, "")} />
       </div>
       {productData.isLoading ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 md:px-10">
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index}>
               <Skeleton className="h-[125px] rounded-2xl" />
@@ -46,7 +72,7 @@ const ProductsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 md:px-10">
           {productData.data.map((product: IProduct) => (
             <Link key={product.id} href={`/product/${product.id}`}>
               <Card className="rounded-2xl overflow-hidden">
@@ -77,4 +103,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default SearchPage;

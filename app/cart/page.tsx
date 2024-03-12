@@ -22,12 +22,25 @@ import { Ellipsis } from "lucide-react";
 import { Trash } from "lucide-react";
 import { ShareIcon } from "lucide-react";
 import { StarIcon } from "lucide-react";
+import { randsSA } from "@/lib/format_to_rand";
 import Link from "next/link";
 import Image from "next/image";
 import { useGlobalContext } from "@/lib/global_context";
 
 const Cart = () => {
-  const { setSelected, cartList, removeFromCart } = useGlobalContext();
+  const {
+    setSelected,
+    cartList,
+    setCartList,
+    removeFromCart,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+  } = useGlobalContext();
+  const total = cartList
+    .map((product) => {
+      return product.price * product.quantity;
+    })
+    .reduce((prev, curr) => prev + curr, 0);
   return (
     <section className="min-h-screen">
       <Card>
@@ -36,15 +49,14 @@ const Cart = () => {
             <CardTitle>Cart</CardTitle>
             <CardDescription>Check out your favorite items</CardDescription>
           </CardHeader>
-          <Link
-            onClick={() => setSelected("Home")}
-            href="/"
-            className={` ${buttonVariants({
-              variant: "outline",
-            })} rounded-full p-4`}
+          <Button
+            onClick={() => setCartList([])}
+            variant="outline"
+            className="rounded-full p-4"
           >
             <XIcon className="w-6 h-6" />
-          </Link>
+            Clear
+          </Button>
         </div>
       </Card>
       <div className="px-4 md:px-10 mb-4">
@@ -52,13 +64,18 @@ const Cart = () => {
           <Card key={item.id} className="p-0 rounded-2xl mt-4 overflow-hidden">
             <div className="flex">
               <CardContent className="p-0 w-[100px] h-[100px]">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover"
-                  width={500}
-                  height={500}
-                />
+                <Link
+                  onClick={() => setSelected("")}
+                  href={`/product/${item.id}`}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                    width={500}
+                    height={500}
+                  />
+                </Link>
               </CardContent>
               <CardHeader className="p-2 h-fit">
                 <CardTitle className="text-base w-[110px] md:w-fit truncate">
@@ -80,7 +97,15 @@ const Cart = () => {
                         </MenubarShortcut>
                       </MenubarItem>
                       <MenubarSeparator />
-                      <MenubarItem>
+                      <MenubarItem
+                        onClick={() =>
+                          navigator.share({
+                            title: "i fond this" + item.name,
+                            text: "Check out this product on product store",
+                            url: "https:/thehandsomedev.com",
+                          })
+                        }
+                      >
                         Share
                         <MenubarShortcut>
                           <ShareIcon className="w-4 h-4" />
@@ -95,11 +120,23 @@ const Cart = () => {
                     </MenubarContent>
                   </MenubarMenu>
                 </Menubar>
-                <Button variant="outline">-</Button>
+                <Button
+                  onClick={() => decreaseCartQuantity(item.id)}
+                  variant="outline"
+                  disabled={item.quantity == 1}
+                >
+                  -
+                </Button>
                 <span className={buttonVariants({ variant: "outline" })}>
                   {item.quantity}
                 </span>
-                <Button variant="outline">+</Button>
+                <Button
+                  onClick={() => increaseCartQuantity(item.id)}
+                  disabled={item.quantity == 10}
+                  variant="outline"
+                >
+                  +
+                </Button>
               </CardFooter>
             </div>
           </Card>
@@ -107,7 +144,7 @@ const Cart = () => {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Total: R1500</CardTitle>
+          <CardTitle>Total: {randsSA.format(total)}</CardTitle>
           <CardDescription>Tax:0%</CardDescription>
         </CardHeader>
         <CardFooter>
