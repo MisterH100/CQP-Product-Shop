@@ -46,11 +46,6 @@ const formSchema = z.object({
 });
 
 const CheckoutPage = () => {
-  const location = navigator.geolocation.getCurrentPosition(
-    (position) => console.log(position),
-    (error) => console.log(error)
-  );
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
