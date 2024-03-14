@@ -31,12 +31,12 @@ const ProductsPage = () => {
     return <div>{productData.error.message}</div>;
   }
   return (
-    <section className="min-h-screen px-4 md:px-10">
+    <section className="min-h-screen px-4 md:px-10 pb-40">
       <div className="py-6">
         <Search />
       </div>
       {productData.isLoading ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index}>
               <Skeleton className="h-[125px] rounded-2xl" />
@@ -48,7 +48,7 @@ const ProductsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
           {productData.data.map((product: IProduct) => (
             <Link key={product._id} href={`/product/${product._id}`}>
               <Card className="rounded-2xl overflow-hidden">

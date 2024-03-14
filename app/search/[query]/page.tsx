@@ -38,7 +38,7 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
     return <div>{productData.error.message}</div>;
   }
   return (
-    <section className="min-h-screen">
+    <section className="min-h-screen pb-40">
       <Card className="mb-4">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>

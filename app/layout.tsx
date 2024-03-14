@@ -41,16 +41,16 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
-        <main
-          className={` ${poppins.className} relative h-screen overflow-y-auto`}
-        >
-          <GlobalContextProvider>
+        <GlobalContextProvider>
+          <main
+            className={` ${poppins.className} relative h-screen overflow-y-scroll`}
+          >
             {children}
-            <div className="sticky bottom-0 left-0">
+            <div className="w-full fixed bottom-0 left-0">
               <BottomNav />
             </div>
-          </GlobalContextProvider>
-        </main>
+          </main>
+        </GlobalContextProvider>
       </body>
     </html>
   );

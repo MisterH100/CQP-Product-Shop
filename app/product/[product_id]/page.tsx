@@ -36,7 +36,7 @@ const ProductPage = ({
     return <div>{product.error.message}</div>;
   }
   return (
-    <section className="min-h-screen px-4 md:px-10">
+    <section className="min-h-screen px-4 md:px-10 pb-40">
       <div className="py-6">
         <Search />
       </div>

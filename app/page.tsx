@@ -78,7 +78,7 @@ const Home = () => {
   }, [productData.data, notificationData.data]);
 
   return (
-    <section className="relative w-full min-h-screen">
+    <section className="relative w-full min-h-screen pb-40">
       <Card className="border-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">

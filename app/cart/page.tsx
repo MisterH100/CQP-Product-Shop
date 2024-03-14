@@ -25,9 +25,11 @@ import { StarIcon } from "lucide-react";
 import { randsSA } from "@/lib/format_to_rand";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/lib/global_context";
 
 const Cart = () => {
+  const router = useRouter();
   const {
     setSelected,
     cartList,
@@ -42,7 +44,7 @@ const Cart = () => {
     })
     .reduce((prev, curr) => prev + curr, 0);
   return (
-    <section className="min-h-screen">
+    <section className="min-h-screen pb-40">
       <Card>
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
@@ -81,7 +83,7 @@ const Cart = () => {
                 <CardTitle className="text-base w-[110px] md:w-fit truncate">
                   {item.name}
                 </CardTitle>
-                <CardDescription>{item.price}</CardDescription>
+                <CardDescription>{randsSA.format(item.price)}</CardDescription>
               </CardHeader>
               <CardFooter className="relative p-0 ml-auto pt-4 pr-2">
                 <Menubar className="absolute top-0 right-0 mr-2 border-none bg-transparent">
@@ -144,11 +146,16 @@ const Cart = () => {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Total: {randsSA.format(total)}</CardTitle>
+          <CardTitle>Total: {total ? randsSA.format(total) : "0.00"}</CardTitle>
           <CardDescription>Tax:0%</CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button className="w-full rounded-2xl" variant="default">
+          <Button
+            onClick={() => router.push("/checkout")}
+            disabled={true}
+            className="w-full rounded-2xl"
+            variant="default"
+          >
             Checkout
           </Button>
         </CardFooter>
