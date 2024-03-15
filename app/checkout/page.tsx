@@ -17,11 +17,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { MapPinIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  APILoader,
+  PlacePicker,
+} from "@googlemaps/extended-component-library/react";
+import { useRef, useState } from "react";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -46,6 +50,7 @@ const formSchema = z.object({
 });
 
 const CheckoutPage = () => {
+  const addyRef = useRef<any>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,6 +65,16 @@ const CheckoutPage = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
+
+  const handleChange = (e: Event) => {
+    if (addyRef.current) {
+      form.setValue(
+        "address",
+        addyRef.current.__childPart._$committedValue._$parts[0].element.value
+      );
+    }
+  };
+
   return (
     <section className="min-h-screen mb-40">
       <Card>
@@ -88,7 +103,7 @@ const CheckoutPage = () => {
                       <FormControl>
                         <Input placeholder="eg: John" {...field} />
                       </FormControl>
-                      <FormDescription>Your first name</FormDescription>
+                      <FormDescription>Required field</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -97,12 +112,12 @@ const CheckoutPage = () => {
                   control={form.control}
                   name="last_name"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="pt-4">
                       <FormLabel>Last Name</FormLabel>
                       <FormControl>
                         <Input placeholder="eg: Doe" {...field} />
                       </FormControl>
-                      <FormDescription>Your Last name</FormDescription>
+                      <FormDescription>Required field</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -111,7 +126,7 @@ const CheckoutPage = () => {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="pt-4">
                       <FormLabel>Email address</FormLabel>
                       <FormControl>
                         <Input
@@ -120,7 +135,7 @@ const CheckoutPage = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>Your email address</FormDescription>
+                      <FormDescription>Required field</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -129,7 +144,7 @@ const CheckoutPage = () => {
                   control={form.control}
                   name="phone"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="pt-4">
                       <FormLabel>Phone number</FormLabel>
                       <FormControl>
                         <Input
@@ -138,7 +153,7 @@ const CheckoutPage = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>Your phone number</FormDescription>
+                      <FormDescription>Required field</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -153,19 +168,30 @@ const CheckoutPage = () => {
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Your address</FormLabel>
+                      <FormLabel>Address search</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Input type="tel" placeholder="" {...field} />
-                          <Button
-                            variant="ghost"
-                            className="absolute right-4 top-0 rounded-full"
-                          >
-                            <MapPinIcon className="w-4 h-4" />
-                          </Button>
+                          <div className="w-full mb-2">
+                            <APILoader
+                              apiKey={process.env.GOOGLE_MAPS_API_KEY}
+                            />
+                            <PlacePicker
+                              ref={addyRef}
+                              onPlaceChange={(e) => handleChange(e)}
+                              placeholder="Search address here"
+                              country={["za"]}
+                              className="w-full"
+                            />
+                          </div>
+                          <Input
+                            type="text"
+                            disabled
+                            placeholder="..."
+                            {...field}
+                          />
                         </div>
                       </FormControl>
-                      <FormDescription>Your address</FormDescription>
+                      <FormDescription>Required field</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

@@ -152,7 +152,7 @@ const Cart = () => {
         <CardFooter>
           <Button
             onClick={() => router.push("/checkout")}
-            disabled={true}
+            disabled={cartList.length < 1}
             className="w-full rounded-2xl"
             variant="default"
           >

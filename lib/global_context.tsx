@@ -8,7 +8,6 @@ import {
 } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useLocalStorage } from "./local_storage";
-import Products from "@/lib/products.json";
 
 export interface IProduct {
   _id: string;
