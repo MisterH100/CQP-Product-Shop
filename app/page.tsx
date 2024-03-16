@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Search } from "@/components/ui/search_field";
-import { BellIcon, ArrowLeftIcon } from "lucide-react";
+import { BellIcon, ArrowLeftIcon, UserIcon } from "lucide-react";
 import jumbotronImage from "@/public/jumbotron-ps.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +37,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const { setSelected } = useGlobalContext();
+  const { setSelected, user, setUser } = useGlobalContext();
   const [featuredProducts, setFeaturedProducts] = useState<IProduct[]>([]);
   const [notifications, setNotifications] = useState<INotification[]>([]);
   const [notRead, setNotRead] = useState<INotification[]>([]);
@@ -82,7 +82,9 @@ const Home = () => {
       <Card className="border-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
-            <CardDescription>Hi Shopper</CardDescription>
+            <CardDescription>
+              Hi {user.name != null ? user.name : "Shopper"}
+            </CardDescription>
             <CardTitle>What do you feel like getting today?</CardTitle>
           </CardHeader>
           <Drawer>
@@ -99,7 +101,11 @@ const Home = () => {
                   {notRead.length}
                 </Badge>
               )}
-              <BellIcon className="w-6 h-6" />
+              {user.name != null ? (
+                <BellIcon className="w-6 h-6" />
+              ) : (
+                <UserIcon className="w-6 h-6" />
+              )}
             </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
@@ -109,36 +115,70 @@ const Home = () => {
                 </DrawerDescription>
               </DrawerHeader>
               <CardContent>
-                {notificationData.isLoading ? (
-                  <CardHeader>
-                    <CardTitle>Fetching notifications</CardTitle>
-                  </CardHeader>
-                ) : !open ? (
-                  <ScrollArea className="h-[300px] w-full">
-                    {notifications.map((notification: INotification) => (
-                      <CardHeader
-                        key={notification.id}
-                        onClick={() => {
-                          setNotification(notification);
-                          setOpen(true);
-                        }}
-                      >
-                        <CardTitle className="flex items-center justify-between">
-                          {notification.title}
-                          {!notification.read && (
-                            <Badge variant="destructive">1</Badge>
-                          )}
-                        </CardTitle>
-                        <CardDescription>
-                          {notification.message}
-                        </CardDescription>
+                {user.name != null ? (
+                  notificationData.isLoading ? (
+                    <CardHeader>
+                      <CardTitle>Fetching notifications</CardTitle>
+                    </CardHeader>
+                  ) : !open ? (
+                    <ScrollArea className="h-[300px] w-full">
+                      {notifications.map((notification: INotification) => (
+                        <CardHeader
+                          key={notification._id}
+                          onClick={() => {
+                            setNotification(notification);
+                            setOpen(true);
+                          }}
+                        >
+                          <CardTitle className="flex items-center justify-between">
+                            {notification.title}
+                            {!notification.read && (
+                              <Badge variant="destructive">1</Badge>
+                            )}
+                          </CardTitle>
+                          <CardDescription>
+                            {notification.message}
+                          </CardDescription>
+                        </CardHeader>
+                      ))}
+                    </ScrollArea>
+                  ) : (
+                    <div>
+                      <CardHeader className="flex-row justify-between items-center">
+                        <CardTitle>{notification.title}</CardTitle>
+                        <Button
+                          onClick={() => setOpen(false)}
+                          variant="outline"
+                          className="rounded-full"
+                        >
+                          <ArrowLeftIcon className=" w-4 h-4" />
+                        </Button>
                       </CardHeader>
-                    ))}
-                  </ScrollArea>
+                      <p className="px-6">{notification.message}</p>
+                    </div>
+                  )
+                ) : !open ? (
+                  <CardHeader
+                    key={notification._id}
+                    onClick={() => {
+                      setNotification(notification);
+                      setOpen(true);
+                    }}
+                  >
+                    <CardTitle className="flex items-center justify-between">
+                      Personalize your shopping experience
+                      <Badge variant="destructive">1</Badge>
+                    </CardTitle>
+                    <CardDescription>
+                      Open an account to personalize your shopping experience
+                    </CardDescription>
+                  </CardHeader>
                 ) : (
                   <div>
                     <CardHeader className="flex-row justify-between items-center">
-                      <CardTitle>{notification.title}</CardTitle>
+                      <CardTitle>
+                        Personalize your shopping experience
+                      </CardTitle>
                       <Button
                         onClick={() => setOpen(false)}
                         variant="outline"
@@ -147,7 +187,12 @@ const Home = () => {
                         <ArrowLeftIcon className=" w-4 h-4" />
                       </Button>
                     </CardHeader>
-                    <p className="px-6">{notification.message}</p>
+                    <p className="px-6">
+                      {" "}
+                      Open an account to personalize your shopping experience,
+                      with an account you may get discount codes,make your
+                      featured feed show the things you are interested in.
+                    </p>
                   </div>
                 )}
               </CardContent>

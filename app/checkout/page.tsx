@@ -21,36 +21,62 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  APILoader,
-  PlacePicker,
-} from "@googlemaps/extended-component-library/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/lib/global_context";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+//import {
+//  APILoader,
+// PlacePicker,
+//} from "@googlemaps/extended-component-library/react";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
 );
+
 const formSchema = z.object({
-  first_name: z.string().min(3, {
-    message: "name must be at least 3 characters.",
-  }),
-  last_name: z.string().min(3, {
-    message: "name must be at least 3 characters.",
-  }),
+  first_name: z
+    .string()
+    .min(3, {
+      message: "name must be at least 3 characters.",
+    })
+    .trim()
+    .toLowerCase(),
+  last_name: z
+    .string()
+    .min(3, {
+      message: "name must be at least 3 characters.",
+    })
+    .trim()
+    .toLowerCase(),
   email: z
     .string()
     .min(10, { message: "This field has to be filled." })
-    .email("This is not a valid email."),
+    .email("This is not a valid email.")
+    .trim()
+    .toLowerCase(),
   phone: z
     .string()
     .min(9, { message: "Invalid phone number" })
     .max(10, { message: "Invalid phone number" })
     .regex(phoneRegex, "Invalid phone number"),
   address: z.string().min(10, { message: "Invalid address" }),
+  payment_method: z.enum(["card", "cash"], {
+    required_error: "you need to select payment method",
+  }),
+  terms: z
+    .boolean({
+      required_error: "accept our terms and conditions to continue",
+    })
+    .refine((val) => val == true, { message: "check this box to continue" }),
 });
 
 const CheckoutPage = () => {
-  const addyRef = useRef<any>(null);
+  const addressRef = useRef<any>(null);
+  const router = useRouter();
+  const { cartList, setSelected, setCartList } = useGlobalContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,18 +85,23 @@ const CheckoutPage = () => {
       email: "",
       phone: "",
       address: "",
+      terms: false,
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    console.log({ ...values, order_items: cartList });
+    setCartList([]);
+    setTimeout(() => {
+      router.push("/summary");
+    }, 2000);
   }
 
   const handleChange = (e: Event) => {
-    if (addyRef.current) {
+    if (addressRef.current) {
       form.setValue(
         "address",
-        addyRef.current.__childPart._$committedValue._$parts[0].element.value
+        addressRef.current.__childPart._$committedValue._$parts[0].element.value
       );
     }
   };
@@ -170,39 +201,121 @@ const CheckoutPage = () => {
                     <FormItem>
                       <FormLabel>Address search</FormLabel>
                       <FormControl>
-                        <div className="relative">
+                        <>
+                          {/*
+                          <APILoader
+                            id="api-loader"
+                            apiKey={process.env.GOOGLE_MAPS_API_KEY}
+                          />
+
                           <div className="w-full mb-2">
-                            <APILoader
-                              apiKey={process.env.GOOGLE_MAPS_API_KEY}
-                            />
                             <PlacePicker
-                              ref={addyRef}
+                              ref={addressRef}
                               onPlaceChange={(e) => handleChange(e)}
                               placeholder="Search address here"
                               country={["za"]}
                               className="w-full"
                             />
                           </div>
+                        */}
                           <Input
                             type="text"
                             disabled
                             placeholder="..."
                             {...field}
                           />
-                        </div>
+                        </>
                       </FormControl>
                       <FormDescription>Required field</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <div>
+                  <CardHeader className="px-0">
+                    <CardTitle>Payment Method</CardTitle>
+                  </CardHeader>
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="payment_method"
+                      render={({ field }) => (
+                        <FormItem className="space-y-3">
+                          <FormLabel>Complete the payment with</FormLabel>
+                          <FormControl>
+                            <RadioGroup
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                              className="flex flex-col space-y-1 border border-input p-4"
+                            >
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <RadioGroupItem disabled value="card" />
+                                </FormControl>
+                                <div>
+                                  <FormLabel>Card</FormLabel>
+                                  <FormDescription>
+                                    Complete payment with your card
+                                  </FormDescription>
+                                </div>
+                              </FormItem>
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <RadioGroupItem value="cash" />
+                                </FormControl>
+                                <div>
+                                  <FormLabel>Cash</FormLabel>
+                                  <FormDescription>
+                                    Cash on delivery
+                                  </FormDescription>
+                                </div>
+                              </FormItem>
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <FormField
+                  control={form.control}
+                  name="terms"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center space-x-3 border border-input p-4 mt-4">
+                      <FormControl>
+                        <Checkbox
+                          className="w-4 h-4 border-border"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div>
+                        <FormLabel>
+                          I have read and agree to the{" "}
+                          <Link
+                            className="text-blue-800"
+                            href="/privacy-policy"
+                          >
+                            Privacy Policy
+                          </Link>
+                        </FormLabel>
+                        <FormDescription>
+                          I understand product store privacy policy
+                        </FormDescription>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
                 <div className="w-full pt-10">
                   <Button
+                    onClick={() => setSelected("")}
                     type="submit"
                     className="w-full rounded-2xl"
                     variant="default"
                   >
-                    Submit
+                    Confirm order
                   </Button>
                 </div>
               </div>

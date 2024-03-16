@@ -17,18 +17,28 @@ export interface IProduct {
   in_stock: number;
   price: number;
   quantity: number;
-  categories: [string];
-  reviews: [string];
-  images: [string];
+  categories: string[];
+  reviews: [];
+  images: string[];
+  createdAt: Date;
 }
 export interface INotification {
-  id: number;
+  _id: string;
   title: string;
   message: string;
   read: boolean;
 }
 
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
 interface contextProps {
+  user: IUser;
+  setUser: Dispatch<SetStateAction<IUser>>;
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
   cartList: IProduct[];
@@ -46,6 +56,7 @@ export const GlobalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const [user, setUser] = useState({} as IUser);
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
 
@@ -100,6 +111,8 @@ export const GlobalContextProvider = ({
   return (
     <GlobalContext.Provider
       value={{
+        user,
+        setUser,
         selected,
         setSelected,
         cartList,
