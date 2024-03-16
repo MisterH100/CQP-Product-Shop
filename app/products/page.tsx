@@ -48,14 +48,14 @@ const ProductsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10 md:place-items-center">
           {productData.data.map((product: IProduct) => (
             <Link key={product._id} href={`/product/${product._id}`}>
-              <Card className="rounded-2xl overflow-hidden">
+              <Card className="rounded-2xl overflow-hidden md:w-[300px]">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-full h-[200px] object-cover"
+                  className="w-full h-[200px] object-cover md:object-contain"
                   width={500}
                   height={500}
                 />

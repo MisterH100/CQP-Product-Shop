@@ -21,16 +21,13 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/lib/global_context";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-//import {
-//  APILoader,
-// PlacePicker,
-//} from "@googlemaps/extended-component-library/react";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -74,8 +71,8 @@ const formSchema = z.object({
 });
 
 const CheckoutPage = () => {
-  const addressRef = useRef<any>(null);
   const router = useRouter();
+  const [value, setValue] = useState<any>();
   const { cartList, setSelected, setCartList } = useGlobalContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -97,14 +94,12 @@ const CheckoutPage = () => {
     }, 2000);
   }
 
-  const handleChange = (e: Event) => {
-    if (addressRef.current) {
-      form.setValue(
-        "address",
-        addressRef.current.__childPart._$committedValue._$parts[0].element.value
-      );
+  useEffect(() => {
+    if (value) {
+      form.setValue("address", value.label);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <section className="min-h-screen mb-40">
@@ -201,30 +196,27 @@ const CheckoutPage = () => {
                     <FormItem>
                       <FormLabel>Address search</FormLabel>
                       <FormControl>
-                        <>
-                          {/*
-                          <APILoader
-                            id="api-loader"
+                        <div>
+                          <GooglePlacesAutocomplete
                             apiKey={process.env.GOOGLE_MAPS_API_KEY}
+                            autocompletionRequest={{
+                              componentRestrictions: {
+                                country: ["za"],
+                              },
+                            }}
+                            selectProps={{
+                              value,
+                              onChange: setValue,
+                            }}
                           />
-
-                          <div className="w-full mb-2">
-                            <PlacePicker
-                              ref={addressRef}
-                              onPlaceChange={(e) => handleChange(e)}
-                              placeholder="Search address here"
-                              country={["za"]}
-                              className="w-full"
-                            />
-                          </div>
-                        */}
                           <Input
+                            id="output"
                             type="text"
                             disabled
                             placeholder="..."
                             {...field}
                           />
-                        </>
+                        </div>
                       </FormControl>
                       <FormDescription>Required field</FormDescription>
                       <FormMessage />
