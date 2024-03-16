@@ -71,7 +71,7 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
             </div>
           ))}
         </div>
-      ) : (
+      ) : productData.data.length > 1 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 md:px-10">
           {productData.data.map((product: IProduct) => (
             <Link key={product._id} href={`/product/${product._id}`}>
@@ -97,6 +97,12 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
               </Card>
             </Link>
           ))}
+        </div>
+      ) : (
+        <div>
+          <CardContent>
+            <p className="w-full text-center">Products not found :{"("}</p>
+          </CardContent>
         </div>
       )}
     </section>

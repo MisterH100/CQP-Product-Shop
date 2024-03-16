@@ -42,9 +42,7 @@ export default function RootLayout({
       </head>
       <body>
         <GlobalContextProvider>
-          <main
-            className={` ${poppins.className} relative h-screen overflow-y-scroll`}
-          >
+          <main className={` ${poppins.className} relative`}>
             {children}
             <div className="w-full fixed bottom-0 left-0">
               <BottomNav />

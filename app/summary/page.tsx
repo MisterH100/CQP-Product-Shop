@@ -36,11 +36,7 @@ const SummaryPage = () => {
   ]);
   const [orderNumber, setOrderNumber] = useState("ofihqhfo3h283yu8hfohf8y");
   const [address, setAddress] = useState("123 my address max city country");
-  const [orderDate, setOrderDate] = useState<Date>(new Date(Date.now()));
-  const [date, setDate] = useState<number>(0);
-  const [month, setMonth] = useState<number>(0);
-  const [nextDate, setNextDate] = useState<number>(0);
-  const [nextMonth, setNextMonth] = useState<number>(0);
+  const [orderDate, setOrderDate] = useState<Date>();
   const months = [
     "January",
     "February",
@@ -57,24 +53,19 @@ const SummaryPage = () => {
   ];
 
   useEffect(() => {
-    if (orderDate) {
-      setNextDate(
-        new Date(orderDate.setDate(orderDate.getDate() + 2)).getDate()
-      );
-      setNextMonth(
-        new Date(orderDate.setDate(orderDate.getDate() + 2)).getMonth()
-      );
-      setDate(new Date(orderDate).getDate());
-      setMonth(new Date(orderDate).getMonth());
-    }
-  }, [orderDate]);
+    setOrderDate(new Date(Date.now()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <section className="min-h-screen mb-40">
       <Card>
         <CardHeader>
           <CardTitle>Delivery</CardTitle>
           <CardDescription>
-            Deliveries are expected to arrive within two working days
+            Deliveries are expected to arrive within two working days.{" "}
+            <Link className="text-blue-800" href="/learn-more/deliveries">
+              Learn more
+            </Link>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -99,16 +90,28 @@ const SummaryPage = () => {
             <CardHeader className="px-0">
               <CardTitle className="text-base">Details</CardTitle>
               <CardDescription>Order number: {orderNumber}</CardDescription>
+              <CardDescription>Payment method: Cash</CardDescription>
+              <CardDescription>Address: {address}</CardDescription>
               <CardDescription>
-                Payment method: cash on delivery
+                Order date:
+                {orderDate ? new Date(orderDate).getDate() : ""}{" "}
+                {orderDate ? months[new Date(orderDate).getMonth()] : ""}{" "}
+                {orderDate ? new Date(orderDate).getFullYear() : ""}
               </CardDescription>
-              <CardDescription>Address:{address}</CardDescription>
               <CardDescription>
-                Order date: {date} {months[month]}{" "}
-                {new Date(Date.now()).getFullYear()}
-              </CardDescription>
-              <CardDescription>
-                ETA: {nextDate} {months[nextMonth]}{" "}
+                ETA:{" "}
+                {orderDate
+                  ? new Date(
+                      orderDate.setDate(orderDate.getDate() + 2)
+                    ).getDate()
+                  : ""}{" "}
+                {orderDate
+                  ? months[
+                      new Date(
+                        orderDate.setDate(orderDate.getDate() + 2)
+                      ).getMonth()
+                    ]
+                  : ""}{" "}
                 {new Date(Date.now()).getFullYear()}
               </CardDescription>
             </CardHeader>

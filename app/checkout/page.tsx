@@ -91,7 +91,7 @@ const CheckoutPage = () => {
     setCartList([]);
     setTimeout(() => {
       router.push("/summary");
-    }, 2000);
+    }, 1000);
   }
 
   useEffect(() => {
@@ -106,9 +106,6 @@ const CheckoutPage = () => {
       <Card>
         <CardHeader>
           <CardTitle>Checkout</CardTitle>
-          <CardDescription>
-            Cash on Delivery only, delivery may take up to 2 working days
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -258,7 +255,7 @@ const CheckoutPage = () => {
                                 <div>
                                   <FormLabel>Cash</FormLabel>
                                   <FormDescription>
-                                    Cash on delivery
+                                    Cash on delivery (free delivery)
                                   </FormDescription>
                                 </div>
                               </FormItem>
@@ -314,6 +311,14 @@ const CheckoutPage = () => {
             </form>
           </Form>
         </CardContent>
+        <CardFooter>
+          <p className="w-full text-center">
+            Learn more about free deliveries{" "}
+            <Link href="/learn-more/deliveries" className="text-blue-800">
+              here
+            </Link>
+          </p>
+        </CardFooter>
       </Card>
     </section>
   );
