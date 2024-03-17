@@ -22,6 +22,13 @@ export interface IProduct {
   images: string[];
   createdAt: Date;
 }
+
+export interface IOrderData {
+  order_number: string;
+  address: string;
+  order_date: Date;
+  payment_method: string;
+}
 export interface INotification {
   _id: string;
   title: string;
@@ -43,6 +50,8 @@ interface contextProps {
   setSelected: Dispatch<SetStateAction<string>>;
   cartList: IProduct[];
   setCartList: Dispatch<SetStateAction<IProduct[]>>;
+  orderData: IOrderData;
+  setOrderData: Dispatch<SetStateAction<IOrderData>>;
   addToCart: (id: string, itemQuantity: number) => void;
   removeFromCart: (Id: string) => void;
   increaseCartQuantity: (id: string) => void;
@@ -59,6 +68,7 @@ export const GlobalContextProvider = ({
   const [user, setUser] = useState({} as IUser);
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
+  const [orderData, setOrderData] = useState({} as IOrderData);
 
   const addToCart = (id: string, itemQuantity: number) => {
     {
@@ -117,6 +127,8 @@ export const GlobalContextProvider = ({
         setSelected,
         cartList,
         setCartList,
+        orderData,
+        setOrderData,
         addToCart,
         removeFromCart,
         increaseCartQuantity,

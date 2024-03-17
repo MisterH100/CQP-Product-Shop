@@ -9,33 +9,17 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { IProduct } from "@/lib/global_context";
+import { IProduct, useGlobalContext } from "@/lib/global_context";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import axios from "axios";
 
 const SummaryPage = () => {
-  const [orderedItems, setOrderedItems] = useState<IProduct[]>([
-    {
-      _id: "65f0c66801fe90c8fb3b2d9d",
-      name: "iPhone XR",
-      brand: "Apple",
-      description:
-        "iPhone 11 64GB/128GB/256GB, refurbished iPhone accompanied by: lightning to USB cable,Screen protector, MagSafe Pouch and 5 months guarantee",
-      price: 5800,
-      in_stock: 10,
-      quantity: 0,
-      categories: ["apple", "phone", "tech", "iPhone", "ios"],
-      images: [
-        "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710277633/Products/iphones/Apple_iPhone_XR_j4gpjk.jpg",
-        "https://res.cloudinary.com/dxrpjdomo/image/upload/v1710277633/Products/iphones/Apple_iphone_XR_2_rbwyi0.jpg",
-      ],
-      createdAt: new Date("2024-03-12T21:17:28.263Z"),
-      reviews: [],
-    },
-  ]);
-  const [orderNumber, setOrderNumber] = useState("ofihqhfo3h283yu8hfohf8y");
-  const [address, setAddress] = useState("123 my address max city country");
+  const { orderData } = useGlobalContext();
+  const [orderedItems, setOrderedItems] = useState<IProduct[]>([]);
+  const [orderNumber, setOrderNumber] = useState("");
+  const [address, setAddress] = useState("");
   const [orderDate, setOrderDate] = useState<Date>();
   const months = [
     "January",
@@ -52,8 +36,26 @@ const SummaryPage = () => {
     "December",
   ];
 
+  const getProductOrders = (orderNumber: string) => {
+    axios
+      .get(
+        `https://nodeserver-v2.onrender.com/api/order_products/${orderNumber}`
+      )
+      .then((response) => {
+        setOrderedItems(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
-    setOrderDate(new Date(Date.now()));
+    setOrderDate(orderData.order_date);
+    setAddress(orderData.address);
+    setOrderNumber(orderData.order_number);
+    if (orderData.order_number) {
+      getProductOrders(orderData.order_number);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -102,13 +104,17 @@ const SummaryPage = () => {
                 ETA:{" "}
                 {orderDate
                   ? new Date(
-                      orderDate.setDate(orderDate.getDate() + 2)
+                      new Date(orderDate).setDate(
+                        new Date(orderDate).getDate() + 2
+                      )
                     ).getDate()
                   : ""}{" "}
                 {orderDate
                   ? months[
                       new Date(
-                        orderDate.setDate(orderDate.getDate() + 2)
+                        new Date(orderDate).setDate(
+                          new Date(orderDate).getDate() + 2
+                        )
                       ).getMonth()
                     ]
                   : ""}{" "}

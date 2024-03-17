@@ -9,8 +9,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Product Store",
-  description: "products store brings you quality products",
+  title: "ProductStore",
+  description: "Welcome to our store",
 };
 
 export default function RootLayout({

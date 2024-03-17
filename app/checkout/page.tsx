@@ -28,6 +28,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import axios from "axios";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -73,7 +74,8 @@ const formSchema = z.object({
 const CheckoutPage = () => {
   const router = useRouter();
   const [value, setValue] = useState<any>();
-  const { cartList, setSelected, setCartList } = useGlobalContext();
+  const { cartList, setSelected, setCartList, setOrderData } =
+    useGlobalContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -87,11 +89,27 @@ const CheckoutPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log({ ...values, order_items: cartList });
-    setCartList([]);
-    setTimeout(() => {
-      router.push("/summary");
-    }, 1000);
+    console.log("sending order...");
+    axios
+      .post(
+        "https://nodeserver-v2.onrender.com/api/products/orders",
+        { ...values, products: Array.from(cartList.map((item) => item._id)) },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      )
+      .then((response) => {
+        setOrderData(response.data);
+        form.reset();
+        setCartList([]);
+        router.push("/summary");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
@@ -299,7 +317,6 @@ const CheckoutPage = () => {
                 />
                 <div className="w-full pt-10">
                   <Button
-                    onClick={() => setSelected("")}
                     type="submit"
                     className="w-full rounded-2xl"
                     variant="default"

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Product Store Cart",
-  description: "products store brings you quality products",
+  title: "ProductStore Terms and Conditions",
+  description: "ProductsStore brings you quality products",
 };
 
 export default function CheckoutLayout({
