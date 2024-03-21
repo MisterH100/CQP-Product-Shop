@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/lib/global_context";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CircleDashed } from "lucide-react";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
@@ -74,6 +75,7 @@ const formSchema = z.object({
 const CheckoutPage = () => {
   const router = useRouter();
   const [value, setValue] = useState<any>();
+  const [loading, setLoading] = useState(false);
   const { cartList, setSelected, setCartList, setOrderData } =
     useGlobalContext();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -89,7 +91,7 @@ const CheckoutPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("sending order...");
+    setLoading(true);
     axios
       .post(
         "https://nodeserver-v2.onrender.com/api/products/orders",
@@ -105,10 +107,12 @@ const CheckoutPage = () => {
         setOrderData(response.data);
         form.reset();
         setCartList([]);
+        setLoading(false);
         router.push("/summary");
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }
 
@@ -120,7 +124,21 @@ const CheckoutPage = () => {
   }, [value]);
 
   return (
-    <section className="min-h-screen mb-40">
+    <section className="relative min-h-screen mb-40">
+      {loading && (
+        <div className="fixed w-full h-screen flex justify-center items-center">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-4">
+                Loading <CircleDashed className="animate-spin" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Creating order...</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       <Card>
         <CardHeader>
           <CardTitle>Checkout</CardTitle>

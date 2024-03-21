@@ -21,6 +21,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Search } from "@/components/ui/search_field";
 import { BellIcon, ArrowLeftIcon, UserIcon } from "lucide-react";
 import jumbotronImage from "@/public/jumbotron-ps.png";
+import externalWearBanner from "@/public/external-wear-1.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -158,21 +159,41 @@ const Home = () => {
                     </div>
                   )
                 ) : !open ? (
-                  <CardHeader
-                    key={notification._id}
-                    onClick={() => {
-                      setNotification(notification);
-                      setOpen(true);
-                    }}
-                  >
-                    <CardTitle className="flex items-center justify-between">
-                      Personalize your shopping experience
-                      <Badge variant="destructive">1</Badge>
-                    </CardTitle>
-                    <CardDescription>
-                      Open an account to personalize your shopping experience
-                    </CardDescription>
-                  </CardHeader>
+                  <>
+                    <CardHeader
+                      key={notification._id}
+                      onClick={() => {
+                        setNotification(notification);
+                        setOpen(true);
+                      }}
+                    >
+                      <CardTitle className="flex items-center justify-between">
+                        Personalize your shopping experience
+                        <Badge variant="destructive">1</Badge>
+                      </CardTitle>
+                      <CardDescription>
+                        Open an account to personalize your shopping experience
+                      </CardDescription>
+                    </CardHeader>
+                    <div className="w-full px-6 pt-2">
+                      <Link
+                        href="/register"
+                        className={`${buttonVariants({
+                          variant: "default",
+                        })} w-full rounded-2xl`}
+                      >
+                        Register
+                      </Link>
+                      <Link
+                        href="/login"
+                        className={`${buttonVariants({
+                          variant: "secondary",
+                        })} w-full rounded-2xl mt-4`}
+                      >
+                        Log in
+                      </Link>
+                    </div>
+                  </>
                 ) : (
                   <div>
                     <CardHeader className="flex-row justify-between items-center">
@@ -188,11 +209,28 @@ const Home = () => {
                       </Button>
                     </CardHeader>
                     <p className="px-6">
-                      {" "}
                       Open an account to personalize your shopping experience,
                       with an account you may get discount codes,make your
                       featured feed show the things you are interested in.
                     </p>
+                    <div className="w-full px-6 pt-2">
+                      <Link
+                        href="/register"
+                        className={`${buttonVariants({
+                          variant: "default",
+                        })} w-full rounded-2xl`}
+                      >
+                        Register
+                      </Link>
+                      <Link
+                        href="/login"
+                        className={`${buttonVariants({
+                          variant: "secondary",
+                        })} w-full rounded-2xl mt-4`}
+                      >
+                        Log in
+                      </Link>
+                    </div>
                   </div>
                 )}
               </CardContent>
@@ -203,15 +241,27 @@ const Home = () => {
       <div className="py-4 px-4 md:px-10">
         <Search />
       </div>
-      <div className="w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 rounded-2xl overflow-hidden">
+      <div className="relative w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 rounded-2xl overflow-hidden bg-[#F5F5F5]">
         <Image
-          src={jumbotronImage}
-          alt="jumbotron-ps.png"
-          className="w-full h-full rounded-2xl object-cover"
+          src={externalWearBanner}
+          alt="external wear banner"
+          className="w-full h-full rounded-2xl object-contain"
           width={1080}
           height={1920}
           priority
         />
+        <div className="absolute w-full h-full top-0 left-0 flex justify-between items-center px-4">
+          <CardHeader>
+            <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] ">
+              external wear
+            </CardTitle>
+          </CardHeader>
+          <CardHeader>
+            <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] ">
+              sa.
+            </CardTitle>
+          </CardHeader>
+        </div>
       </div>
       <div className="px-4 md:px-10 py-4">
         <h1 className="text-2xl py-4 font-semibold leading-none tracking-tight">

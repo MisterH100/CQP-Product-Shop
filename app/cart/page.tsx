@@ -102,8 +102,8 @@ const Cart = () => {
                       <MenubarItem
                         onClick={() =>
                           navigator.share({
-                            title: "I found this" + item.name,
-                            text: "Check out this product on product store",
+                            title: "Hey i found this" + " " + item.name + " ",
+                            text: "Check out this product on external wear sa",
                             url: `https://cqp-product-shop.vercel.app/product/${item._id}`,
                           })
                         }
