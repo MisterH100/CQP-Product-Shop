@@ -4,10 +4,12 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useLocalStorage } from "./local_storage";
+import axios from "axios";
 
 export interface IProduct {
   _id: string;
@@ -38,8 +40,12 @@ export interface INotification {
 
 export interface IUser {
   _id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
+  profileImage: string;
+  address: string;
+  phone: string;
   createdAt: Date;
 }
 
@@ -117,6 +123,23 @@ export const GlobalContextProvider = ({
       )
     );
   };
+
+  const AuthUser = () => {
+    axios
+      .post("https://nodeserver-v2.onrender.com/api/auth", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setUser(response.data.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    AuthUser();
+  }, []);
 
   return (
     <GlobalContext.Provider

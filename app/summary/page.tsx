@@ -84,7 +84,12 @@ const SummaryPage = () => {
                   width={500}
                   height={500}
                 />
-                <span className="text-xs">{orderedItem.name}</span>
+                <span className="text-xs">
+                  {orderedItem.name}
+                  {"("}
+                  {orderedItem.quantity}
+                  {")"}
+                </span>
               </div>
             ))}
           </div>

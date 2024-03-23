@@ -1,12 +1,12 @@
 [
   {
-    "id": 1,
+    "_id": 1,
     "title": "Account verification",
     "message": "You have successfully logged in to product store, verify your account, by clicking link in your email",
     "read": true
   },
   {
-    "id": 2,
+    "_id": 2,
     "title": "Welcome to products store",
     "message": "For first time users of products store you get 50% off your first purchase by using code HIFIRST",
     "read": false

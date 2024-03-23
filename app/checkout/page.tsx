@@ -78,6 +78,11 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const { cartList, setSelected, setCartList, setOrderData } =
     useGlobalContext();
+  const total = cartList
+    .map((product) => {
+      return product.price * product.quantity;
+    })
+    .reduce((prev, curr) => prev + curr, 0);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -95,7 +100,11 @@ const CheckoutPage = () => {
     axios
       .post(
         "https://nodeserver-v2.onrender.com/api/products/orders",
-        { ...values, products: Array.from(cartList.map((item) => item._id)) },
+        {
+          ...values,
+          products: Array.from(cartList.map((item) => item)),
+          price: total,
+        },
         {
           headers: {
             "Content-Type": "application/json",

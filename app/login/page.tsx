@@ -24,9 +24,8 @@ import { z } from "zod";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/lib/global_context";
+import { CircleDashed } from "lucide-react";
 import Link from "next/link";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import axios from "axios";
 
@@ -45,10 +44,10 @@ const formSchema = z.object({
 
 const LoginPage = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
-  const { cartList, setSelected, setCartList, setOrderData } =
-    useGlobalContext();
+  const { setUser } = useGlobalContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,31 +57,42 @@ const LoginPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    /*axios
-      .post(
-        "https://nodeserver-v2.onrender.com/api/products/orders",
-        { ...values, products: Array.from(cartList.map((item) => item._id)) },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      )
+    setLoading(true);
+    axios
+      .post("https://nodeserver-v2.onrender.com/api/login", values, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
       .then((response) => {
-        setOrderData(response.data);
+        setUser(response.data.user);
+        setLoading(false);
         form.reset();
-        setCartList([]);
-        router.push("/summary");
+        router.push("/");
       })
       .catch((error) => {
         console.log(error);
-      });*/
+        setLoading(false);
+      });
   }
 
   return (
-    <section className="min-h-screen mb-40">
+    <section className="relative min-h-screen mb-40">
+      {loading && (
+        <div className="fixed z-[100] w-full h-screen flex justify-center items-center">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-4">
+                Loading <CircleDashed className="animate-spin" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Logging In...</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       <Card>
         <CardHeader>
           <CardTitle>Login</CardTitle>

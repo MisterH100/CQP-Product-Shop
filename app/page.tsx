@@ -84,7 +84,10 @@ const Home = () => {
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
             <CardDescription>
-              Hi {user.name != null ? user.name : "Shopper"}
+              Hi{" "}
+              {user.first_name != null
+                ? user.first_name.toUpperCase()
+                : "Shopper"}
             </CardDescription>
             <CardTitle>What do you feel like getting today?</CardTitle>
           </CardHeader>
@@ -102,7 +105,7 @@ const Home = () => {
                   {notRead.length}
                 </Badge>
               )}
-              {user.name != null ? (
+              {user.first_name != null ? (
                 <BellIcon className="w-6 h-6" />
               ) : (
                 <UserIcon className="w-6 h-6" />
@@ -116,7 +119,7 @@ const Home = () => {
                 </DrawerDescription>
               </DrawerHeader>
               <CardContent>
-                {user.name != null ? (
+                {user.first_name != null ? (
                   notificationData.isLoading ? (
                     <CardHeader>
                       <CardTitle>Fetching notifications</CardTitle>
