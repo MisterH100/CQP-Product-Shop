@@ -126,8 +126,11 @@ export const GlobalContextProvider = ({
 
   const AuthUser = () => {
     axios
-      .post("https://nodeserver-v2.onrender.com/api/auth", {
+      .get("https://nodeserver-v2.onrender.com/api/auth", {
         withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
       .then((response) => {
         setUser(response.data.user);

@@ -98,9 +98,9 @@ const RegisterPage = () => {
     setLoading(true);
     axios
       .post("https://nodeserver-v2.onrender.com/api/register", values, {
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((response) => {

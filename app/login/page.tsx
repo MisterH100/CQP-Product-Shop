@@ -58,18 +58,19 @@ const LoginPage = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
+
     axios
       .post("https://nodeserver-v2.onrender.com/api/login", values, {
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((response) => {
         setUser(response.data.user);
-        setLoading(false);
         form.reset();
         router.push("/");
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -88,7 +89,7 @@ const LoginPage = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Logging In...</p>
+              <p>Logging</p>
             </CardContent>
           </Card>
         </div>
