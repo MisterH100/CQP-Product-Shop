@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "External wear sa register",
-  description: "External wear sa brings you quality products",
+  title: "Sign up",
+  description: "external wear sa brings you quality products",
 };
 
 export default function RegisterLayout({

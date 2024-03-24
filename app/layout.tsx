@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "ProductStore",
+  title: "external wear sa",
   description: "Welcome to our store",
 };
 

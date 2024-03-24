@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ProductStore Privacy Policy",
-  description: "ProductsStore brings you quality products",
+  title: "Privacy Policy",
+  description: "external wear sa brings you quality products",
 };
 
 export default function PrivacyPolicyLayout({

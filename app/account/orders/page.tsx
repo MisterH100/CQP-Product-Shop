@@ -24,7 +24,7 @@ interface IOrders {
   orderDate: Date;
 }
 
-const orderPage = () => {
+const OrderPage = () => {
   const { user, setSelected } = useGlobalContext();
   const [orders, setOrders] = useState<IOrders[]>([]);
 
@@ -42,6 +42,7 @@ const orderPage = () => {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <section className="min-h-screen pb-40">
@@ -109,4 +110,4 @@ const orderPage = () => {
   );
 };
 
-export default orderPage;
+export default OrderPage;

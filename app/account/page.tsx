@@ -70,6 +70,7 @@ const AccountPage = () => {
         });
         router.push("/");
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <section className="min-h-screen pb-40">
