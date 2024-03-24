@@ -72,9 +72,10 @@ const ProductPage = ({
               <Button
                 className="ml-auto border rounded-2xl"
                 variant="secondary"
+                disabled={product.data.in_stock < 1}
                 onClick={() => addToCart(product.data._id, 1)}
               >
-                Add to cart
+                {product.data.in_stock < 1 ? "Sold out" : "Add to cart"}
               </Button>
             </CardFooter>
           </Card>

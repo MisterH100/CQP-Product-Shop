@@ -83,13 +83,31 @@ const Home = () => {
       <Card className="border-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
-            <CardDescription>
-              Hi{" "}
-              {user.first_name != null
-                ? user.first_name.toUpperCase()
-                : "Shopper"}
-            </CardDescription>
-            <CardTitle>What do you feel like getting today?</CardTitle>
+            <Link
+              href={user.first_name ? "/account" : "/"}
+              className="flex items-center"
+            >
+              {user.first_name && (
+                <Image
+                  src={user.profileImage}
+                  alt="Profile Image"
+                  width={50}
+                  height={50}
+                  loading="lazy"
+                />
+              )}
+              <div className="ml-2">
+                <CardTitle className="text-lg">
+                  Hi{" "}
+                  {user.first_name != null
+                    ? user.first_name.toUpperCase()
+                    : "Shopper"}
+                </CardTitle>
+                <CardDescription className="text-sm">
+                  What do you feel like getting today
+                </CardDescription>
+              </div>
+            </Link>
           </CardHeader>
           <Drawer>
             <DrawerTrigger
@@ -290,7 +308,7 @@ const Home = () => {
                 onClick={() => setSelected("")}
                 href={`/product/${product._id}`}
               >
-                <Card className="rounded-2xl overflow-hidden md:w-[300px]">
+                <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
                   <Image
                     src={product.images[0]}
                     alt={product.name}
@@ -298,16 +316,26 @@ const Home = () => {
                     width={500}
                     height={500}
                   />
+                  <Badge className="absolute top-4 right-4" variant="default">
+                    New
+                  </Badge>
                   <CardHeader className="p-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="font-normal text-sm truncate">
                         {product.name}
                       </CardTitle>
-                      <CardTitle className="text-sm">
+                      <CardTitle className="text-sm font-normal">
                         {randsSA.format(product.price)}
                       </CardTitle>
                     </div>
-                    <CardDescription>{product.brand}</CardDescription>
+                    <div className="flex justify-between items-center">
+                      <CardDescription>{product.brand}</CardDescription>
+                      {product.in_stock < 1 && (
+                        <CardDescription className="text-primary">
+                          Sold out
+                        </CardDescription>
+                      )}
+                    </div>
                   </CardHeader>
                 </Card>
               </Link>

@@ -27,6 +27,7 @@ import { useGlobalContext } from "@/lib/global_context";
 import { CircleDashed } from "lucide-react";
 import Link from "next/link";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 
 const formSchema = z.object({
@@ -48,6 +49,7 @@ const LoginPage = () => {
   const [value, setValue] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
   const { setUser } = useGlobalContext();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,17 +73,25 @@ const LoginPage = () => {
         form.reset();
         router.push("/");
         setLoading(false);
+        toast({
+          title: "logged in",
+          description: response.data.message,
+        });
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
+        toast({
+          title: error.name,
+          description: error.response.data.message,
+        });
       });
   }
 
   return (
     <section className="relative min-h-screen mb-40">
       {loading && (
-        <div className="fixed z-[100] w-full h-screen flex justify-center items-center">
+        <div className="fixed  w-full h-screen flex justify-center items-center">
           <Card>
             <CardHeader>
               <CardTitle className="flex gap-4">

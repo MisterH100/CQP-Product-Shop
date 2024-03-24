@@ -2,6 +2,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import { BottomNav } from "@/components/layout/bottom_nav";
+import { Toaster } from "@/components/ui/toaster";
 import { GlobalContextProvider } from "@/lib/global_context";
 const poppins = Poppins({
   weight: ["400", "500", "900"],
@@ -42,6 +43,7 @@ export default function RootLayout({
       </head>
       <body>
         <GlobalContextProvider>
+          <Toaster />
           <main className={` ${poppins.className} relative`}>
             {children}
             <div className="w-full fixed bottom-0 left-0">

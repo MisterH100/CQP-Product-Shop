@@ -21,13 +21,15 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/lib/global_context";
 import { CircleDashed } from "lucide-react";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { useToast } from "@/components/ui/use-toast";
+
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import axios from "axios";
 
@@ -81,6 +83,7 @@ const RegisterPage = () => {
   const [value, setValue] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
   const { setUser } = useGlobalContext();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -108,10 +111,18 @@ const RegisterPage = () => {
         form.reset();
         setLoading(false);
         router.push("/");
+        toast({
+          title: "Success",
+          description: response.data.message,
+        });
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
+        toast({
+          title: error.name,
+          description: error.response.data.message,
+        });
       });
   }
   useEffect(() => {

@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IProduct } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
 import { randsSA } from "@/lib/format_to_rand";
+import { Badge } from "@/components/ui/badge";
 
 const ProductsPage = () => {
   const productData = useQuery({
@@ -49,9 +50,9 @@ const ProductsPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10 md:place-items-center">
-          {productData.data.map((product: IProduct) => (
+          {productData.data.map((product: IProduct, index: number) => (
             <Link key={product._id} href={`/product/${product._id}`}>
-              <Card className="rounded-2xl overflow-hidden md:w-[300px]">
+              <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
@@ -59,16 +60,28 @@ const ProductsPage = () => {
                   width={500}
                   height={500}
                 />
+                {index < 4 && (
+                  <Badge className="absolute top-4 right-4" variant="default">
+                    New
+                  </Badge>
+                )}
                 <CardHeader className="p-2">
                   <div className="flex justify-between items-center">
                     <CardTitle className="font-normal text-sm truncate">
                       {product.name}
                     </CardTitle>
-                    <CardTitle className="text-sm">
+                    <CardTitle className="text-sm font-normal">
                       {randsSA.format(product.price)}
                     </CardTitle>
                   </div>
-                  <CardDescription>{product.brand}</CardDescription>
+                  <div className="flex justify-between items-center">
+                    <CardDescription>{product.brand}</CardDescription>
+                    {product.in_stock < 1 && (
+                      <CardDescription className="text-primary">
+                        Sold out
+                      </CardDescription>
+                    )}
+                  </div>
                 </CardHeader>
               </Card>
             </Link>

@@ -71,7 +71,7 @@ export const GlobalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState({} as IUser);
+  const [user, setUser] = useLocalStorage("user", {} as IUser);
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
   const [orderData, setOrderData] = useState({} as IOrderData);
@@ -123,26 +123,6 @@ export const GlobalContextProvider = ({
       )
     );
   };
-
-  const AuthUser = () => {
-    axios
-      .get("https://nodeserver-v2.onrender.com/api/auth", {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setUser(response.data.user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    AuthUser();
-  }, []);
 
   return (
     <GlobalContext.Provider
