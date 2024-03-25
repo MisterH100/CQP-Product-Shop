@@ -17,7 +17,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const AccountPage = () => {
-  const { user, setUser, setSelected } = useGlobalContext();
+  const { user, setUser, setSelected, token } = useGlobalContext();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -31,7 +31,7 @@ const AccountPage = () => {
       })
       .then((response) => {
         toast({
-          title: "User logged out",
+          title: "logged out",
           description: response.data.message,
         });
       })
@@ -50,14 +50,14 @@ const AccountPage = () => {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         if (response.data.user._id) {
           setUser(response.data.user);
           toast({
-            title: "User authenticated",
+            title: "authentication",
             description: response.data.message,
           });
         }
@@ -98,8 +98,14 @@ const AccountPage = () => {
             <CardTitle>Personal details</CardTitle>
           </CardHeader>
           <Link
-            onClick={() => setSelected(" ")}
-            href="/account/edit"
+            href="/account"
+            onClick={() => {
+              setSelected(" ");
+              toast({
+                title: "unavailable",
+                description: "You can not edit your account at the moment",
+              });
+            }}
             className={` ${buttonVariants({
               variant: "outline",
               className: "rounded-full p-4",

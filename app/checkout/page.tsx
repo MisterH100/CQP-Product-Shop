@@ -76,13 +76,13 @@ const CheckoutPage = () => {
   const router = useRouter();
   const [value, setValue] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const { cartList, setSelected, setCartList, setOrderData } =
-    useGlobalContext();
+  const { user, cartList, setCartList, setOrderData } = useGlobalContext();
   const total = cartList
     .map((product) => {
       return product.price * product.quantity;
     })
     .reduce((prev, curr) => prev + curr, 0);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -95,13 +95,22 @@ const CheckoutPage = () => {
     },
   });
 
+  const autoFill = () => {
+    form.setValue("first_name", user.first_name);
+    form.setValue("last_name", user.last_name);
+    form.setValue("email", user.email);
+    form.setValue("phone", user.phone);
+    form.setValue("address", user.address);
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     axios
       .post(
-        "https://nodeserver-v2.onrender.com/api/products/orders",
+        "https://nodeserver-v2.onrender.com/api/products/orders/new",
         {
           ...values,
+          customer_id: user._id,
           products: Array.from(cartList.map((item) => item)),
           price: total,
         },
@@ -124,6 +133,13 @@ const CheckoutPage = () => {
         setLoading(false);
       });
   }
+
+  useEffect(() => {
+    if (user) {
+      autoFill();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (value) {

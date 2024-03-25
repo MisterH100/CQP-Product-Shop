@@ -39,7 +39,7 @@ const SummaryPage = () => {
   const getProductOrders = (orderNumber: string) => {
     axios
       .get(
-        `https://nodeserver-v2.onrender.com/api/order_products/${orderNumber}`
+        `https://nodeserver-v2.onrender.com/api/products/orders/number/${orderNumber}`
       )
       .then((response) => {
         setOrderedItems(response.data.products);

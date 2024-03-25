@@ -82,7 +82,7 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
-  const { setUser } = useGlobalContext();
+  const { setUser, setToken } = useGlobalContext();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -108,11 +108,12 @@ const RegisterPage = () => {
       })
       .then((response) => {
         setUser(response.data.user);
+        setToken(response.data.token);
         form.reset();
         setLoading(false);
         router.push("/");
         toast({
-          title: "Success",
+          title: "registration",
           description: response.data.message,
         });
       })

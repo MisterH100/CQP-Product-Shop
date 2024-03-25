@@ -10,7 +10,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import Products from "@/lib/products.json";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
 import { randsSA } from "@/lib/format_to_rand";

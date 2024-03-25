@@ -46,20 +46,44 @@ const Home = () => {
   const [notification, setNotification] = useState<INotification>(
     {} as INotification
   );
+
   const productData = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res: any = await fetch(
-        "https://nodeserver-v2.onrender.com/api/products"
+        "https://nodeserver-v2.onrender.com/api/products/all"
       );
       const data = await res.json();
       return data;
     },
   });
+
   const notificationData = useQuery({
     queryKey: ["notifications"],
     queryFn: async () => {
       const data: any = Notifications;
+      return data;
+    },
+  });
+
+  const phoneData = useQuery({
+    queryKey: ["phones"],
+    queryFn: async () => {
+      const res: any = await fetch(
+        "https://nodeserver-v2.onrender.com/api/products/category/phones"
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  const shoeData = useQuery({
+    queryKey: ["shoes"],
+    queryFn: async () => {
+      const res: any = await fetch(
+        "https://nodeserver-v2.onrender.com/api/products/category/shoes"
+      );
+      const data = await res.json();
       return data;
     },
   });
@@ -79,7 +103,7 @@ const Home = () => {
   }, [productData.data, notificationData.data]);
 
   return (
-    <section className="relative w-full min-h-screen pb-40">
+    <section className="relative w-full min-h-screen pb-20">
       <Card className="border-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
@@ -263,30 +287,17 @@ const Home = () => {
         <Search />
       </div>
       <div className="relative w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 rounded-2xl overflow-hidden bg-[#F5F5F5]">
-        <Image
-          src={externalWearBanner}
-          alt="external wear banner"
-          className="w-full h-full rounded-2xl object-contain"
-          width={1080}
-          height={1920}
-          priority
-        />
-        <div className="absolute w-full h-full top-0 left-0 flex justify-between items-center px-4">
+        <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center px-4">
           <CardHeader>
             <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] ">
-              external wear
-            </CardTitle>
-          </CardHeader>
-          <CardHeader>
-            <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] ">
-              sa.
+              external wear sa.
             </CardTitle>
           </CardHeader>
         </div>
       </div>
       <div className="px-4 md:px-10 py-4">
-        <h1 className="text-2xl py-4 font-semibold leading-none tracking-tight">
-          Featured
+        <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
+          Featured Products
         </h1>
         {productData.isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -319,6 +330,136 @@ const Home = () => {
                   <Badge className="absolute top-4 right-4" variant="default">
                     New
                   </Badge>
+                  <CardHeader className="p-2">
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="font-normal text-sm truncate">
+                        {product.name}
+                      </CardTitle>
+                      <CardTitle className="text-sm font-normal">
+                        {randsSA.format(product.price)}
+                      </CardTitle>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <CardDescription>{product.brand}</CardDescription>
+                      {product.in_stock < 1 && (
+                        <CardDescription className="text-primary">
+                          Sold out
+                        </CardDescription>
+                      )}
+                    </div>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
+        <div className="w-full flex justify-center py-4">
+          <Link
+            onClick={() => setSelected("")}
+            href="/products"
+            className={`${buttonVariants({ variant: "outline" })} rounded-2xl`}
+          >
+            View all
+          </Link>
+        </div>
+      </div>
+      <div className="px-4 md:px-10 py-4">
+        <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
+          Phones
+        </h1>
+        {phoneData.isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index}>
+                <Skeleton className="h-[125px] rounded-2xl" />
+                <div className="mt-2">
+                  <Skeleton className="h-4 mb-2" />
+                  <Skeleton className="h-4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:place-items-center">
+            {phoneData.data.slice(0, 4).map((product: IProduct) => (
+              <Link
+                key={product._id}
+                onClick={() => setSelected("")}
+                href={`/product/${product._id}`}
+              >
+                <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-[200px] object-cover md:object-contain"
+                    width={500}
+                    height={500}
+                  />
+                  <CardHeader className="p-2">
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="font-normal text-sm truncate">
+                        {product.name}
+                      </CardTitle>
+                      <CardTitle className="text-sm font-normal">
+                        {randsSA.format(product.price)}
+                      </CardTitle>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <CardDescription>{product.brand}</CardDescription>
+                      {product.in_stock < 1 && (
+                        <CardDescription className="text-primary">
+                          Sold out
+                        </CardDescription>
+                      )}
+                    </div>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
+        <div className="w-full flex justify-center py-4">
+          <Link
+            onClick={() => setSelected("")}
+            href="/products"
+            className={`${buttonVariants({ variant: "outline" })} rounded-2xl`}
+          >
+            View all
+          </Link>
+        </div>
+      </div>
+      <div className="px-4 md:px-10 py-4">
+        <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
+          Shoes
+        </h1>
+        {shoeData.isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index}>
+                <Skeleton className="h-[125px] rounded-2xl" />
+                <div className="mt-2">
+                  <Skeleton className="h-4 mb-2" />
+                  <Skeleton className="h-4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:place-items-center">
+            {shoeData.data.slice(0, 4).map((product: IProduct) => (
+              <Link
+                key={product._id}
+                onClick={() => setSelected("")}
+                href={`/product/${product._id}`}
+              >
+                <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-[200px] object-cover md:object-contain"
+                    width={500}
+                    height={500}
+                  />
                   <CardHeader className="p-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="font-normal text-sm truncate">

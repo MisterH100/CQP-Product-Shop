@@ -25,7 +25,7 @@ const ProductPage = ({
     queryKey: ["product"],
     queryFn: async () => {
       const res: any = await fetch(
-        `https://nodeserver-v2.onrender.com/api/products/product/${product_id}`
+        `https://nodeserver-v2.onrender.com/api/products/id/${product_id}`
       );
       const data = await res.json();
       return data;

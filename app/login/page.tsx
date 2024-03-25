@@ -46,9 +46,8 @@ const formSchema = z.object({
 const LoginPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
-  const { setUser } = useGlobalContext();
+  const { setUser, setToken } = useGlobalContext();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,6 +69,7 @@ const LoginPage = () => {
       })
       .then((response) => {
         setUser(response.data.user);
+        setToken(response.data.token);
         form.reset();
         router.push("/");
         setLoading(false);

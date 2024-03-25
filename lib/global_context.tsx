@@ -52,6 +52,8 @@ export interface IUser {
 interface contextProps {
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
+  token: string;
+  setToken: Dispatch<SetStateAction<string>>;
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
   cartList: IProduct[];
@@ -72,13 +74,14 @@ export const GlobalContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useLocalStorage("user", {} as IUser);
+  const [token, setToken] = useLocalStorage("token", "");
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
   const [orderData, setOrderData] = useState({} as IOrderData);
 
   const addToCart = (id: string, itemQuantity: number) => {
     {
-      const URL = `https://nodeserver-v2.onrender.com/api/products/product/${id}`;
+      const URL = `https://nodeserver-v2.onrender.com/api/products/id/${id}`;
       const fetchData = async (URL: string) => {
         try {
           const response = await fetch(URL);
@@ -129,6 +132,8 @@ export const GlobalContextProvider = ({
       value={{
         user,
         setUser,
+        token,
+        setToken,
         selected,
         setSelected,
         cartList,
