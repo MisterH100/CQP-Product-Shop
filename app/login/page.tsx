@@ -62,9 +62,9 @@ const LoginPage = () => {
 
     axios
       .post("https://nodeserver-v2.onrender.com/api/login", values, {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((response) => {
@@ -82,28 +82,15 @@ const LoginPage = () => {
         console.log(error);
         setLoading(false);
         toast({
-          title: error.name,
-          description: error.response.data.message,
+          title: "log in",
+          description: "failed to log in",
         });
       });
   }
 
   return (
     <section className="relative min-h-screen mb-40">
-      {loading && (
-        <div className="fixed  w-full h-screen flex justify-center items-center">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex gap-4">
-                Loading <CircleDashed className="animate-spin" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Logging</p>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {loading && <div className="loaderBar"></div>}
       <Card>
         <CardHeader>
           <CardTitle>Login</CardTitle>

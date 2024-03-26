@@ -29,6 +29,7 @@ import { CircleDashed } from "lucide-react";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 
 const phoneRegex = new RegExp(
@@ -77,6 +78,7 @@ const CheckoutPage = () => {
   const [value, setValue] = useState<any>();
   const [loading, setLoading] = useState(false);
   const { user, cartList, setCartList, setOrderData } = useGlobalContext();
+  const { toast } = useToast();
   const total = cartList
     .map((product) => {
       return product.price * product.quantity;
@@ -105,33 +107,46 @@ const CheckoutPage = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    axios
-      .post(
-        "https://nodeserver-v2.onrender.com/api/products/orders/new",
-        {
-          ...values,
-          customer_id: user._id,
-          products: Array.from(cartList.map((item) => item)),
-          price: total,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      )
-      .then((response) => {
-        setOrderData(response.data);
-        form.reset();
-        setCartList([]);
-        setLoading(false);
-        router.push("/summary");
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
+    if (user.first_name) {
+      toast({
+        title: "creating order",
+        description: "please wait while we create your order",
       });
+      axios
+        .post(
+          "https://nodeserver-v2.onrender.com/api/products/orders/new",
+          {
+            ...values,
+            customer_id: user._id,
+            products: Array.from(cartList.map((item) => item)),
+            price: total,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
+        .then((response) => {
+          setOrderData(response.data);
+          form.reset();
+          setCartList([]);
+          setLoading(false);
+          router.push("/summary");
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+      toast({
+        title: "authentication",
+        description: "you must be logged in to create order",
+      });
+      router.push("/login");
+    }
   }
 
   useEffect(() => {
@@ -150,20 +165,7 @@ const CheckoutPage = () => {
 
   return (
     <section className="relative min-h-screen mb-40">
-      {loading && (
-        <div className="fixed w-full h-screen flex justify-center items-center">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex gap-4">
-                Loading <CircleDashed className="animate-spin" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Creating order...</p>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {loading && <div className="loaderBar"></div>}
       <Card>
         <CardHeader>
           <CardTitle>Checkout</CardTitle>

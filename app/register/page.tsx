@@ -21,15 +21,13 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/lib/global_context";
-import { CircleDashed } from "lucide-react";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useToast } from "@/components/ui/use-toast";
-
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import axios from "axios";
 
@@ -101,9 +99,9 @@ const RegisterPage = () => {
     setLoading(true);
     axios
       .post("https://nodeserver-v2.onrender.com/api/register", values, {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((response) => {
@@ -121,8 +119,8 @@ const RegisterPage = () => {
         console.log(error);
         setLoading(false);
         toast({
-          title: error.name,
-          description: error.response.data.message,
+          title: "registration",
+          description: "failed to register user",
         });
       });
   }
@@ -135,20 +133,7 @@ const RegisterPage = () => {
 
   return (
     <section className="relative min-h-screen mb-40">
-      {loading && (
-        <div className="fixed w-full h-screen flex justify-center items-center">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex gap-4">
-                Loading <CircleDashed className="animate-spin" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Signing Up...</p>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {loading && <div className="loaderBar"></div>}
       <Card>
         <CardHeader>
           <CardTitle>Register</CardTitle>

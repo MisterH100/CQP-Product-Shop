@@ -17,39 +17,16 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const AccountPage = () => {
-  const { user, setUser, setSelected, token } = useGlobalContext();
+  const { user, setUser, setSelected, token, logOut } = useGlobalContext();
   const { toast } = useToast();
   const router = useRouter();
 
-  const logOut = () => {
-    axios
-      .post("https://nodeserver-v2.onrender.com/api/logout", {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        toast({
-          title: "logged out",
-          description: response.data.message,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        toast({
-          title: error.name,
-          description: error.response.data.message,
-        });
-        router.push("/");
-      });
-  };
   useEffect(() => {
     axios
       .get("https://nodeserver-v2.onrender.com/api/auth", {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
       })
@@ -65,8 +42,8 @@ const AccountPage = () => {
       .catch((error) => {
         console.log(error);
         toast({
-          title: error.name,
-          description: error.response.data.message,
+          title: "authentication",
+          description: "authentication failed",
         });
         router.push("/");
       });
@@ -145,6 +122,11 @@ const AccountPage = () => {
               href="/"
             >
               Log out
+            </Link>
+          </div>
+          <div className="w-full pt-6">
+            <Link className="block w-full" href="/learn-more/privacy-policy">
+              Privacy Policy
             </Link>
           </div>
         </CardFooter>

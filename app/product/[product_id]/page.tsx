@@ -54,7 +54,7 @@ const ProductPage = ({
             <Image
               src={product.data.images[0]}
               alt={product.data.name}
-              className="w-full h-[500px] object-cover md:object-contain"
+              className="w-full h-[500px] object-contain"
               width={500}
               height={500}
             />

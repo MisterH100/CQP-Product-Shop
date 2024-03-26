@@ -17,11 +17,25 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Search } from "@/components/ui/search_field";
-import { BellIcon, ArrowLeftIcon, UserIcon } from "lucide-react";
-import jumbotronImage from "@/public/jumbotron-ps.png";
-import externalWearBanner from "@/public/external-wear-1.jpg";
+import {
+  BellIcon,
+  ArrowLeftIcon,
+  UserIcon,
+  LogOutIcon,
+  FormInputIcon,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -30,17 +44,19 @@ import {
   IProduct,
   useGlobalContext,
 } from "@/lib/global_context";
-import Notifications from "@/lib/notifications.json";
 import { Skeleton } from "@/components/layout/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { randsSA } from "@/lib/format_to_rand";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "@/lib/local_storage";
 
 const Home = () => {
-  const { setSelected, user, setUser } = useGlobalContext();
+  const router = useRouter();
+  const { setSelected, user, notifications, setNotifications, logOut } =
+    useGlobalContext();
   const [featuredProducts, setFeaturedProducts] = useState<IProduct[]>([]);
-  const [notifications, setNotifications] = useState<INotification[]>([]);
   const [notRead, setNotRead] = useState<INotification[]>([]);
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState<INotification>(
@@ -61,7 +77,7 @@ const Home = () => {
   const notificationData = useQuery({
     queryKey: ["notifications"],
     queryFn: async () => {
-      const data: any = Notifications;
+      const data: any = notifications;
       return data;
     },
   });
@@ -88,12 +104,56 @@ const Home = () => {
     },
   });
 
+  const readNotification = (id: string) => {
+    setNotifications((current) =>
+      current.map((item) =>
+        item._id == id ? { ...item, read: true } : { ...item }
+      )
+    );
+    setNotRead(
+      notifications.filter((notification) => notification.read == false)
+    );
+  };
+
+  const addNewNotification = (notif: INotification) => {
+    if (
+      notifications.find(
+        (notification: INotification) => notification._id == notif._id
+      )
+    ) {
+      return;
+    }
+    setNotifications([...notifications, notif]);
+  };
+
+  useEffect(() => {
+    if (user.first_name) {
+      addNewNotification({
+        _id: "notif1",
+        title: "Account verification",
+        message:
+          "You have successfully logged in to external wear sa, verify your account, by clicking link in your email",
+        read: false,
+        public: false,
+      });
+    } else {
+      addNewNotification({
+        _id: "notif2",
+        title: "Personalize your shopping experience",
+        message:
+          "Register or login to your account to make purchases and have a more personal shopping experience",
+        read: false,
+        public: true,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (productData.data) {
       setFeaturedProducts(productData.data.slice(0, 4));
     }
     if (notificationData.data) {
-      setNotifications(notificationData.data);
       setNotRead(
         notificationData.data.filter(
           (notification: INotification) => notification.read == false
@@ -107,31 +167,71 @@ const Home = () => {
       <Card className="border-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
-            <Link
-              href={user.first_name ? "/account" : "/"}
-              className="flex items-center"
-            >
-              {user.first_name && (
-                <Image
-                  src={user.profileImage}
-                  alt="Profile Image"
-                  width={50}
-                  height={50}
-                  loading="lazy"
-                />
-              )}
-              <div className="ml-2">
-                <CardTitle className="text-lg">
-                  Hi{" "}
-                  {user.first_name != null
-                    ? user.first_name.toUpperCase()
-                    : "Shopper"}
-                </CardTitle>
-                <CardDescription className="text-sm">
-                  What do you feel like getting today
-                </CardDescription>
-              </div>
-            </Link>
+            <Menubar className="border-none px-0">
+              <MenubarMenu>
+                <MenubarTrigger className="px-0">
+                  <div className="flex items-center">
+                    {user.first_name && (
+                      <Image
+                        src={user.profileImage}
+                        alt="Profile Image"
+                        width={50}
+                        height={50}
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="text-left ml-2">
+                      <CardTitle className="text-lg">
+                        Hi{" "}
+                        {user.first_name != null
+                          ? user.first_name.toUpperCase()
+                          : "Shopper"}
+                      </CardTitle>
+                      <CardDescription className="text-sm">
+                        What do you feel like getting today
+                      </CardDescription>
+                    </div>
+                  </div>
+                </MenubarTrigger>
+                <MenubarContent>
+                  <MenubarItem
+                    onClick={() =>
+                      router.push(user.first_name ? "/account" : "/login")
+                    }
+                  >
+                    Account
+                    <MenubarShortcut>
+                      <UserIcon className="w-4 h-4" />
+                    </MenubarShortcut>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  {user.first_name ? (
+                    <MenubarItem
+                      onClick={() => {
+                        logOut();
+                        router.push("/");
+                      }}
+                    >
+                      Logout
+                      <MenubarShortcut>
+                        <LogOutIcon className="w-4 h-4" />
+                      </MenubarShortcut>
+                    </MenubarItem>
+                  ) : (
+                    <MenubarItem
+                      onClick={() => {
+                        router.push("/register");
+                      }}
+                    >
+                      Sign Up
+                      <MenubarShortcut>
+                        <FormInputIcon className="w-4 h-4" />
+                      </MenubarShortcut>
+                    </MenubarItem>
+                  )}
+                </MenubarContent>
+              </MenubarMenu>
+            </Menubar>
           </CardHeader>
           <Drawer>
             <DrawerTrigger
@@ -161,90 +261,58 @@ const Home = () => {
                 </DrawerDescription>
               </DrawerHeader>
               <CardContent>
-                {user.first_name != null ? (
-                  notificationData.isLoading ? (
-                    <CardHeader>
-                      <CardTitle>Fetching notifications</CardTitle>
-                    </CardHeader>
-                  ) : !open ? (
-                    <ScrollArea className="h-[300px] w-full">
-                      {notifications.map((notification: INotification) => (
-                        <CardHeader
-                          key={notification._id}
-                          onClick={() => {
-                            setNotification(notification);
-                            setOpen(true);
-                          }}
-                        >
-                          <CardTitle className="flex items-center justify-between">
-                            {notification.title}
-                            {!notification.read && (
-                              <Badge variant="destructive">1</Badge>
-                            )}
-                          </CardTitle>
-                          <CardDescription>
-                            {notification.message}
-                          </CardDescription>
-                        </CardHeader>
-                      ))}
-                    </ScrollArea>
-                  ) : (
-                    <div>
-                      <CardHeader className="flex-row justify-between items-center">
-                        <CardTitle>{notification.title}</CardTitle>
-                        <Button
-                          onClick={() => setOpen(false)}
-                          variant="outline"
-                          className="rounded-full"
-                        >
-                          <ArrowLeftIcon className=" w-4 h-4" />
-                        </Button>
-                      </CardHeader>
-                      <p className="px-6">{notification.message}</p>
-                    </div>
-                  )
+                {notificationData.isLoading ? (
+                  <CardHeader>
+                    <CardTitle>Fetching notifications</CardTitle>
+                  </CardHeader>
                 ) : !open ? (
-                  <>
-                    <CardHeader
-                      key={notification._id}
-                      onClick={() => {
-                        setNotification(notification);
-                        setOpen(true);
-                      }}
-                    >
-                      <CardTitle className="flex items-center justify-between">
-                        Personalize your shopping experience
-                        <Badge variant="destructive">1</Badge>
-                      </CardTitle>
-                      <CardDescription>
-                        Open an account to personalize your shopping experience
-                      </CardDescription>
-                    </CardHeader>
-                    <div className="w-full px-6 pt-2">
-                      <Link
-                        href="/register"
-                        className={`${buttonVariants({
-                          variant: "default",
-                        })} w-full rounded-2xl`}
+                  <ScrollArea className="h-[300px] w-full">
+                    {notifications.map((notification: INotification) => (
+                      <CardHeader
+                        key={notification._id}
+                        onClick={() => {
+                          setNotification(notification);
+                          setOpen(true);
+                          readNotification(notification._id);
+                        }}
                       >
-                        Register
-                      </Link>
-                      <Link
-                        href="/login"
-                        className={`${buttonVariants({
-                          variant: "secondary",
-                        })} w-full rounded-2xl mt-4`}
-                      >
-                        Log in
-                      </Link>
-                    </div>
-                  </>
+                        <CardTitle className="flex items-center justify-between">
+                          {notification.title}
+                          {!notification.read && (
+                            <Badge variant="destructive">1</Badge>
+                          )}
+                        </CardTitle>
+                        <CardDescription>
+                          {notification.message}
+                        </CardDescription>
+                      </CardHeader>
+                    ))}
+
+                    {!user.first_name && (
+                      <div className="w-full px-6 pt-2">
+                        <Link
+                          href="/register"
+                          className={`${buttonVariants({
+                            variant: "default",
+                          })} w-full rounded-2xl`}
+                        >
+                          Register
+                        </Link>
+                        <Link
+                          href="/login"
+                          className={`${buttonVariants({
+                            variant: "outline",
+                          })} w-full rounded-2xl mt-4`}
+                        >
+                          Log in
+                        </Link>
+                      </div>
+                    )}
+                  </ScrollArea>
                 ) : (
                   <div>
                     <CardHeader className="flex-row justify-between items-center">
-                      <CardTitle>
-                        Personalize your shopping experience
-                      </CardTitle>
+                      <CardTitle>{notification.title}</CardTitle>
                       <Button
                         onClick={() => setOpen(false)}
                         variant="outline"
@@ -253,29 +321,7 @@ const Home = () => {
                         <ArrowLeftIcon className=" w-4 h-4" />
                       </Button>
                     </CardHeader>
-                    <p className="px-6">
-                      Open an account to personalize your shopping experience,
-                      with an account you may get discount codes,make your
-                      featured feed show the things you are interested in.
-                    </p>
-                    <div className="w-full px-6 pt-2">
-                      <Link
-                        href="/register"
-                        className={`${buttonVariants({
-                          variant: "default",
-                        })} w-full rounded-2xl`}
-                      >
-                        Register
-                      </Link>
-                      <Link
-                        href="/login"
-                        className={`${buttonVariants({
-                          variant: "secondary",
-                        })} w-full rounded-2xl mt-4`}
-                      >
-                        Log in
-                      </Link>
-                    </div>
+                    <p className="px-6">{notification.message}</p>
                   </div>
                 )}
               </CardContent>
@@ -323,7 +369,7 @@ const Home = () => {
                   <Image
                     src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-[200px] object-cover md:object-contain"
+                    className="w-full h-[200px] object-contain"
                     width={500}
                     height={500}
                   />
@@ -391,7 +437,7 @@ const Home = () => {
                   <Image
                     src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-[200px] object-cover md:object-contain"
+                    className="w-full h-[200px] object-contain"
                     width={500}
                     height={500}
                   />
@@ -456,7 +502,7 @@ const Home = () => {
                   <Image
                     src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-[200px] object-cover md:object-contain"
+                    className="w-full h-[200px] object-contain"
                     width={500}
                     height={500}
                   />

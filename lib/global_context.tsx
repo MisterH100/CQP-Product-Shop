@@ -9,6 +9,8 @@ import {
 } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useLocalStorage } from "./local_storage";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 
 export interface IProduct {
@@ -36,6 +38,7 @@ export interface INotification {
   title: string;
   message: string;
   read: boolean;
+  public: boolean;
 }
 
 export interface IUser {
@@ -60,10 +63,13 @@ interface contextProps {
   setCartList: Dispatch<SetStateAction<IProduct[]>>;
   orderData: IOrderData;
   setOrderData: Dispatch<SetStateAction<IOrderData>>;
+  notifications: INotification[];
+  setNotifications: Dispatch<SetStateAction<INotification[]>>;
   addToCart: (id: string, itemQuantity: number) => void;
   removeFromCart: (Id: string) => void;
   increaseCartQuantity: (id: string) => void;
   decreaseCartQuantity: (id: string) => void;
+  logOut: () => void;
 }
 const queryClient = new QueryClient();
 const GlobalContext = createContext<contextProps>({} as contextProps);
@@ -78,6 +84,12 @@ export const GlobalContextProvider = ({
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
   const [orderData, setOrderData] = useState({} as IOrderData);
+  const [notifications, setNotifications] = useLocalStorage<INotification[]>(
+    "notifications",
+    []
+  );
+  const router = useRouter();
+  const { toast } = useToast();
 
   const addToCart = (id: string, itemQuantity: number) => {
     {
@@ -127,6 +139,34 @@ export const GlobalContextProvider = ({
     );
   };
 
+  const logOut = () => {
+    axios
+      .post("https://nodeserver-v2.onrender.com/api/logout", {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((response) => {
+        setUser({} as IUser);
+        setNotifications([]);
+        setToken("");
+        toast({
+          title: "logged out",
+          description: response.data.message,
+        });
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast({
+          title: "log out",
+          description: "failed to log out",
+        });
+        router.push("/");
+      });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -140,10 +180,13 @@ export const GlobalContextProvider = ({
         setCartList,
         orderData,
         setOrderData,
+        notifications,
+        setNotifications,
         addToCart,
         removeFromCart,
         increaseCartQuantity,
         decreaseCartQuantity,
+        logOut,
       }}
     >
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
