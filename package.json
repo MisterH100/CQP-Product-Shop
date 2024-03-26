@@ -26,6 +26,7 @@
     "dotenv": "^16.4.5",
     "lucide-react": "^0.354.0",
     "next": "latest",
+    "next-themes": "^0.3.0",
     "react": "latest",
     "react-dom": "latest",
     "react-google-places-autocomplete": "^4.0.1",

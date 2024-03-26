@@ -44,7 +44,7 @@ const Cart = () => {
     })
     .reduce((prev, curr) => prev + curr, 0);
   return (
-    <section className="min-h-screen pb-40">
+    <section className="min-h-screen pb-10">
       <Card>
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
@@ -102,7 +102,7 @@ const Cart = () => {
                       <MenubarItem
                         onClick={() =>
                           navigator.share({
-                            title: "Hey i found this" + " " + item.name + " ",
+                            title: item.name,
                             text: "Check out this product on external wear sa",
                             url: `https://cqp-product-shop.vercel.app/product/${item._id}`,
                           })

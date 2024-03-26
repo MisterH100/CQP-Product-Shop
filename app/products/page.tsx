@@ -48,7 +48,7 @@ const ProductsPage = () => {
     return <div>{productData.error.message}</div>;
   }
   return (
-    <section className="min-h-screen px-4 md:px-10 pb-40">
+    <section className="min-h-screen px-4 md:px-10 pb-10">
       <div className="py-6">
         <Search />
       </div>
@@ -59,11 +59,13 @@ const ProductsPage = () => {
             onClick={() => {
               setCategory(cat);
             }}
-            className={
+            className={`${
               category === cat
                 ? buttonVariants({ variant: "default" })
                 : buttonVariants({ variant: "secondary" })
             }
+                rounded-2xl
+            `}
           >
             {cat}
           </Button>
@@ -87,18 +89,23 @@ const ProductsPage = () => {
             productData.data.map((product: IProduct, index: number) => (
               <Link key={product._id} href={`/product/${product._id}`}>
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-[200px] object-cover md:object-contain"
-                    width={500}
-                    height={500}
-                  />
-                  {index < 4 && (
-                    <Badge className="absolute top-4 right-4" variant="default">
-                      New
-                    </Badge>
-                  )}
+                  <div className="w-full h-fit bg-[#FAFAFA]">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-[200px] object-cover md:object-contain"
+                      width={500}
+                      height={500}
+                    />
+                    {index < 4 && (
+                      <Badge
+                        className="absolute top-4 right-4"
+                        variant="destructive"
+                      >
+                        New
+                      </Badge>
+                    )}
+                  </div>
                   <CardHeader className="p-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="font-normal text-sm truncate">
@@ -111,7 +118,7 @@ const ProductsPage = () => {
                     <div className="flex justify-between items-center">
                       <CardDescription>{product.brand}</CardDescription>
                       {product.in_stock < 1 && (
-                        <CardDescription className="text-primary">
+                        <CardDescription className="text-destructive">
                           Sold out
                         </CardDescription>
                       )}
@@ -141,21 +148,23 @@ const ProductsPage = () => {
               (product: IProduct, index: number) => (
                 <Link key={product._id} href={`/product/${product._id}`}>
                   <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                    <Image
-                      src={product.images[0]}
-                      alt={product.name}
-                      className="w-full h-[200px] object-cover md:object-contain"
-                      width={500}
-                      height={500}
-                    />
-                    {index < 4 && (
-                      <Badge
-                        className="absolute top-4 right-4"
-                        variant="default"
-                      >
-                        New
-                      </Badge>
-                    )}
+                    <div className="w-full h-fit bg-[#FAFAFA]">
+                      <Image
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-[200px] object-cover md:object-contain"
+                        width={500}
+                        height={500}
+                      />
+                      {index < 4 && (
+                        <Badge
+                          className="absolute top-4 right-4"
+                          variant="destructive"
+                        >
+                          New
+                        </Badge>
+                      )}
+                    </div>
                     <CardHeader className="p-2">
                       <div className="flex justify-between items-center">
                         <CardTitle className="font-normal text-sm truncate">
@@ -168,7 +177,7 @@ const ProductsPage = () => {
                       <div className="flex justify-between items-center">
                         <CardDescription>{product.brand}</CardDescription>
                         {product.in_stock < 1 && (
-                          <CardDescription className="text-primary">
+                          <CardDescription className="text-destructive">
                             Sold out
                           </CardDescription>
                         )}

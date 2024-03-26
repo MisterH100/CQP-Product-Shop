@@ -50,7 +50,7 @@ const AccountPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <section className="min-h-screen pb-40">
+    <section className="min-h-screen pb-10">
       <Card className="mb-4">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
@@ -93,7 +93,7 @@ const AccountPage = () => {
         </div>
         <CardContent>
           <CardTitle className="text-lg font-medium">Full name</CardTitle>
-          <CardDescription>
+          <CardDescription className="capitalize">
             {user.first_name} {user.last_name}
           </CardDescription>
           <CardTitle className="text-lg font-medium">Email</CardTitle>

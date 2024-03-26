@@ -156,6 +156,7 @@ export const GlobalContextProvider = ({
           description: response.data.message,
         });
         router.push("/");
+        router.refresh();
       })
       .catch((error) => {
         console.log(error);

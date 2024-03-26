@@ -9,7 +9,7 @@ import {
 
 const DeliveriesPage = () => {
   return (
-    <section className="min-h-screen mb-40">
+    <section className="min-h-screen mb-10">
       <Card>
         <CardHeader>
           <CardTitle>Free Deliveries</CardTitle>

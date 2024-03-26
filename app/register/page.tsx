@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -132,7 +132,7 @@ const RegisterPage = () => {
   }, [value]);
 
   return (
-    <section className="relative min-h-screen mb-40">
+    <section className="relative min-h-screen mb-10">
       {loading && <div className="loaderBar"></div>}
       <Card>
         <CardHeader>
@@ -206,7 +206,7 @@ const RegisterPage = () => {
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showPassword ? "password" : "text"}
+                            type={showPassword ? "text" : "password"}
                             placeholder="eg: my_PassW0rd!"
                             {...field}
                           />
@@ -216,7 +216,7 @@ const RegisterPage = () => {
                             variant="outline"
                             className="absolute right-0 top-0 bg-none"
                           >
-                            {showPassword ? <EyeIcon /> : <EyeOffIcon />}
+                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                           </Button>
                         </div>
                       </FormControl>
@@ -233,7 +233,7 @@ const RegisterPage = () => {
                       <FormLabel>Confirm Password</FormLabel>
                       <FormControl>
                         <Input
-                          type={showPassword ? "password" : "text"}
+                          type={showPassword ? "text" : "password"}
                           {...field}
                         />
                       </FormControl>
@@ -283,12 +283,22 @@ const RegisterPage = () => {
                     <FormItem className="pt-4">
                       <FormLabel>Phone number</FormLabel>
                       <FormControl>
-                        <Input
-                          type="tel"
-                          required={false}
-                          placeholder="eg: 714556002"
-                          {...field}
-                        />
+                        <div className="flex">
+                          <span
+                            className={`${buttonVariants({
+                              variant: "outline",
+                            })} rounded-l-md`}
+                          >
+                            +27
+                          </span>
+                          <Input
+                            type="tel"
+                            required={false}
+                            placeholder="eg: 714556002"
+                            className="rounded-l-none rounded-r-md"
+                            {...field}
+                          />
+                        </div>
                       </FormControl>
                       <FormDescription>Optional</FormDescription>
                       <FormMessage />
@@ -331,6 +341,7 @@ const RegisterPage = () => {
                   )}
                 />
                 <Button
+                  disabled={loading}
                   type="submit"
                   className="w-full rounded-2xl mt-10"
                   variant="default"

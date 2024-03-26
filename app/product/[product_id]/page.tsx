@@ -36,7 +36,7 @@ const ProductPage = ({
     return <div>{product.error.message}</div>;
   }
   return (
-    <section className="min-h-screen px-4 md:px-10 pb-40">
+    <section className="min-h-screen px-4 md:px-10 pb-10">
       <div className="py-6">
         <Search />
       </div>
@@ -51,13 +51,15 @@ const ProductPage = ({
           </Card>
         ) : (
           <Card className="md:w-2/3 mb-10 overflow-hidden">
-            <Image
-              src={product.data.images[0]}
-              alt={product.data.name}
-              className="w-full h-[500px] object-contain"
-              width={500}
-              height={500}
-            />
+            <div className="w-full h-fit bg-[#FAFAFA]">
+              <Image
+                src={product.data.images[0]}
+                alt={product.data.name}
+                className="w-full h-[500px] object-contain"
+                width={500}
+                height={500}
+              />
+            </div>
             <CardHeader>
               <div className="flex justify-between items-center">
                 <CardTitle>{product.data.name}</CardTitle>

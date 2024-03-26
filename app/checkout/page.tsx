@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -60,7 +60,7 @@ const formSchema = z.object({
   phone: z
     .string()
     .min(9, { message: "Invalid phone number" })
-    .max(10, { message: "Invalid phone number" })
+    .max(9, { message: "Invalid phone number" })
     .regex(phoneRegex, "Invalid phone number"),
   address: z.string().min(10, { message: "Invalid address" }),
   payment_method: z.enum(["card", "cash"], {
@@ -164,7 +164,7 @@ const CheckoutPage = () => {
   }, [value]);
 
   return (
-    <section className="relative min-h-screen mb-40">
+    <section className="relative min-h-screen mb-10">
       {loading && <div className="loaderBar"></div>}
       <Card>
         <CardHeader>
@@ -187,7 +187,11 @@ const CheckoutPage = () => {
                     <FormItem>
                       <FormLabel>First Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="eg: John" {...field} />
+                        <Input
+                          className="capitalize"
+                          placeholder="eg: John"
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>Required field</FormDescription>
                       <FormMessage />
@@ -201,7 +205,11 @@ const CheckoutPage = () => {
                     <FormItem className="pt-4">
                       <FormLabel>Last Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="eg: Doe" {...field} />
+                        <Input
+                          className="capitalize"
+                          placeholder="eg: Doe"
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>Required field</FormDescription>
                       <FormMessage />
@@ -233,11 +241,21 @@ const CheckoutPage = () => {
                     <FormItem className="pt-4">
                       <FormLabel>Phone number</FormLabel>
                       <FormControl>
-                        <Input
-                          type="tel"
-                          placeholder="eg: 714556002"
-                          {...field}
-                        />
+                        <div className="flex">
+                          <span
+                            className={`${buttonVariants({
+                              variant: "outline",
+                            })} rounded-l-md`}
+                          >
+                            +27
+                          </span>
+                          <Input
+                            type="tel"
+                            placeholder="eg: 714556002"
+                            className="rounded-l-none rounded-r-md"
+                            {...field}
+                          />
+                        </div>
                       </FormControl>
                       <FormDescription>Required field</FormDescription>
                       <FormMessage />
@@ -347,13 +365,13 @@ const CheckoutPage = () => {
                           I have read and agree to the{" "}
                           <Link
                             className="text-blue-800"
-                            href="/privacy-policy"
+                            href="/learn-more/privacy-policy"
                           >
                             Privacy Policy
                           </Link>
                         </FormLabel>
                         <FormDescription>
-                          I understand product store privacy policy
+                          I understand external wear sa privacy policy
                         </FormDescription>
                         <FormMessage />
                       </div>

@@ -1,9 +1,19 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { BottomNav } from "@/components/layout/bottom_nav";
 import { Toaster } from "@/components/ui/toaster";
 import { GlobalContextProvider } from "@/lib/global_context";
+import { ThemeProvider } from "@/lib/theme_provider";
+import Link from "next/link";
 const poppins = Poppins({
   weight: ["400", "500", "900"],
   subsets: ["latin"],
@@ -20,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="apple-touch-icon"
@@ -42,15 +52,45 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
-        <GlobalContextProvider>
-          <Toaster />
-          <main className={` ${poppins.className} relative`}>
-            {children}
-            <div className="w-full fixed bottom-0 left-0">
-              <BottomNav />
-            </div>
-          </main>
-        </GlobalContextProvider>
+        <ThemeProvider attribute="class" defaultTheme="light">
+          <GlobalContextProvider>
+            <Toaster />
+            <main className={` ${poppins.className} relative`}>
+              {children}
+              <Card className="min-h-[300px]">
+                <CardFooter className="flex-col">
+                  <CardHeader>
+                    <CardTitle>external wear sa</CardTitle>
+                    <CardDescription>Follow us on our socials</CardDescription>
+                  </CardHeader>
+                  <Link className="underline" href="/">
+                    Instagram
+                  </Link>
+                  <div className="flex gap-4 mt-2">
+                    <Link
+                      className="underline"
+                      href="mailto:thehandsomedevservices@gmail.com"
+                    >
+                      Contact us
+                    </Link>
+                    <Link className="underline" href="/learn-more/deliveries">
+                      Deliveries
+                    </Link>
+                    <Link
+                      className="underline"
+                      href="/learn-more/privacy-policy"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </div>
+                </CardFooter>
+              </Card>
+              <div className="w-full fixed bottom-0 left-0">
+                <BottomNav />
+              </div>
+            </main>
+          </GlobalContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

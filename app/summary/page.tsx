@@ -59,7 +59,7 @@ const SummaryPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <section className="min-h-screen mb-40">
+    <section className="min-h-screen mb-10">
       <Card>
         <CardHeader>
           <CardTitle>Delivery</CardTitle>
@@ -136,7 +136,6 @@ const SummaryPage = () => {
                 })} rounded-2xl`}
                 href="/"
               >
-                {" "}
                 continue shopping
               </Link>
             </div>

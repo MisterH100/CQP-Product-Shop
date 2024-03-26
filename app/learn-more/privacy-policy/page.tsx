@@ -6,36 +6,41 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 const PrivacyPolicyPage = () => {
   return (
-    <section className="min-h-screen mb-40">
+    <section className="min-h-screen mb-10">
       <Card>
         <CardHeader>
-          <CardTitle>ProductStore</CardTitle>
-          <CardDescription>ProductStore privacy policy</CardDescription>
+          <CardTitle>external wear sa</CardTitle>
+          <CardDescription>external wear sa privacy policy</CardDescription>
         </CardHeader>
         <CardContent>
           <CardHeader className="px-0">
-            <CardTitle>Privacy Policy</CardTitle>
+            <CardTitle className="font-medium">Privacy Policy</CardTitle>
           </CardHeader>
           <p>
-            ProductStore Team operates ProductStore.This page informs you of our
-            policies regarding the collection, use, and disclosure of personal
-            data when you use our site and the choices you have associated with
-            that data. We use your data to provide and improve the site. By
-            using the site, you agree to the collection and use of information
-            in accordance with this policy.
+            external wear sa Team operates external wear sa.This page informs
+            you of our policies regarding the collection, use, and disclosure of
+            personal data when you use our site and the choices you have
+            associated with that data. We use your data to provide and improve
+            the site. By using the site, you agree to the collection and use of
+            information in accordance with this policy.
           </p>
           <CardHeader className="px-0">
-            <CardTitle>Information Collection and Use</CardTitle>
+            <CardTitle className="font-medium">
+              Information Collection and Use
+            </CardTitle>
           </CardHeader>
           <p>
             We collect several different types of information for various
             purposes to provide and improve our service to you.
           </p>
           <CardHeader className="px-0">
-            <CardTitle>Types of Data Collected</CardTitle>
+            <CardTitle className="font-medium">
+              Types of Data Collected
+            </CardTitle>
           </CardHeader>
           <p>
             While using our site, we may ask you to provide us with certain
@@ -50,7 +55,7 @@ const PrivacyPolicyPage = () => {
             <li>Address</li>
           </ul>
           <CardHeader className="px-0">
-            <CardTitle>Use of Data</CardTitle>
+            <CardTitle className="font-medium">Use of Data</CardTitle>
           </CardHeader>
           <p>
             We use the collected data for various purposes, including but not
@@ -72,7 +77,7 @@ const PrivacyPolicyPage = () => {
             <li>To detect, prevent and address technical issues</li>
           </ul>
           <CardHeader className="px-0">
-            <CardTitle>Disclosure of Data</CardTitle>
+            <CardTitle className="font-medium">Disclosure of Data</CardTitle>
           </CardHeader>
           <p>
             We do not sell, trade, or otherwise transfer your Personal Data to
@@ -85,7 +90,7 @@ const PrivacyPolicyPage = () => {
             safety.
           </p>
           <CardHeader className="px-0">
-            <CardTitle>Security of Data</CardTitle>
+            <CardTitle className="font-medium">Security of Data</CardTitle>
           </CardHeader>
           <p>
             We take reasonable measures to protect the security of your personal
@@ -95,7 +100,7 @@ const PrivacyPolicyPage = () => {
             security.
           </p>
           <CardHeader className="px-0">
-            <CardTitle>Your Rights</CardTitle>
+            <CardTitle className="font-medium">Your Rights</CardTitle>
           </CardHeader>
           <p>
             You have the right to access, correct, or delete your personal
@@ -106,7 +111,9 @@ const PrivacyPolicyPage = () => {
             administrative messages regarding your orders or account.
           </p>
           <CardHeader className="px-0">
-            <CardTitle>Changes to this Privacy Policy</CardTitle>
+            <CardTitle className="font-medium">
+              Changes to this Privacy Policy
+            </CardTitle>
           </CardHeader>
           <p>
             We reserve the right to update or change this Privacy Policy at any
@@ -115,11 +122,15 @@ const PrivacyPolicyPage = () => {
             this Privacy Policy periodically for any updates or changes.
           </p>
           <CardHeader className="px-0">
-            <CardTitle>Contact Us</CardTitle>
+            <CardTitle className="font-medium">Contact Us</CardTitle>
           </CardHeader>
           <p>
             If you have any questions or concerns about this Privacy Policy or
-            our data practices, please contact us at handsomenyathi1@gmail.com.
+            our data practices, please contact us at:{" "}
+            <Link href="mailto:thehandsomedevservices@gmail.com">
+              thehandsomedevservices@gmail.com
+            </Link>
+            .
           </p>
         </CardContent>
       </Card>

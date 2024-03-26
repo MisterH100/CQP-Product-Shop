@@ -89,7 +89,7 @@ const LoginPage = () => {
   }
 
   return (
-    <section className="relative min-h-screen mb-40">
+    <section className="relative min-h-screen mb-10">
       {loading && <div className="loaderBar"></div>}
       <Card>
         <CardHeader>
@@ -135,7 +135,7 @@ const LoginPage = () => {
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showPassword ? "password" : "text"}
+                            type={showPassword ? "text" : "password"}
                             placeholder="eg: my_PassW0rd!"
                             {...field}
                           />
@@ -145,7 +145,7 @@ const LoginPage = () => {
                             variant="outline"
                             className="absolute right-0 top-0 bg-none"
                           >
-                            {showPassword ? <EyeIcon /> : <EyeOffIcon />}
+                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                           </Button>
                         </div>
                       </FormControl>
@@ -155,6 +155,7 @@ const LoginPage = () => {
                   )}
                 />
                 <Button
+                  disabled={loading}
                   type="submit"
                   className="w-full rounded-2xl mt-10"
                   variant="default"

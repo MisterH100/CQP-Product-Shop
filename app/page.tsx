@@ -131,8 +131,7 @@ const Home = () => {
       addNewNotification({
         _id: "notif1",
         title: "Account verification",
-        message:
-          "You have successfully logged in to external wear sa, verify your account, by clicking link in your email",
+        message: `Hi ${user.first_name} ${user.last_name}, you have successfully logged in to external wear sa, email address: ${user.email}`,
         read: false,
         public: false,
       });
@@ -163,7 +162,7 @@ const Home = () => {
   }, [productData.data, notificationData.data]);
 
   return (
-    <section className="relative w-full min-h-screen pb-20">
+    <section className="relative w-full min-h-screen pb-10">
       <Card className="border-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
@@ -181,11 +180,9 @@ const Home = () => {
                       />
                     )}
                     <div className="text-left ml-2">
-                      <CardTitle className="text-lg">
+                      <CardTitle className="text-lg font-medium capitalize">
                         Hi{" "}
-                        {user.first_name != null
-                          ? user.first_name.toUpperCase()
-                          : "Shopper"}
+                        {user.first_name != null ? user.first_name : "Shopper"}
                       </CardTitle>
                       <CardDescription className="text-sm">
                         What do you feel like getting today
@@ -332,10 +329,10 @@ const Home = () => {
       <div className="py-4 px-4 md:px-10">
         <Search />
       </div>
-      <div className="relative w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 rounded-2xl overflow-hidden bg-[#F5F5F5]">
+      <div className="relative w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 overflow-hidden bg-secondary">
         <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center px-4">
           <CardHeader>
-            <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] ">
+            <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] text-primary">
               external wear sa.
             </CardTitle>
           </CardHeader>
@@ -366,16 +363,21 @@ const Home = () => {
                 href={`/product/${product._id}`}
               >
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-[200px] object-contain"
-                    width={500}
-                    height={500}
-                  />
-                  <Badge className="absolute top-4 right-4" variant="default">
-                    New
-                  </Badge>
+                  <div className="w-full h-fit bg-[#FAFAFA]">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-[200px] object-contain"
+                      width={500}
+                      height={500}
+                    />
+                    <Badge
+                      className="absolute top-4 right-4"
+                      variant="destructive"
+                    >
+                      New
+                    </Badge>
+                  </div>
                   <CardHeader className="p-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="font-normal text-sm truncate">
@@ -388,7 +390,7 @@ const Home = () => {
                     <div className="flex justify-between items-center">
                       <CardDescription>{product.brand}</CardDescription>
                       {product.in_stock < 1 && (
-                        <CardDescription className="text-primary">
+                        <CardDescription className="text-destructive">
                           Sold out
                         </CardDescription>
                       )}
@@ -434,13 +436,15 @@ const Home = () => {
                 href={`/product/${product._id}`}
               >
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-[200px] object-contain"
-                    width={500}
-                    height={500}
-                  />
+                  <div className="w-full h-fit bg-[#FAFAFA]">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-[200px] object-contain"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
                   <CardHeader className="p-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="font-normal text-sm truncate">
@@ -453,7 +457,7 @@ const Home = () => {
                     <div className="flex justify-between items-center">
                       <CardDescription>{product.brand}</CardDescription>
                       {product.in_stock < 1 && (
-                        <CardDescription className="text-primary">
+                        <CardDescription className="text-destructive">
                           Sold out
                         </CardDescription>
                       )}
@@ -499,13 +503,15 @@ const Home = () => {
                 href={`/product/${product._id}`}
               >
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-[200px] object-contain"
-                    width={500}
-                    height={500}
-                  />
+                  <div className="w-full h-fit bg-[#FAFAFA]">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-[200px] object-contain"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
                   <CardHeader className="p-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="font-normal text-sm truncate">
@@ -518,7 +524,7 @@ const Home = () => {
                     <div className="flex justify-between items-center">
                       <CardDescription>{product.brand}</CardDescription>
                       {product.in_stock < 1 && (
-                        <CardDescription className="text-primary">
+                        <CardDescription className="text-destructive">
                           Sold out
                         </CardDescription>
                       )}
