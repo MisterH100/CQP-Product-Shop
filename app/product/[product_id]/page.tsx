@@ -78,8 +78,12 @@ const ProductPage = ({ params }: Props) => {
             </div>
             <CardHeader>
               <div className="flex justify-between items-center">
-                <CardTitle>{product.data.name}</CardTitle>
-                <CardTitle>{randsSA.format(product.data.price)}</CardTitle>
+                <CardTitle className="font-normal truncate">
+                  {product.data.name}
+                </CardTitle>
+                <CardTitle className="font-normal">
+                  {randsSA.format(product.data.price)}
+                </CardTitle>
               </div>
               <CardDescription>{product.data.brand}</CardDescription>
             </CardHeader>
