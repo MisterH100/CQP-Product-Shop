@@ -11,10 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
-import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/layout/skeleton";
 
@@ -60,7 +58,7 @@ const OrderPage = () => {
           </Link>
         </div>
       </Card>
-      <Card>
+      <Card className="mt-4">
         <CardHeader>
           <CardTitle>Order details</CardTitle>
         </CardHeader>

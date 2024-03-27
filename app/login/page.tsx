@@ -79,7 +79,6 @@ const LoginPage = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         toast({
           title: "log in error",

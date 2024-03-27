@@ -104,7 +104,7 @@ const Cart = () => {
                           navigator.share({
                             title: item.name,
                             text: "Check out this product on external wear sa",
-                            url: `https://cqp-product-shop.vercel.app/product/${item._id}`,
+                            url: `https://productshop-official.vercel.app/product/${item._id}`,
                           })
                         }
                       >

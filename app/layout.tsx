@@ -20,8 +20,22 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "external wear sa",
+  title: "External wear sa",
   description: "Welcome to our store",
+  openGraph: {
+    title: "External wear sa",
+    description:
+      "Welcome to external wear sa, what do you feel like getting today",
+    url: "https://productshop-official.vercel.app",
+    siteName: "External wear sa",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dxrpjdomo/image/upload/v1711540298/Products/assets/externalwearbanner_hcq2bh.png",
+        width: 800,
+        height: 300,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

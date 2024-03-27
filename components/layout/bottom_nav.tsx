@@ -25,7 +25,7 @@ export const BottomNav = () => {
     },
   ];
   return (
-    <Card>
+    <Card className="rounded-none">
       <nav className="flex justify-center">
         {navLinks.map((link) => (
           <CardHeader key={link.id}>

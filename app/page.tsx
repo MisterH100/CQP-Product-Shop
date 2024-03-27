@@ -26,7 +26,6 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Search } from "@/components/ui/search_field";
 import {
@@ -50,8 +49,7 @@ import { randsSA } from "@/lib/format_to_rand";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useLocalStorage } from "@/lib/local_storage";
-
+import externalWearBanner from "@/public/externalwearbanner.png";
 const Home = () => {
   const router = useRouter();
   const { setSelected, user, notifications, setNotifications, logOut } =
@@ -325,14 +323,15 @@ const Home = () => {
       <div className="py-4 px-4 md:px-10">
         <Search />
       </div>
-      <div className="relative w-full h-[200px] md:h-[300px] my-4 px-4 md:px-10 overflow-hidden bg-secondary">
-        <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center px-4">
-          <CardHeader>
-            <CardTitle className="font-normal text-2xl md:text-5xl tracking-[4px] text-primary">
-              external wear sa.
-            </CardTitle>
-          </CardHeader>
-        </div>
+      <div className="relative w-full h-[200px] flex justify-center md:h-[300px] my-4 px-4 md:px-10 overflow-hidden bg-[#ffffff]">
+        <Image
+          className="w-auto h-full object-contain"
+          src={externalWearBanner}
+          alt="external wear sa"
+          width={800}
+          height={300}
+          priority
+        />
       </div>
       <div className="px-4 md:px-10 py-4">
         <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
@@ -359,7 +358,7 @@ const Home = () => {
                 href={`/product/${product._id}`}
               >
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <div className="w-full h-fit bg-[#FAFAFA]">
+                  <div className="w-full h-fit bg-[#ffffff]">
                     <Image
                       src={product.images[0]}
                       alt={product.name}
@@ -432,7 +431,7 @@ const Home = () => {
                 href={`/product/${product._id}`}
               >
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <div className="w-full h-fit bg-[#FAFAFA]">
+                  <div className="w-full h-fit bg-[#ffffff]">
                     <Image
                       src={product.images[0]}
                       alt={product.name}
@@ -499,7 +498,7 @@ const Home = () => {
                 href={`/product/${product._id}`}
               >
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <div className="w-full h-fit bg-[#FAFAFA]">
+                  <div className="w-full h-fit bg-[#ffffff]">
                     <Image
                       src={product.images[0]}
                       alt={product.name}

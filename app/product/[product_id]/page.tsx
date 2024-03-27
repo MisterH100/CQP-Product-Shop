@@ -15,13 +15,13 @@ import { randsSA } from "@/lib/format_to_rand";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 
-const ProductPage = ({
-  params: { product_id },
-}: {
+type Props = {
   params: { product_id: string };
-}) => {
+};
+
+const ProductPage = ({ params }: Props) => {
+  const product_id = params.product_id;
   const { addToCart, setSelected } = useGlobalContext();
   const product = useQuery({
     queryKey: ["product"],
@@ -67,7 +67,7 @@ const ProductPage = ({
           </Card>
         ) : (
           <Card className="md:w-2/3 mb-10 overflow-hidden">
-            <div className="w-full h-fit bg-[#FAFAFA]">
+            <div className="w-full h-fit bg-[#ffffff]">
               <Image
                 src={product.data.images[0]}
                 alt={product.data.name}
@@ -126,7 +126,7 @@ const ProductPage = ({
                     href={`/product/${product._id}`}
                   >
                     <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                      <div className="w-full h-fit bg-[#FAFAFA]">
+                      <div className="w-full h-fit bg-[#ffffff]">
                         <Image
                           src={product.images[0]}
                           alt={product.name}

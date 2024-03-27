@@ -89,7 +89,7 @@ const ProductsPage = () => {
             productData.data.map((product: IProduct, index: number) => (
               <Link key={product._id} href={`/product/${product._id}`}>
                 <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <div className="w-full h-fit bg-[#FAFAFA]">
+                  <div className="w-full h-fit bg-[#ffffff]">
                     <Image
                       src={product.images[0]}
                       alt={product.name}
@@ -148,7 +148,7 @@ const ProductsPage = () => {
               (product: IProduct, index: number) => (
                 <Link key={product._id} href={`/product/${product._id}`}>
                   <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                    <div className="w-full h-fit bg-[#FAFAFA]">
+                    <div className="w-full h-fit bg-[#ffffff]">
                       <Image
                         src={product.images[0]}
                         alt={product.name}
