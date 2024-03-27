@@ -14,13 +14,15 @@ import { useQuery } from "@tanstack/react-query";
 import { randsSA } from "@/lib/format_to_rand";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 const ProductPage = ({
   params: { product_id },
 }: {
   params: { product_id: string };
 }) => {
-  const { addToCart } = useGlobalContext();
+  const { addToCart, setSelected } = useGlobalContext();
   const product = useQuery({
     queryKey: ["product"],
     queryFn: async () => {
@@ -30,6 +32,18 @@ const ProductPage = ({
       const data = await res.json();
       return data;
     },
+  });
+
+  const similarProducts = useQuery({
+    queryKey: ["similarProducts", product.data.category],
+    queryFn: async () => {
+      const res: any = await fetch(
+        `https://nodeserver-v2.onrender.com/api/products/category/${product.data.category}`
+      );
+      const data = await res.json();
+      return data;
+    },
+    enabled: !!product.data.category,
   });
 
   if (product.error) {
@@ -81,6 +95,64 @@ const ProductPage = ({
               </Button>
             </CardFooter>
           </Card>
+        )}
+      </div>
+      <div className="px-4 md:px-10 py-4">
+        <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
+          Similar Products
+        </h1>
+        {similarProducts.isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index}>
+                <Skeleton className="h-[125px] rounded-2xl" />
+                <div className="mt-2">
+                  <Skeleton className="h-4 mb-2" />
+                  <Skeleton className="h-4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:place-items-center">
+            {similarProducts.data.map((product: IProduct) => (
+              <Link
+                key={product._id}
+                onClick={() => setSelected("")}
+                href={`/product/${product._id}`}
+              >
+                <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
+                  <div className="w-full h-fit bg-[#FAFAFA]">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-[200px] object-contain"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                  <CardHeader className="p-2">
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="font-normal text-sm truncate">
+                        {product.name}
+                      </CardTitle>
+                      <CardTitle className="text-sm font-normal">
+                        {randsSA.format(product.price)}
+                      </CardTitle>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <CardDescription>{product.brand}</CardDescription>
+                      {product.in_stock < 1 && (
+                        <CardDescription className="text-destructive">
+                          Sold out
+                        </CardDescription>
+                      )}
+                    </div>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </section>

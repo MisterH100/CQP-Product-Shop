@@ -313,18 +313,20 @@ const RegisterPage = () => {
                       <FormLabel>Address search</FormLabel>
                       <FormControl>
                         <div>
-                          <GooglePlacesAutocomplete
-                            apiKey={process.env.GOOGLE_MAPS_API_KEY}
-                            autocompletionRequest={{
-                              componentRestrictions: {
-                                country: ["za"],
-                              },
-                            }}
-                            selectProps={{
-                              value,
-                              onChange: setValue,
-                            }}
-                          />
+                          <div className="text-black">
+                            <GooglePlacesAutocomplete
+                              apiKey={process.env.GOOGLE_MAPS_API_KEY}
+                              autocompletionRequest={{
+                                componentRestrictions: {
+                                  country: ["za"],
+                                },
+                              }}
+                              selectProps={{
+                                value,
+                                onChange: setValue,
+                              }}
+                            />
+                          </div>
                           <Input
                             id="output"
                             type="text"
