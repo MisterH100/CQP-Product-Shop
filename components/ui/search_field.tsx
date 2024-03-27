@@ -6,10 +6,12 @@ import Link from "next/link";
 import { useGlobalContext } from "@/lib/global_context";
 import { useState } from "react";
 import { XIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export const Search = ({ textValue }: { textValue?: string }) => {
   const { setSelected } = useGlobalContext();
   const [value, setValue] = useState(textValue);
+  const pathname = usePathname();
   const sanitizeString = (str: string) => {
     return str.replace(/\s+/g, " ").toLowerCase();
   };
@@ -37,7 +39,7 @@ export const Search = ({ textValue }: { textValue?: string }) => {
         href={
           typeof value != "undefined" && value != ""
             ? "/search/" + value.replace(/\s+/g, "")
-            : "/"
+            : pathname
         }
         className={` ${buttonVariants({
           variant: "outline",

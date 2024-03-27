@@ -160,6 +160,9 @@ const LoginPage = () => {
                   variant="default"
                 >
                   Login
+                  {loading && (
+                    <CircleDashed className="ml-4 w-4 h-4 animate-spin" />
+                  )}
                 </Button>
               </div>
             </form>

@@ -28,7 +28,7 @@ import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useToast } from "@/components/ui/use-toast";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { CircleDashed, EyeIcon, EyeOffIcon } from "lucide-react";
 import axios from "axios";
 
 const formSchema = z
@@ -348,6 +348,9 @@ const RegisterPage = () => {
                   variant="default"
                 >
                   Sign Up
+                  {loading && (
+                    <CircleDashed className="ml-4 w-4 h-4 animate-spin" />
+                  )}
                 </Button>
               </div>
             </form>

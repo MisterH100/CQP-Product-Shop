@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 const AccountPage = () => {
   const { user, setUser, setSelected, token, logOut, auth, setAuth } =
     useGlobalContext();
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -26,6 +27,7 @@ const AccountPage = () => {
     if (auth) {
       return;
     }
+    setLoading(true);
     axios
       .get("https://nodeserver-v2.onrender.com/api/auth", {
         headers: {
@@ -43,6 +45,7 @@ const AccountPage = () => {
           });
           setAuth(true);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -50,12 +53,14 @@ const AccountPage = () => {
           title: "authentication",
           description: "authentication failed",
         });
+        setLoading(false);
         router.push("/");
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <section className="min-h-screen pb-10">
+      {loading && <div className="loaderBar"></div>}
       <Card className="mb-4">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>

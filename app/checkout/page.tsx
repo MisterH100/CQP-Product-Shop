@@ -275,18 +275,20 @@ const CheckoutPage = () => {
                       <FormLabel>Address search</FormLabel>
                       <FormControl>
                         <div>
-                          <GooglePlacesAutocomplete
-                            apiKey={process.env.GOOGLE_MAPS_API_KEY}
-                            autocompletionRequest={{
-                              componentRestrictions: {
-                                country: ["za"],
-                              },
-                            }}
-                            selectProps={{
-                              value,
-                              onChange: setValue,
-                            }}
-                          />
+                          <div className="text-black">
+                            <GooglePlacesAutocomplete
+                              apiKey={process.env.GOOGLE_MAPS_API_KEY}
+                              autocompletionRequest={{
+                                componentRestrictions: {
+                                  country: ["za"],
+                                },
+                              }}
+                              selectProps={{
+                                value,
+                                onChange: setValue,
+                              }}
+                            />
+                          </div>
                           <Input
                             id="output"
                             type="text"
@@ -380,11 +382,15 @@ const CheckoutPage = () => {
                 />
                 <div className="w-full pt-10">
                   <Button
+                    disabled={loading}
                     type="submit"
                     className="w-full rounded-2xl"
                     variant="default"
                   >
                     Confirm order
+                    {loading && (
+                      <CircleDashed className="ml-4 w-4 h-4 animate-spin" />
+                    )}
                   </Button>
                 </div>
               </div>
