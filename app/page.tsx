@@ -56,7 +56,6 @@ const Home = () => {
   const router = useRouter();
   const { setSelected, user, notifications, setNotifications, logOut } =
     useGlobalContext();
-  const [featuredProducts, setFeaturedProducts] = useState<IProduct[]>([]);
   const [notRead, setNotRead] = useState<INotification[]>([]);
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState<INotification>(
@@ -149,9 +148,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (productData.data) {
-      setFeaturedProducts(productData.data.slice(0, 4));
-    }
     if (notificationData.data) {
       setNotRead(
         notificationData.data.filter(
@@ -159,7 +155,7 @@ const Home = () => {
         )
       );
     }
-  }, [productData.data, notificationData.data]);
+  }, [notificationData.data]);
 
   return (
     <section className="relative w-full min-h-screen pb-10">
@@ -356,7 +352,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:place-items-center">
-            {featuredProducts.map((product: IProduct) => (
+            {productData.data.slice(0, 4).map((product: IProduct) => (
               <Link
                 key={product._id}
                 onClick={() => setSelected("")}
@@ -429,7 +425,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:place-items-center">
-            {phoneData.data.slice(0, 4).map((product: IProduct) => (
+            {phoneData.data.slice(4, 8).map((product: IProduct) => (
               <Link
                 key={product._id}
                 onClick={() => setSelected("")}

@@ -82,8 +82,8 @@ const LoginPage = () => {
         console.log(error);
         setLoading(false);
         toast({
-          title: "log in",
-          description: "failed to log in",
+          title: "log in error",
+          description: error.response.data.message,
         });
       });
   }

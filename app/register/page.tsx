@@ -116,11 +116,10 @@ const RegisterPage = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         toast({
           title: "registration",
-          description: "failed to register user",
+          description: error.response.data.message,
         });
       });
   }

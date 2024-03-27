@@ -17,11 +17,15 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const AccountPage = () => {
-  const { user, setUser, setSelected, token, logOut } = useGlobalContext();
+  const { user, setUser, setSelected, token, logOut, auth, setAuth } =
+    useGlobalContext();
   const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
+    if (auth) {
+      return;
+    }
     axios
       .get("https://nodeserver-v2.onrender.com/api/auth", {
         headers: {
@@ -37,6 +41,7 @@ const AccountPage = () => {
             title: "authentication",
             description: response.data.message,
           });
+          setAuth(true);
         }
       })
       .catch((error) => {

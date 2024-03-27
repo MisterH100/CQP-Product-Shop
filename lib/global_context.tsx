@@ -57,6 +57,8 @@ interface contextProps {
   setUser: Dispatch<SetStateAction<IUser>>;
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
+  auth: boolean;
+  setAuth: Dispatch<SetStateAction<boolean>>;
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
   cartList: IProduct[];
@@ -81,6 +83,7 @@ export const GlobalContextProvider = ({
 }) => {
   const [user, setUser] = useLocalStorage("user", {} as IUser);
   const [token, setToken] = useLocalStorage("token", "");
+  const [auth, setAuth] = useState(false);
   const [selected, setSelected] = useState("Home");
   const [cartList, setCartList] = useLocalStorage<IProduct[]>("localCart", []);
   const [orderData, setOrderData] = useState({} as IOrderData);
@@ -175,6 +178,8 @@ export const GlobalContextProvider = ({
         setUser,
         token,
         setToken,
+        auth,
+        setAuth,
         selected,
         setSelected,
         cartList,

@@ -52,7 +52,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <GlobalContextProvider>
             <Toaster />
             <main className={` ${poppins.className} relative`}>

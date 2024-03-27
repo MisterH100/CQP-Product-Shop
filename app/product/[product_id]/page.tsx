@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -34,16 +34,18 @@ const ProductPage = ({
     },
   });
 
+  const category = product.data ? product.data.category : null;
+
   const similarProducts = useQuery({
-    queryKey: ["similarProducts", product.data.category],
+    queryKey: ["similarProducts", category],
     queryFn: async () => {
       const res: any = await fetch(
-        `https://nodeserver-v2.onrender.com/api/products/category/${product.data.category}`
+        `https://nodeserver-v2.onrender.com/api/products/category/${category}`
       );
       const data = await res.json();
       return data;
     },
-    enabled: !!product.data.category,
+    enabled: !!category,
   });
 
   if (product.error) {
@@ -101,7 +103,7 @@ const ProductPage = ({
         <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
           Similar Products
         </h1>
-        {similarProducts.isLoading ? (
+        {similarProducts.isPending ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {Array.from({ length: 4 }).map((_, index) => (
               <div key={index}>
@@ -115,45 +117,57 @@ const ProductPage = ({
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:place-items-center">
-            {similarProducts.data.map((product: IProduct) => (
-              <Link
-                key={product._id}
-                onClick={() => setSelected("")}
-                href={`/product/${product._id}`}
-              >
-                <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
-                  <div className="w-full h-fit bg-[#FAFAFA]">
-                    <Image
-                      src={product.images[0]}
-                      alt={product.name}
-                      className="w-full h-[200px] object-contain"
-                      width={500}
-                      height={500}
-                    />
-                  </div>
-                  <CardHeader className="p-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="font-normal text-sm truncate">
-                        {product.name}
-                      </CardTitle>
-                      <CardTitle className="text-sm font-normal">
-                        {randsSA.format(product.price)}
-                      </CardTitle>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <CardDescription>{product.brand}</CardDescription>
-                      {product.in_stock < 1 && (
-                        <CardDescription className="text-destructive">
-                          Sold out
-                        </CardDescription>
-                      )}
-                    </div>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
+            {similarProducts.data.slice(0, 9).map(
+              (product: IProduct) =>
+                product._id != product_id && (
+                  <Link
+                    key={product._id}
+                    onClick={() => setSelected("")}
+                    href={`/product/${product._id}`}
+                  >
+                    <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
+                      <div className="w-full h-fit bg-[#FAFAFA]">
+                        <Image
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="w-full h-[200px] object-contain"
+                          width={500}
+                          height={500}
+                        />
+                      </div>
+                      <CardHeader className="p-2">
+                        <div className="flex justify-between items-center">
+                          <CardTitle className="font-normal text-sm truncate">
+                            {product.name}
+                          </CardTitle>
+                          <CardTitle className="text-sm font-normal">
+                            {randsSA.format(product.price)}
+                          </CardTitle>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <CardDescription>{product.brand}</CardDescription>
+                          {product.in_stock < 1 && (
+                            <CardDescription className="text-destructive">
+                              Sold out
+                            </CardDescription>
+                          )}
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                )
+            )}
           </div>
         )}
+        <div className="w-full flex justify-center py-4">
+          <Link
+            onClick={() => setSelected("")}
+            href="/products"
+            className={`${buttonVariants({ variant: "outline" })} rounded-2xl`}
+          >
+            View all
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -67,19 +67,19 @@ const OrderPage = () => {
         <CardContent>
           {orderData.isLoading ? (
             Array.from({ length: 3 }).map((_, index) => (
-              <div key={index}>
+              <div key={index} className="my-2">
                 <Skeleton className="w-full h-[100px] rounded-2xl" />
                 <div className="flex gap-4 mt-2">
                   <Skeleton className="w-10 h-10" />
-                  <Skeleton className="w-10 h-10" />
-                  <Skeleton className="w-10 h-10" />
+                  <Skeleton className="w-10 h-10 ml-2" />
+                  <Skeleton className="w-10 h-10 ml-2" />
                 </div>
               </div>
             ))
           ) : orderData.data.length > 1 ? (
             orderData.data.map((order: IOrders) => (
               <div key={order._id}>
-                <Separator className="mt-4" />
+                <Separator className="my-4" />
                 <div>
                   <div className="flex justify-between items-center">
                     <CardTitle className="text-lg font-medium">
