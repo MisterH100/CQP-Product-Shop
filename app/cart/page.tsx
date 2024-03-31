@@ -17,11 +17,7 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { XIcon } from "lucide-react";
-import { Ellipsis } from "lucide-react";
-import { Trash } from "lucide-react";
-import { ShareIcon } from "lucide-react";
-import { StarIcon } from "lucide-react";
+import { XIcon, Ellipsis, Trash, ShareIcon, StarIcon } from "lucide-react";
 import { randsSA } from "@/lib/format_to_rand";
 import Link from "next/link";
 import Image from "next/image";
@@ -104,7 +100,7 @@ const Cart = () => {
                           navigator.share({
                             title: item.name,
                             text: "Check out this product on external wear sa",
-                            url: `https://externalwearsa/product/${item._id}`,
+                            url: `https://externalwearsa.co.za/product/${item._id}`,
                           })
                         }
                       >

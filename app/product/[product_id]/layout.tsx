@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "website",
       title: resMetadata.name,
       locale: "en_ZA",
-      url: `https://externalwearsa.vercel.app/product/${id}`,
+      url: `https://externalwearsa.co.za/product/${id}`,
       siteName: "externalwearsa",
       images: [
         {

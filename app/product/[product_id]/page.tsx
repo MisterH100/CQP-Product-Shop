@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { randsSA } from "@/lib/format_to_rand";
 import { IProduct, useGlobalContext } from "@/lib/global_context";
 import { Skeleton } from "@/components/layout/skeleton";
+import { ShareIcon, ImagesIcon } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
@@ -67,7 +68,7 @@ const ProductPage = ({ params }: Props) => {
           </Card>
         ) : (
           <Card className="md:w-2/3 mb-10 overflow-hidden">
-            <div className="w-full h-fit bg-[#ffffff]">
+            <div className="relative w-full h-fit bg-[#ffffff]">
               <Image
                 src={product.data.images[0]}
                 alt={product.data.name}
@@ -75,6 +76,21 @@ const ProductPage = ({ params }: Props) => {
                 width={500}
                 height={500}
               />
+              <div className="w-full h-20 flex items-end  px-6 py-2 absolute bottom-0 left-0 bg-gradient-to-t from-secondary to-95%">
+                <Button
+                  variant={"ghost"}
+                  className="p-0"
+                  onClick={() =>
+                    navigator.share({
+                      title: product.data.name,
+                      text: "Check out this product on external wear sa",
+                      url: `https://externalwearsa.co.za/product/${product.data._id}`,
+                    })
+                  }
+                >
+                  <ShareIcon className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
             <CardHeader>
               <div className="flex justify-between items-center">
@@ -91,14 +107,25 @@ const ProductPage = ({ params }: Props) => {
               <p>{product.data.description}</p>
             </CardContent>
             <CardFooter>
-              <Button
-                className="ml-auto border rounded-2xl"
-                variant="secondary"
-                disabled={product.data.in_stock < 1}
-                onClick={() => addToCart(product.data._id, 1)}
-              >
-                {product.data.in_stock < 1 ? "Sold out" : "Add to cart"}
-              </Button>
+              <div className="w-full flex justify-between">
+                <Link
+                  href={`/product/${product.data._id}/gallery`}
+                  className={`${buttonVariants({
+                    variant: "ghost",
+                  })} border rounded-2xl`}
+                >
+                  <ImagesIcon className="w-4 h-4 text-blue-500" />
+                </Link>
+
+                <Button
+                  className="border rounded-2xl"
+                  variant="secondary"
+                  disabled={product.data.in_stock < 1}
+                  onClick={() => addToCart(product.data._id, 1)}
+                >
+                  {product.data.in_stock < 1 ? "Sold out" : "Add to cart"}
+                </Button>
+              </div>
             </CardFooter>
           </Card>
         )}

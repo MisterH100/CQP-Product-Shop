@@ -15,6 +15,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/layout/skeleton";
+import { ArrowLeftIcon } from "lucide-react";
 
 interface IOrders {
   _id: string;
@@ -54,6 +55,7 @@ const OrderPage = () => {
               className: "rounded-full p-4",
             })} `}
           >
+            <ArrowLeftIcon className="w-6 h-6" />
             Back
           </Link>
         </div>

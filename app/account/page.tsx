@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { ArrowLeftIcon } from "lucide-react";
 
 const AccountPage = () => {
   const { user, setUser, setSelected, token, logOut, auth, setAuth } =
@@ -75,6 +76,7 @@ const AccountPage = () => {
               className: "rounded-full p-4",
             })} `}
           >
+            <ArrowLeftIcon className="w-6 h-6" />
             Back
           </Link>
         </div>

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "External wear sa",
     description:
       "Welcome to external wear sa, what do you feel like getting today",
-    url: "https://externalwearsa.vercel.app",
+    url: "https://externalwearsa.co.za",
     siteName: "externalwearsa",
     images: [
       {

@@ -34,6 +34,7 @@ import {
   UserIcon,
   LogOutIcon,
   FormInputIcon,
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -174,13 +175,19 @@ const Home = () => {
                       />
                     )}
                     <div className="text-left ml-2">
-                      <CardTitle className="text-lg font-medium capitalize">
-                        Hi{" "}
-                        {user.first_name != null ? user.first_name : "Shopper"}
-                      </CardTitle>
-                      <CardDescription className="text-sm">
-                        What do you feel like getting today
-                      </CardDescription>
+                      {user.first_name != null ? (
+                        <CardTitle className="text-lg font-medium capitalize">
+                          Hi {user.first_name}{" "}
+                          <ChevronDown className="inline-block w-4 h-4" />
+                        </CardTitle>
+                      ) : (
+                        <CardTitle className="relative text-2xl font-medium capitalize">
+                          externalwear
+                          <span className="text-xs absolute -top-2 -right-5">
+                            ZA
+                          </span>
+                        </CardTitle>
+                      )}
                     </div>
                   </div>
                 </MenubarTrigger>
