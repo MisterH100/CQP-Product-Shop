@@ -251,7 +251,7 @@ const Home = () => {
                 <UserIcon className="w-6 h-6" />
               )}
             </DrawerTrigger>
-            <DrawerContent>
+            <DrawerContent className="min-h-[400px] md:max-w-[1100px] md:mx-auto">
               <DrawerHeader>
                 <DrawerTitle>Notifications</DrawerTitle>
                 <DrawerDescription>

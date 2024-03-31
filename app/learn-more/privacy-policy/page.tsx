@@ -11,7 +11,7 @@ import Link from "next/link";
 const PrivacyPolicyPage = () => {
   return (
     <section className="min-h-screen mb-10">
-      <Card>
+      <Card className="border-none">
         <CardHeader>
           <CardTitle>external wear sa</CardTitle>
           <CardDescription>external wear sa privacy policy</CardDescription>

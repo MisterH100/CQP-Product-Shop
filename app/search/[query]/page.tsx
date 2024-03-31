@@ -74,24 +74,33 @@ const SearchPage = ({ params: { query } }: { params: { query: string } }) => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 md:px-10">
           {productData.data.map((product: IProduct) => (
             <Link key={product._id} href={`/product/${product._id}`}>
-              <Card className="rounded-2xl overflow-hidden">
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="w-full h-[200px] object-cover"
-                  width={500}
-                  height={500}
-                />
+              <Card className="relative rounded-2xl overflow-hidden md:w-[300px]">
+                <div className="w-full h-fit bg-[#ffffff]">
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-[200px] object-cover md:object-contain"
+                    width={500}
+                    height={500}
+                  />
+                </div>
                 <CardHeader className="p-2">
                   <div className="flex justify-between items-center">
                     <CardTitle className="font-normal text-sm truncate">
                       {product.name}
                     </CardTitle>
-                    <CardTitle className="text-sm">
+                    <CardTitle className="text-sm font-normal">
                       {randsSA.format(product.price)}
                     </CardTitle>
                   </div>
-                  <CardDescription>{product.brand}</CardDescription>
+                  <div className="flex justify-between items-center">
+                    <CardDescription>{product.brand}</CardDescription>
+                    {product.in_stock < 1 && (
+                      <CardDescription className="text-destructive">
+                        Sold out
+                      </CardDescription>
+                    )}
+                  </div>
                 </CardHeader>
               </Card>
             </Link>

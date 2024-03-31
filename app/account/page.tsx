@@ -106,10 +106,10 @@ const AccountPage = () => {
         <CardContent>
           <CardTitle className="text-lg font-medium">Full name</CardTitle>
           <CardDescription className="capitalize">
-            {user.first_name} {user.last_name}
+            {user.first_name ? user.first_name : "..."} {user.last_name}
           </CardDescription>
           <CardTitle className="text-lg font-medium">Email</CardTitle>
-          <CardDescription>{user.email}</CardDescription>
+          <CardDescription>{user.email ? user.email : "..."}</CardDescription>
           <CardTitle className="text-lg font-medium">Phone</CardTitle>
           <CardDescription>{user.phone ? user.phone : "..."}</CardDescription>
           <CardTitle className="text-lg font-medium">Address</CardTitle>

@@ -57,7 +57,7 @@ const Cart = () => {
           </Button>
         </div>
       </Card>
-      <div className="px-4 md:px-10 mb-4">
+      <div className="px-4 md:px-0 mb-4">
         {cartList.map((item) => (
           <Card key={item._id} className="p-0 rounded-2xl mt-4 overflow-hidden">
             <div className="flex">
@@ -76,7 +76,7 @@ const Cart = () => {
                 </Link>
               </CardContent>
               <CardHeader className="p-2 h-fit">
-                <CardTitle className="text-base w-[110px] md:w-fit truncate">
+                <CardTitle className="font-normal text-base w-[110px] md:w-fit truncate">
                   {item.name}
                 </CardTitle>
                 <CardDescription>{randsSA.format(item.price)}</CardDescription>

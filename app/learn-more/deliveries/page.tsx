@@ -10,7 +10,7 @@ import {
 const DeliveriesPage = () => {
   return (
     <section className="min-h-screen mb-10">
-      <Card>
+      <Card className="border-none">
         <CardHeader>
           <CardTitle>Free Deliveries</CardTitle>
           <CardDescription>Terms and Conditions</CardDescription>

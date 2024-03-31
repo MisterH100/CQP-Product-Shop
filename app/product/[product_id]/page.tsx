@@ -76,10 +76,10 @@ const ProductPage = ({ params }: Props) => {
                 width={500}
                 height={500}
               />
-              <div className="w-full h-20 flex items-end  px-6 py-2 absolute bottom-0 left-0 bg-gradient-to-t from-secondary to-95%">
+              <div className="w-full h-20 flex items-end  px-4 py-2 absolute bottom-0 left-0 bg-gradient-to-t from-secondary to-95%">
                 <Button
                   variant={"ghost"}
-                  className="p-0"
+                  className="rounded-2xl"
                   onClick={() =>
                     navigator.share({
                       title: product.data.name,

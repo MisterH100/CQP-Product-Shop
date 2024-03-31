@@ -90,7 +90,7 @@ const LoginPage = () => {
   return (
     <section className="relative min-h-screen mb-10">
       {loading && <div className="loaderBar"></div>}
-      <Card>
+      <Card className="border-none">
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>
@@ -169,7 +169,7 @@ const LoginPage = () => {
           </Form>
         </CardContent>
         <CardFooter>
-          <p className="w-full text-center">
+          <p className="w-full px-6">
             Learn more about our privacy policy and data security{" "}
             <Link href="/learn-more/privacy-policy" className="text-blue-800">
               here

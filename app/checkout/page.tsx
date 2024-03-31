@@ -166,7 +166,7 @@ const CheckoutPage = () => {
   return (
     <section className="relative min-h-screen mb-10">
       {loading && <div className="loaderBar"></div>}
-      <Card>
+      <Card className="border-none">
         <CardHeader>
           <CardTitle>Checkout</CardTitle>
         </CardHeader>
