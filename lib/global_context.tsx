@@ -144,13 +144,17 @@ export const GlobalContextProvider = ({
 
   const logOut = () => {
     axios
-      .post("https://nodeserver-v2.onrender.com/api/logout", {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post(
+        "https://nodeserver-v2.onrender.com/api/logout",
+        { id: user._id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         setUser({} as IUser);
         setNotifications([]);
