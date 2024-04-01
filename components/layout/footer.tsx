@@ -43,7 +43,7 @@ export const Footer = () => {
           </div>
         </div>
         <p className="pt-4">
-          Crafted with passion and precision. © externalwearsa 2024. All rights
+          Crafted with passion and precision. © externalwear 2024. All rights
           reserved. Built using cutting-edge technologies.
         </p>
       </CardFooter>

@@ -50,9 +50,12 @@ import { randsSA } from "@/lib/format_to_rand";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import externalWearBanner from "@/public/externalwearbanner.png";
+import externalWearBannerLight from "@/public/externalwearbannerlight.png";
+import externalWearBannerDark from "@/public/externalwearbannerdark.png";
+import { useTheme } from "next-themes";
 const Home = () => {
   const router = useRouter();
+  const { theme } = useTheme();
   const { setSelected, user, notifications, setNotifications, logOut } =
     useGlobalContext();
   const [notRead, setNotRead] = useState<INotification[]>([]);
@@ -330,10 +333,12 @@ const Home = () => {
       <div className="py-4 px-4 md:px-10">
         <Search />
       </div>
-      <div className="relative w-full h-[200px] flex justify-center md:h-[300px] my-4 px-4 md:px-10 overflow-hidden bg-[#ffffff]">
+      <div className="relative w-full h-[200px] flex justify-center md:h-[300px] my-4 px-4 md:px-10 overflow-hidden bg-background">
         <Image
           className="w-auto h-full object-contain"
-          src={externalWearBanner}
+          src={
+            theme == "light" ? externalWearBannerLight : externalWearBannerDark
+          }
           alt="external wear sa"
           width={800}
           height={300}

@@ -140,7 +140,7 @@ const Cart = () => {
           </Card>
         ))}
       </div>
-      <Card>
+      <Card className="rounded-none">
         <CardHeader>
           <CardTitle>Total: {total ? randsSA.format(total) : "0.00"}</CardTitle>
           <CardDescription>Tax:0%</CardDescription>

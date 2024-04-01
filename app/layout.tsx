@@ -61,7 +61,7 @@ export default function RootLayout({
           <GlobalContextProvider>
             <Toaster />
             <main
-              className={` ${poppins.className} relative md:max-w-[1100px] md:mx-auto`}
+              className={` ${poppins.className} relative md:max-w-[1100px] md:mx-auto md:border`}
             >
               {children}
               <Footer />

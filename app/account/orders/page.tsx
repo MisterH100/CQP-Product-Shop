@@ -60,7 +60,7 @@ const OrderPage = () => {
           </Link>
         </div>
       </Card>
-      <Card className="mt-4">
+      <Card className="mt-4 rounded-none">
         <CardHeader>
           <CardTitle>Order details</CardTitle>
         </CardHeader>

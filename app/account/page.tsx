@@ -81,7 +81,7 @@ const AccountPage = () => {
           </Link>
         </div>
       </Card>
-      <Card>
+      <Card className="rounded-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Personal details</CardTitle>
