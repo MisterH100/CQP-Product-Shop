@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "website",
       title: resMetadata.name,
       locale: "en_ZA",
-      url: `https://externalwearsa.co.za/product/${id}`,
-      siteName: "externalwearsa",
+      url: `https://externalwear.co.za/product/${id}`,
+      siteName: "externalwear",
       images: [
         {
           url: resMetadata.images[0],

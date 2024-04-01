@@ -83,8 +83,8 @@ const ProductPage = ({ params }: Props) => {
                   onClick={() =>
                     navigator.share({
                       title: product.data.name,
-                      text: "Check out this product on external wear sa",
-                      url: `https://externalwearsa.co.za/product/${product.data._id}`,
+                      text: "Check out this product on externalwear",
+                      url: `https://externalwear.co.za/product/${product.data._id}`,
                     })
                   }
                 >

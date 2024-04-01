@@ -41,7 +41,7 @@ const OrderPage = () => {
 
   return (
     <section className="min-h-screen pb-10">
-      <Card>
+      <Card className="rounded-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Orders</CardTitle>

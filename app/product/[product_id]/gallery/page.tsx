@@ -34,8 +34,8 @@ const GalleryPage = ({ params }: Props) => {
   });
 
   return (
-    <section className="min-h-screen px-4 md:px-10 pb-10">
-      <Card>
+    <section className="min-h-screen  pb-10">
+      <Card className="rounded-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Gallery</CardTitle>
@@ -54,7 +54,7 @@ const GalleryPage = ({ params }: Props) => {
       </Card>
       {product.isLoading ? (
         <Card className="pt-6 border-none">
-          <div className="columns-2 md:columns-3 gap-4">
+          <div className="columns-1 sm:columns-2 md:columns-3 gap-4">
             <Skeleton className="w-full h-[300px] rounded-2xl mb-4 break-inside-avoid" />
             <Skeleton className="w-full h-[300px] rounded-2xl mb-4 break-inside-avoid" />
             <Skeleton className="w-full h-[300px] rounded-2xl mb-4 break-inside-avoid" />
@@ -64,7 +64,7 @@ const GalleryPage = ({ params }: Props) => {
       ) : (
         <Card className="pt-6 border-none">
           <CardContent>
-            <div className="columns-2 md:columns-3 gap-4">
+            <div className="columns-1 sm:columns-2 md:columns-3 gap-4">
               {product.data.images.map((image: string) => (
                 <div key={image} className="w-full h-fit bg-[#ffffff] mb-4">
                   <Image

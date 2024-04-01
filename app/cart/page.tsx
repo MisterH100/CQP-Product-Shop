@@ -41,7 +41,7 @@ const Cart = () => {
     .reduce((prev, curr) => prev + curr, 0);
   return (
     <section className="min-h-screen pb-10">
-      <Card>
+      <Card className="rounded-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Cart</CardTitle>
@@ -99,8 +99,8 @@ const Cart = () => {
                         onClick={() =>
                           navigator.share({
                             title: item.name,
-                            text: "Check out this product on external wear sa",
-                            url: `https://externalwearsa.co.za/product/${item._id}`,
+                            text: "Check out this product on externalwear",
+                            url: `https://externalwear.co.za/product/${item._id}`,
                           })
                         }
                       >

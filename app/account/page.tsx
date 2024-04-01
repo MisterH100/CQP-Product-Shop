@@ -62,7 +62,7 @@ const AccountPage = () => {
   return (
     <section className="min-h-screen pb-10">
       {loading && <div className="loaderBar"></div>}
-      <Card className="mb-4">
+      <Card className="mb-4 rounded-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Account</CardTitle>

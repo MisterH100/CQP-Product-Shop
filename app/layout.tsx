@@ -12,14 +12,13 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "External wear sa",
+  title: "External wear",
   description: "Welcome to our store",
   openGraph: {
-    title: "External wear sa",
-    description:
-      "Welcome to external wear sa, what do you feel like getting today",
-    url: "https://externalwearsa.co.za",
-    siteName: "externalwearsa",
+    title: "External wear",
+    description: "Welcome to externalwear, what do you feel like getting today",
+    url: "https://externalwear.co.za",
+    siteName: "externalwear",
     images: [
       {
         url: "https://res.cloudinary.com/dxrpjdomo/image/upload/v1711540298/Products/assets/externalwearbanner_hcq2bh.png",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Checkout",
-  description: "external wear sa rings you quality products",
+  description: "externalwear brings you quality products",
 };
 
 export default function CheckoutLayout({

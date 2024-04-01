@@ -158,7 +158,7 @@ const Home = () => {
 
   return (
     <section className="relative w-full min-h-screen pb-10">
-      <Card className="border-none">
+      <Card className="rounded-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-full">
             <Menubar className="border-none px-0">
@@ -174,14 +174,14 @@ const Home = () => {
                         loading="lazy"
                       />
                     )}
-                    <div className="text-left ml-2">
+                    <div>
                       {user.first_name != null ? (
-                        <CardTitle className="text-lg font-medium capitalize">
+                        <CardTitle className="text-lg font-medium capitalize ml-2">
                           Hi {user.first_name}{" "}
                           <ChevronDown className="inline-block w-4 h-4" />
                         </CardTitle>
                       ) : (
-                        <CardTitle className="relative text-2xl font-medium capitalize">
+                        <CardTitle className="relative text-2xl font-medium">
                           externalwear
                           <span className="text-xs absolute -top-2 -right-5">
                             ZA

@@ -13,16 +13,16 @@ const PrivacyPolicyPage = () => {
     <section className="min-h-screen mb-10">
       <Card className="border-none">
         <CardHeader>
-          <CardTitle>external wear sa</CardTitle>
-          <CardDescription>external wear sa privacy policy</CardDescription>
+          <CardTitle>externalwear </CardTitle>
+          <CardDescription>externalwear privacy policy</CardDescription>
         </CardHeader>
         <CardContent>
           <CardHeader className="px-0">
             <CardTitle className="font-medium">Privacy Policy</CardTitle>
           </CardHeader>
           <p>
-            external wear sa Team operates external wear sa.This page informs
-            you of our policies regarding the collection, use, and disclosure of
+            externalwear Team operates externalwear .This page informs you of
+            our policies regarding the collection, use, and disclosure of
             personal data when you use our site and the choices you have
             associated with that data. We use your data to provide and improve
             the site. By using the site, you agree to the collection and use of
