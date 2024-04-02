@@ -55,6 +55,10 @@ export default function RootLayout({
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta
+          name="google-site-verification"
+          content="2wsyqO_rhNw47Fpgp7fdglX1vmkN4IT7QW-JDI0jjmE"
+        />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
