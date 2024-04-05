@@ -50,13 +50,11 @@ import { randsSA } from "@/lib/format_to_rand";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import externalWearBannerLight from "@/public/externalwearbannerlight.png";
-import externalWearBannerDark from "@/public/externalwearbannerdark.png";
 import { useTheme } from "next-themes";
 import { CarouselBanner } from "@/components/ui/carousel-banner";
 const Home = () => {
+  const categories = ["phones", "shoes"];
   const router = useRouter();
-  const { theme } = useTheme();
   const { setSelected, user, notifications, setNotifications, logOut } =
     useGlobalContext();
   const [notRead, setNotRead] = useState<INotification[]>([]);
@@ -336,6 +334,20 @@ const Home = () => {
       </div>
       <div className="relative w-full my-4 bg-background">
         <CarouselBanner />
+      </div>
+      <CardHeader className="md:px-10">
+        <CardDescription>Most viewed categories</CardDescription>
+      </CardHeader>
+      <div className="flex items-center gap-4 px-4 md:px-10">
+        {categories.map((cat) => (
+          <Link
+            onClick={() => setSelected("")}
+            href={`/products/${cat}`}
+            className={`${buttonVariants({ variant: "outline" })} rounded-2xl`}
+          >
+            {cat}
+          </Link>
+        ))}
       </div>
       <div className="px-4 md:px-10 py-4">
         <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">

@@ -13,7 +13,7 @@ export const Footer = () => {
     <Card className="min-h-[400px] border-none bg-primary text-primary-foreground rounded-none">
       <CardFooter className="flex-col">
         <CardHeader>
-          <CardTitle>external wear sa</CardTitle>
+          <CardTitle>externalwear</CardTitle>
         </CardHeader>
         <div className="w-full justify-between flex gap-6 mb-2">
           <div className="flex flex-col gap-4">
