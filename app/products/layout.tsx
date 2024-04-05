@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "external wear sa",
-  description: "external wear sa brings you quality products",
+  title: "externalwear",
+  description: "externalwear brings you quality products",
 };
 
 export default function ProductsLayout({

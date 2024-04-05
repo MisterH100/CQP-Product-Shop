@@ -14,6 +14,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "External wear",
   description: "Welcome to our store",
+  applicationName: "externalwear",
+  generator: "externalwear",
+  keywords: ["externalwear", "shopping", "online shopping", "shoes", "phones"],
+  authors: [{ name: "thehandsomedev", url: "https://thehandsomedev.com" }],
   openGraph: {
     title: "External wear",
     description: "Welcome to externalwear, what do you feel like getting today",

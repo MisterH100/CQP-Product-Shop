@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Log in",
-  description: "external wear sa brings you quality products",
+  description: "externalwear brings you quality products",
 };
 
 export default function LoginLayout({

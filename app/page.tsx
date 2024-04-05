@@ -341,6 +341,7 @@ const Home = () => {
       <div className="flex items-center gap-4 px-4 md:px-10">
         {categories.map((cat) => (
           <Link
+            key={cat}
             onClick={() => setSelected("")}
             href={`/products/${cat}`}
             className={`${buttonVariants({ variant: "outline" })} rounded-2xl`}
