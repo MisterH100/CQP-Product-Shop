@@ -57,6 +57,14 @@
     @apply bg-background text-foreground;
   }
 }
+.font-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px white;
+}
+.font-outline-2 {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px white;
+}
 .loaderBar {
   position: absolute;
   top: 0;

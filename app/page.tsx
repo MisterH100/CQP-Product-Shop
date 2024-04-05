@@ -53,6 +53,7 @@ import { useEffect, useState } from "react";
 import externalWearBannerLight from "@/public/externalwearbannerlight.png";
 import externalWearBannerDark from "@/public/externalwearbannerdark.png";
 import { useTheme } from "next-themes";
+import { CarouselBanner } from "@/components/ui/carousel-banner";
 const Home = () => {
   const router = useRouter();
   const { theme } = useTheme();
@@ -333,17 +334,8 @@ const Home = () => {
       <div className="py-4 px-4 md:px-10">
         <Search />
       </div>
-      <div className="relative w-full h-[200px] flex justify-center md:h-[300px] my-4 px-4 md:px-10 overflow-hidden bg-background">
-        <Image
-          className="w-auto h-full object-contain"
-          src={
-            theme == "light" ? externalWearBannerLight : externalWearBannerDark
-          }
-          alt="external wear sa"
-          width={800}
-          height={300}
-          priority
-        />
+      <div className="relative w-full my-4 bg-background">
+        <CarouselBanner />
       </div>
       <div className="px-4 md:px-10 py-4">
         <h1 className="text-2xl py-4 font-medium leading-none tracking-tight">
