@@ -65,7 +65,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <GlobalContextProvider>
             <Toaster />
             <main

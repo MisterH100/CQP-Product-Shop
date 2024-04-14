@@ -162,77 +162,13 @@ const Home = () => {
     <section className="relative w-full min-h-screen pb-10">
       <Card className="rounded-none">
         <div className="flex justify-between items-center pr-6">
-          <CardHeader className="w-full">
-            <Menubar className="border-none px-0">
-              <MenubarMenu>
-                <MenubarTrigger className="px-0">
-                  <div className="flex items-center">
-                    {user.first_name && (
-                      <Image
-                        src={user.profileImage}
-                        alt="Profile Image"
-                        width={50}
-                        height={50}
-                        loading="lazy"
-                      />
-                    )}
-                    <div>
-                      {user.first_name != null ? (
-                        <CardTitle className="text-lg font-medium capitalize ml-2">
-                          Hi {user.first_name}{" "}
-                          <ChevronDown className="inline-block w-4 h-4" />
-                        </CardTitle>
-                      ) : (
-                        <CardTitle className="relative text-2xl font-medium">
-                          externalwear
-                          <span className="text-xs absolute -top-2 -right-5">
-                            ZA
-                          </span>
-                        </CardTitle>
-                      )}
-                    </div>
-                  </div>
-                </MenubarTrigger>
-                <MenubarContent>
-                  <MenubarItem
-                    onClick={() =>
-                      router.push(user.first_name ? "/account" : "/login")
-                    }
-                  >
-                    Account
-                    <MenubarShortcut>
-                      <UserIcon className="w-4 h-4" />
-                    </MenubarShortcut>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  {user.first_name ? (
-                    <MenubarItem
-                      onClick={() => {
-                        logOut();
-                        router.push("/");
-                      }}
-                    >
-                      Logout
-                      <MenubarShortcut>
-                        <LogOutIcon className="w-4 h-4" />
-                      </MenubarShortcut>
-                    </MenubarItem>
-                  ) : (
-                    <MenubarItem
-                      onClick={() => {
-                        router.push("/register");
-                      }}
-                    >
-                      Sign Up
-                      <MenubarShortcut>
-                        <FormInputIcon className="w-4 h-4" />
-                      </MenubarShortcut>
-                    </MenubarItem>
-                  )}
-                </MenubarContent>
-              </MenubarMenu>
-            </Menubar>
+          <CardHeader className="w-fit">
+            <CardTitle className="relative text-2xl font-medium">
+              externalwear
+              <span className="text-xs absolute -top-2 -right-5">ZA</span>
+            </CardTitle>
           </CardHeader>
+
           <Drawer>
             <DrawerTrigger
               className={`${buttonVariants({

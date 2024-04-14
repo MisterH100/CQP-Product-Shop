@@ -1,14 +1,20 @@
 "use client";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { HomeIcon, ShoppingCartIcon, MoonIcon, SunIcon } from "lucide-react";
+import {
+  HomeIcon,
+  ShoppingCartIcon,
+  MoonIcon,
+  SunIcon,
+  UserIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useGlobalContext } from "@/lib/global_context";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "next-themes";
 
 export const BottomNav = () => {
-  const { selected, setSelected, cartList } = useGlobalContext();
+  const { selected, setSelected, cartList, user } = useGlobalContext();
   const { theme, setTheme } = useTheme();
   const navLinks = [
     {
@@ -22,6 +28,12 @@ export const BottomNav = () => {
       name: "Cart",
       link: "/cart",
       icon: <ShoppingCartIcon className="w-6 h-6 z-10" />,
+    },
+    {
+      id: 3,
+      name: "You",
+      link: user.first_name ? "/account" : "/login",
+      icon: <UserIcon className="w-6 h-6 z-10" />,
     },
   ];
   return (
