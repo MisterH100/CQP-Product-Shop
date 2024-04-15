@@ -14,7 +14,7 @@ const PrivacyPolicyPage = () => {
       <Card className="border-none">
         <CardHeader>
           <CardTitle>externalwear </CardTitle>
-          <CardDescription>externalwear privacy policy</CardDescription>
+          <CardDescription>Privacy Policy</CardDescription>
         </CardHeader>
         <CardContent>
           <CardHeader className="px-0">
@@ -126,9 +126,9 @@ const PrivacyPolicyPage = () => {
           </CardHeader>
           <p>
             If you have any questions or concerns about this Privacy Policy or
-            our data practices, please contact us at:{" "}
-            <Link href="mailto:thehandsomedevservices@gmail.com">
-              thehandsomedevservices@gmail.com
+            our data practices
+            <Link className="underline" href="/support">
+              Contact Us
             </Link>
             .
           </p>

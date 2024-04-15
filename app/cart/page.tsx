@@ -41,7 +41,7 @@ const Cart = () => {
     .reduce((prev, curr) => prev + curr, 0);
   return (
     <section className="min-h-screen pb-10">
-      <Card className="rounded-none">
+      <Card className="rounded-none border-x-0">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Cart</CardTitle>
@@ -59,7 +59,10 @@ const Cart = () => {
       </Card>
       <div className="px-4 md:px-0 mb-4">
         {cartList.map((item) => (
-          <Card key={item._id} className="p-0 rounded-2xl mt-4 overflow-hidden">
+          <Card
+            key={item._id}
+            className="p-0 rounded-2xl mt-4 overflow-hidden border-x-0"
+          >
             <div className="flex">
               <CardContent className="p-0 w-[100px] h-[100px]">
                 <Link
@@ -140,7 +143,7 @@ const Cart = () => {
           </Card>
         ))}
       </div>
-      <Card className="rounded-none">
+      <Card className="rounded-none border-x-0 border-b-0">
         <CardHeader>
           <CardTitle>Total: {total ? randsSA.format(total) : "0.00"}</CardTitle>
           <CardDescription>Tax:0%</CardDescription>

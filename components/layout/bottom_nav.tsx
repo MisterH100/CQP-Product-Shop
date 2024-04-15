@@ -21,19 +21,19 @@ export const BottomNav = () => {
       id: 1,
       name: "Home",
       link: "/",
-      icon: <HomeIcon className="w-6 h-6 z-10" />,
+      icon: <HomeIcon className="w-4 h-4 md:w-6 md:h-6 z-10" />,
     },
     {
       id: 2,
       name: "Cart",
       link: "/cart",
-      icon: <ShoppingCartIcon className="w-6 h-6 z-10" />,
+      icon: <ShoppingCartIcon className="w-4 h-4 md:w-6 md:h-6 z-10" />,
     },
     {
       id: 3,
       name: "You",
       link: user.first_name ? "/account" : "/login",
-      icon: <UserIcon className="w-6 h-6 z-10" />,
+      icon: <UserIcon className="w-4 h-4 md:w-6 md:h-6 z-10" />,
     },
   ];
   return (
@@ -86,9 +86,9 @@ export const BottomNav = () => {
                 }`}
               >
                 {theme === "light" ? (
-                  <MoonIcon className="w-6 h-6 z-10" />
+                  <MoonIcon className="w-4 h-4 md:w-6 md:h-6 z-10" />
                 ) : (
-                  <SunIcon className="w-6 h-6 z-10" />
+                  <SunIcon className="w-4 h-4 md:w-6 md:h-6 z-10" />
                 )}
                 <span className="relative z-10 hidden md:block">Theme</span>
                 {selected === "theme" && (

@@ -62,7 +62,7 @@ const AccountPage = () => {
   return (
     <section className="min-h-screen pb-10">
       {loading && <div className="loaderBar"></div>}
-      <Card className="mb-4 rounded-none">
+      <Card className="mb-4 rounded-none border-x-0">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Account</CardTitle>
@@ -81,7 +81,7 @@ const AccountPage = () => {
           </Link>
         </div>
       </Card>
-      <Card className="rounded-none">
+      <Card className="rounded-none border-x-0 border-b-0">
         <div className="flex justify-between items-center pr-6">
           <CardHeader>
             <CardTitle>Personal details</CardTitle>

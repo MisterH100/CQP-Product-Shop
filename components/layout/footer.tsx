@@ -28,17 +28,17 @@ export const Footer = () => {
 
           <div className="flex flex-col gap-4">
             <CardDescription>Useful links</CardDescription>
-            <Link
-              className="underline"
-              href="mailto:thehandsomedevservices@gmail.com"
-            >
-              Contact us
+            <Link className="underline" href="/support">
+              Contact Us
             </Link>
             <Link className="underline" href="/learn-more/deliveries">
               Deliveries
             </Link>
             <Link className="underline" href="/learn-more/privacy-policy">
               Privacy Policy
+            </Link>
+            <Link className="underline" href="/learn-more/exchange-policy">
+              Exchange Policy
             </Link>
           </div>
         </div>
