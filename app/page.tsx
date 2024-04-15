@@ -160,7 +160,7 @@ const Home = () => {
 
   return (
     <section className="relative w-full min-h-screen pb-10">
-      <Card className="rounded-none">
+      <Card className="rounded-none border-b border-x-0 border-t-0 shadow-none">
         <div className="flex justify-between items-center pr-6">
           <CardHeader className="w-fit">
             <CardTitle className="relative text-2xl font-medium">

@@ -1,6 +1,6 @@
 {
-  "name": "product-store",
-  "version": "0.2.0",
+  "name": "externalwear",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

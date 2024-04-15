@@ -37,8 +37,8 @@ export const BottomNav = () => {
     },
   ];
   return (
-    <Card className="rounded-none md:max-w-[1100px] md:mx-auto">
-      <nav className="flex justify-center">
+    <Card className="rounded-none md:max-w-[1100px] md:mx-auto border-x-0">
+      <nav className="flex justify-center px-4 md:px-0">
         {navLinks.map((link) => (
           <CardHeader key={link.id}>
             <CardTitle className="relative text-lg">
