@@ -97,7 +97,7 @@ const SummaryPage = () => {
             <CardHeader className="px-0">
               <CardTitle className="text-base">Details</CardTitle>
               <CardDescription>Order number: {orderNumber}</CardDescription>
-              <CardDescription>Payment method: Cash</CardDescription>
+              <CardDescription>Payment method: Card</CardDescription>
               <CardDescription>Address: {address}</CardDescription>
               <CardDescription>
                 Order date:

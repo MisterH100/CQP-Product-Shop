@@ -52,6 +52,16 @@ export interface IUser {
   createdAt: Date;
 }
 
+export interface IFormValues {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  address: string;
+  payment_method: string;
+  terms: boolean;
+}
+
 interface contextProps {
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
@@ -67,6 +77,8 @@ interface contextProps {
   setOrderData: Dispatch<SetStateAction<IOrderData>>;
   notifications: INotification[];
   setNotifications: Dispatch<SetStateAction<INotification[]>>;
+  formValues: IFormValues;
+  setFormValues: Dispatch<SetStateAction<IFormValues>>;
   addToCart: (id: string, itemQuantity: number) => void;
   removeFromCart: (Id: string) => void;
   increaseCartQuantity: (id: string) => void;
@@ -90,6 +102,10 @@ export const GlobalContextProvider = ({
   const [notifications, setNotifications] = useLocalStorage<INotification[]>(
     "notifications",
     []
+  );
+  const [formValues, setFormValues] = useLocalStorage<IFormValues>(
+    "formValues",
+    {} as IFormValues
   );
   const router = useRouter();
   const { toast } = useToast();
@@ -193,6 +209,8 @@ export const GlobalContextProvider = ({
         setOrderData,
         notifications,
         setNotifications,
+        formValues,
+        setFormValues,
         addToCart,
         removeFromCart,
         increaseCartQuantity,

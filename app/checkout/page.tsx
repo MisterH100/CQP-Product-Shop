@@ -77,7 +77,7 @@ const CheckoutPage = () => {
   const router = useRouter();
   const [value, setValue] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const { user, cartList, setCartList, setOrderData } = useGlobalContext();
+  const { user, cartList, setFormValues, setCartList } = useGlobalContext();
   const { toast } = useToast();
   const total = cartList
     .map((product) => {
@@ -108,18 +108,18 @@ const CheckoutPage = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     if (user.first_name) {
+      setFormValues(values);
       toast({
-        title: "creating order",
-        description: "please wait while we create your order",
+        title: "redirecting to payment page",
+        description: "please wait while we redirect you to payment page",
       });
       axios
         .post(
-          "https://nodeserver-v2.onrender.com/api/products/orders/new",
+          "https://nodeserver-v2.onrender.com/api/ikhokha/pay",
           {
-            ...values,
             customer_id: user._id,
-            products: Array.from(cartList.map((item) => item)),
             price: total,
+            products: Array.from(cartList.map((item) => item)),
           },
           {
             headers: {
@@ -129,11 +129,9 @@ const CheckoutPage = () => {
           }
         )
         .then((response) => {
-          setOrderData(response.data);
-          form.reset();
-          setCartList([]);
+          console.log(response.data);
           setLoading(false);
-          router.push("/summary");
+          router.replace(response.data.paylinkUrl);
         })
         .catch((error) => {
           console.log(error);
@@ -322,23 +320,12 @@ const CheckoutPage = () => {
                             >
                               <FormItem className="flex items-center space-x-3 space-y-0">
                                 <FormControl>
-                                  <RadioGroupItem disabled value="card" />
+                                  <RadioGroupItem value="card" />
                                 </FormControl>
                                 <div>
                                   <FormLabel>Card</FormLabel>
                                   <FormDescription>
                                     Complete payment with your card
-                                  </FormDescription>
-                                </div>
-                              </FormItem>
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="cash" />
-                                </FormControl>
-                                <div>
-                                  <FormLabel>Cash</FormLabel>
-                                  <FormDescription>
-                                    Cash on delivery (free delivery)
                                   </FormDescription>
                                 </div>
                               </FormItem>
@@ -387,7 +374,7 @@ const CheckoutPage = () => {
                     className="w-full rounded-2xl"
                     variant="default"
                   >
-                    Confirm order
+                    Proceed to payment
                     {loading && (
                       <CircleDashed className="ml-4 w-4 h-4 animate-spin" />
                     )}
